@@ -47,6 +47,15 @@ namespace Tower_Defense
             return myCurrentMouseState.RightButton == ButtonState.Pressed;
         }
 
+        public static bool ScrollUp()
+        {
+            return myCurrentMouseState.ScrollWheelValue > myPreviousMouseState.ScrollWheelValue;
+        }
+        public static bool ScrollDown()
+        {
+            return myCurrentMouseState.ScrollWheelValue < myPreviousMouseState.ScrollWheelValue;
+        }
+
         public static MouseState CurrentMouseState
         {
             get => myCurrentMouseState;

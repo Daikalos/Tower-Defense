@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/tobia/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_03.png</SourceFile>
-  <SourceTime>2019-09-10T17:48:19.8414587+02:00</SourceTime>
-  <DestFile>C:/Users/tobia/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/bin/Windows/Content/Sprites/Forest_Tileset/forest_tile_03.xnb</DestFile>
-  <DestTime>2019-12-11T12:01:10.1006927+01:00</DestTime>
+  <SourceFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_03.png</SourceFile>
+  <SourceTime>2019-12-11T15:34:04.4060109+01:00</SourceTime>
+  <DestFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/bin/Windows/Content/Sprites/Forest_Tileset/forest_tile_03.xnb</DestFile>
+  <DestTime>2019-12-11T15:52:22.6489004+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

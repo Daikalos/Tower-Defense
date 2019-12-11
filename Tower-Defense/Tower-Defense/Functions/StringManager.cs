@@ -13,7 +13,7 @@ namespace Tower_Defense
             if (aFont != null)
             {
                 aSpriteBatch.DrawString(aFont, aString, new Vector2(
-                    aPosition.X,
+                    aPosition.X, 
                     aPosition.Y - (aFont.MeasureString(aString).Y / 2) * aSize), aColor, 0.0f, Vector2.Zero, aSize, SpriteEffects.None, 0.0f);
             }
         }

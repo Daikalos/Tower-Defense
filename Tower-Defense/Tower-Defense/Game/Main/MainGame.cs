@@ -52,7 +52,7 @@ namespace Tower_Defense
 
             for (int i = 0; i < 10; i++)
             {
-                ResourceManager.AddTexture("Forest_Tile_0" + i, this.Content.Load<Texture2D>("Sprites/Forest_Tileset/forest_tile_0" + i));
+                ResourceManager.AddTexture("Forest_Tile_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Forest_Tileset/forest_tile_" + Extensions.NumberFormat(i)));
             }
 
             myGameState.LoadContent();

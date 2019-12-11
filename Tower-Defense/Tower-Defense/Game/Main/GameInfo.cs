@@ -18,8 +18,7 @@ namespace Tower_Defense
             myLevelName,
             myFolderLevels,
             myFolderLevelsInfo,
-            myFolderHighScores,
-            myTerrainType;
+            myFolderHighScores;
 
         public static bool IsPaused
         {
@@ -124,9 +123,12 @@ namespace Tower_Defense
 
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
-            StringManager.DrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), new Vector2(Camera.Position.X + 32, 64), Color.Black, 0.5f);
-            StringManager.DrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.5f);
-            StringManager.DrawStringRight(aSpriteBatch, aFont, GameInfo.LevelName, new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width - 32), 32), Color.Black, 0.5f);
+            StringManager.DrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), 
+                Camera.TopLeftCorner + new Vector2(32 / Camera.Zoom, 64 / Camera.Zoom), Color.Black, 0.7f / Camera.Zoom);
+            StringManager.DrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), 
+                Camera.TopLeftCorner + new Vector2((aWindow.ClientBounds.Width / 2 / Camera.Zoom), 32 / Camera.Zoom), Color.Black, 0.7f / Camera.Zoom);
+            StringManager.DrawStringRight(aSpriteBatch, aFont, GameInfo.LevelName, 
+                Camera.TopLeftCorner + new Vector2((aWindow.ClientBounds.Width - 32) / Camera.Zoom, 64 / Camera.Zoom), Color.Black, 0.7f / Camera.Zoom);
 
             for (int i = myDrawScore.Count - 1; i >= 0; i--)
             {

@@ -50,7 +50,7 @@ namespace Tower_Defense
 
         public EditorState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
-            Level.LoadLevel(aWindow, new Point(32), "Level_Template");
+            Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
                 
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), null, "LOAD", 0.6f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), null, "SAVE", 0.6f);
@@ -164,15 +164,6 @@ namespace Tower_Defense
             mySaveButton.Update();
             myDeleteButton.Update();
 
-            if (KeyMouseReader.KeyHold(Keys.Left))
-            {
-                Camera.MoveCamera(aWindow, -12.0f);
-            }
-            if (KeyMouseReader.KeyHold(Keys.Right))
-            {
-                Camera.MoveCamera(aWindow, 12.0f);
-            }
-
             if (myTimer > 0)
             {
                 myTimer -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
@@ -199,19 +190,6 @@ namespace Tower_Defense
                     {
                         mySelectedTile = mySelections[i].TileType;
                         myTile = i;
-
-                        switch (mySelections[i].TileType)
-                        {
-                            case '/':
-                                mySelectedSource = new Rectangle(0, 0, mySelections[i].Texture.Width / 4, mySelections[i].Texture.Height);
-                                break;
-                            case '¤':
-                                mySelectedSource = new Rectangle(0, 0, mySelections[i].Texture.Width / 4, mySelections[i].Texture.Height / 2);
-                                break;
-                            default:
-                                mySelectedSource = new Rectangle(0, 0, mySelections[i].Texture.Width, mySelections[i].Texture.Height);
-                                break;
-                        }
 
                         myTimer = myDelay;
                     }
@@ -310,7 +288,7 @@ namespace Tower_Defense
                 button.Update();
                 if (button.IsClicked())
                 {
-                    Level.LoadLevel(aWindow, new Point(32), button.DisplayText);
+                    Level.LoadLevel(aWindow, new Point(64, 32), button.DisplayText);
 
                     LoadContent();
 

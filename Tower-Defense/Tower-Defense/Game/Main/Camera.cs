@@ -1,60 +1,79 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
 {
     static class Camera
     {
-        private static Vector2 myPosition;
+        private static Vector2 
+            myPosition,
+            myOldMousePosition,
+            myViewportSize;
+        private static float myZoom;
 
         public static Vector2 Position
         {
             get => myPosition;
             set => myPosition = value;
         }
+        public static Vector2 TopLeftCorner
+        {
+            get => myPosition - ViewportCenter * (1 / myZoom);
+        }
+        public static Vector2 ViewportCenter
+        {
+            get => new Vector2(myViewportSize.X / 2, myViewportSize.Y / 2);
+        }
+        public static float Zoom
+        {
+            get => myZoom;
+        }
         public static Matrix TranslationMatrix
         {
             get
             {
-                return Matrix.CreateTranslation(new Vector3(-myPosition, 0));
+                return 
+                    Matrix.CreateTranslation(new Vector3(-myPosition, 0)) * 
+                    Matrix.CreateScale(myZoom, myZoom, 1.0f) * 
+                    Matrix.CreateTranslation(new Vector3(ViewportCenter, 0));
             }
         }
 
-        public static void Reset()
+        public static void Initialize(GameWindow aWindow, Vector2 aPosition)
         {
-            myPosition = Vector2.Zero;
+            myPosition = aPosition;
+
+            myViewportSize = aWindow.ClientBounds.Size.ToVector2();
+            myZoom = 1.0f;
         }
 
-        public static void MoveCamera(GameWindow aWindow, float aNewPosition)
+        public static void MoveCamera()
         {
-            if (SnapToMap(aWindow, aNewPosition))
+            if (KeyMouseReader.LeftClick())
             {
-                myPosition.X += aNewPosition;
+                myOldMousePosition = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
             }
-        }
+            if (KeyMouseReader.LeftHold() && myOldMousePosition != Vector2.Zero)
+            {
+                Vector2 tempNewPos = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
+                Vector2 tempDeltaPos = myOldMousePosition - tempNewPos;
 
-        private static bool SnapToMap(GameWindow aWindow, float aNewPosition)
-        {
-            if (myPosition.X + aNewPosition + aWindow.ClientBounds.Width > Level.MapSize.X)
-            {
-                myPosition.X = Level.MapSize.X - aWindow.ClientBounds.Width;
-                return false;
+                myPosition += tempDeltaPos;
+
+                myOldMousePosition = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
             }
-            if (myPosition.X + aNewPosition < 0)
+
+            if (KeyMouseReader.ScrollUp())
             {
-                myPosition.X = 0;
-                return false;
+                myZoom += 0.05f;
+                myZoom = MathHelper.Clamp(myZoom, 0.5f, 2.0f);
             }
-            if (myPosition.Y + aNewPosition <= 0)
+            if (KeyMouseReader.ScrollDown())
             {
-                myPosition.Y = 0;
-                return false;
+                myZoom -= 0.05f;
+                myZoom = MathHelper.Clamp(myZoom, 0.5f, 2.0f);
             }
-            if (myPosition.Y + aNewPosition + aWindow.ClientBounds.Height > Level.MapSize.Y)
-            {
-                myPosition.Y = Level.MapSize.Y - aWindow.ClientBounds.Height;
-            }
-            return true;
         }
     }
 }

@@ -11,8 +11,6 @@ namespace Tower_Defense
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
-            myGame.IsMouseVisible = false;
-
             //EnemyManager.Initialize();
 
             GameInfo.Initialize(0.5f);
@@ -20,7 +18,7 @@ namespace Tower_Defense
 
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
 
-            Camera.Reset();
+            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
 
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                     new Point(128, 48),
@@ -32,6 +30,7 @@ namespace Tower_Defense
         {
             if (!GameInfo.IsPaused)
             {
+                Camera.MoveCamera();
                 Level.Update();
                 //EnemyManager.Update(aGameTime);
                 GameInfo.Update(aGameTime);
@@ -44,7 +43,6 @@ namespace Tower_Defense
             if (KeyMouseReader.KeyPressed(Keys.Escape))
             {
                 GameInfo.IsPaused = !GameInfo.IsPaused;
-                myGame.IsMouseVisible = !myGame.IsMouseVisible;
             }
         }
 
