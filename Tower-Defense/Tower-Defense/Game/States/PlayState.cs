@@ -60,7 +60,7 @@ namespace Tower_Defense
             if (GameInfo.IsPaused)
             {
                 StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "PAUSED", 
-                    new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width / 2), aWindow.ClientBounds.Height / 2), Color.Black, 1.5f);
+                    new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), Color.Black, 1.5f);
                 myBackButton.Draw(aSpriteBatch);
             }
         }

@@ -7,6 +7,7 @@ namespace Tower_Defense
     class Tile : StaticObject
     {
         private List<Tile> myHistory; //Used for pathfinding
+        private Color myColor;
         private bool myIsObstacle;
         private char myTileType;
         private int myTileForm;
@@ -45,7 +46,12 @@ namespace Tower_Defense
             this.myTileType = aTileType;
             this.myTerrainType = aTerrainType;
 
-            switch (aTileType)
+            DefineTile();
+        }
+
+        public void DefineTile()
+        {
+            switch (myTileType)
             {
                 case '#':
                     this.myIsObstacle = true;

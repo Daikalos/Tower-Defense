@@ -51,6 +51,8 @@ namespace Tower_Defense
         public EditorState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
+
+            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
                 
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), null, "LOAD", 0.6f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), null, "SAVE", 0.6f);
@@ -62,7 +64,7 @@ namespace Tower_Defense
 
             this.mySelections = new Tile[]
             {
-
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 64, 64), new Point(64, 32), '#', GameInfo.TerrainType)
             };
 
             this.myEditorState = EditorStates.isEditing;
@@ -80,6 +82,8 @@ namespace Tower_Defense
             switch(myEditorState)
             {
                 case EditorStates.isEditing:
+                    Camera.MoveCamera();
+
                     Misc(aWindow, aGameTime);
 
                     SelectTile();
@@ -130,29 +134,29 @@ namespace Tower_Defense
 
                     if (myTile >= 0 && myTile < mySelections.Length)
                     {
-                        aSpriteBatch.Draw(mySelections[myTile].Texture, (Camera.Position + KeyMouseReader.CurrentMouseState.Position.ToVector2()), mySelectedSource, Color.White);
+                        aSpriteBatch.Draw(mySelections[myTile].Texture, (KeyMouseReader.CurrentMouseState.Position.ToVector2()), mySelectedSource, Color.White);
                     }
 
                     myLoadButton.Draw(aSpriteBatch);
                     mySaveButton.Draw(aSpriteBatch);
                     myDeleteButton.Draw(aSpriteBatch);
 
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(Camera.Position.X + 16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isLoading:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.9f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(Camera.Position.X + 16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.9f);
+                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", Camera.TopLeftCorner + new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isSaving:
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myLevelName + "_", new Vector2(Camera.Position.X + (aWindow.ClientBounds.Width / 2), 96), Color.Black, 0.8f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(Camera.Position.X + 16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myLevelName + "_", new Vector2((aWindow.ClientBounds.Width / 2), 96), Color.Black, 0.8f);
+                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", Camera.TopLeftCorner + new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isDeleting:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(Camera.Position.X + aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(Camera.Position.X + 16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
+                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
             }
         }
@@ -200,12 +204,12 @@ namespace Tower_Defense
         {
             if (KeyMouseReader.LeftHold() && mySelectedTile != ' ' && myTimer <= 0)
             {
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.Position + KeyMouseReader.CurrentMouseState.Position.ToVector2());
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
                 if (tempTile.Item2)
                 {
-                    tempTile.Item1.TileType = mySelectedTile;
-                    tempTile.Item1.TileForm = 0;
+                    tempTile.Item1.TileType = '#';
+                    tempTile.Item1.DefineTile();
                     tempTile.Item1.SetTextureEditor();
                 }
             }
@@ -214,12 +218,12 @@ namespace Tower_Defense
                 mySelectedTile = '-';
                 myTile = -1;
 
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.Position + KeyMouseReader.CurrentMouseState.Position.ToVector2());
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
                 if (tempTile.Item2)
                 {
-                    tempTile.Item1.TileType = mySelectedTile;
-                    tempTile.Item1.TileForm = 0;
+                    tempTile.Item1.TileType = '-';
+                    tempTile.Item1.DefineTile();
                     tempTile.Item1.SetTextureEditor();
                 }
             }

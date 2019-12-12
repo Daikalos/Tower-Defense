@@ -12,9 +12,9 @@ namespace Tower_Defense
         {
             if (aFont != null)
             {
-                aSpriteBatch.DrawString(aFont, aString, new Vector2(
-                    aPosition.X, 
-                    aPosition.Y - (aFont.MeasureString(aString).Y / 2) * aSize), aColor, 0.0f, Vector2.Zero, aSize, SpriteEffects.None, 0.0f);
+                aSpriteBatch.DrawString(aFont, aString, Camera.TopLeftCorner + new Vector2(
+                    (aPosition.X / Camera.Zoom), 
+                    (aPosition.Y / Camera.Zoom) - (aFont.MeasureString(aString).Y / 2) * aSize / Camera.Zoom), aColor, 0.0f, Vector2.Zero, aSize / Camera.Zoom, SpriteEffects.None, 0.0f);
             }
         }
 
@@ -25,9 +25,9 @@ namespace Tower_Defense
         {
             if (aFont != null)
             {
-                aSpriteBatch.DrawString(aFont, aString, new Vector2(
-                    aPosition.X - (aFont.MeasureString(aString).X / 2) * aSize,
-                    aPosition.Y - (aFont.MeasureString(aString).Y / 2) * aSize), aColor, 0.0f, Vector2.Zero, aSize, SpriteEffects.None, 0.0f);
+                aSpriteBatch.DrawString(aFont, aString, Camera.TopLeftCorner + new Vector2(
+                    (aPosition.X / Camera.Zoom) - (aFont.MeasureString(aString).X / 2) * aSize / Camera.Zoom,
+                    (aPosition.Y / Camera.Zoom) - (aFont.MeasureString(aString).Y / 2) * aSize / Camera.Zoom), aColor, 0.0f, Vector2.Zero, aSize / Camera.Zoom, SpriteEffects.None, 0.0f);
             }
         }
 
@@ -38,9 +38,9 @@ namespace Tower_Defense
         {
             if (aFont != null)
             {
-                aSpriteBatch.DrawString(aFont, aString, new Vector2(
-                    aPosition.X - (aFont.MeasureString(aString).X) * aSize,
-                    aPosition.Y - (aFont.MeasureString(aString).Y / 2) * aSize), aColor, 0.0f, Vector2.Zero, aSize, SpriteEffects.None, 0.0f);
+                aSpriteBatch.DrawString(aFont, aString, Camera.TopLeftCorner + new Vector2(
+                    (aPosition.X / Camera.Zoom) - (aFont.MeasureString(aString).X) * aSize / Camera.Zoom,
+                    (aPosition.Y / Camera.Zoom) - (aFont.MeasureString(aString).Y / 2) * aSize / Camera.Zoom), aColor, 0.0f, Vector2.Zero, aSize / Camera.Zoom, SpriteEffects.None, 0.0f);
             }
         }
     }

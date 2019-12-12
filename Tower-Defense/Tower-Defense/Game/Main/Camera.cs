@@ -8,8 +8,8 @@ namespace Tower_Defense
     {
         private static Vector2 
             myPosition,
-            myOldMousePosition,
             myViewportSize;
+        private static Point myOldMousePosition;
         private static float myZoom;
 
         public static Vector2 Position
@@ -34,8 +34,8 @@ namespace Tower_Defense
             get
             {
                 return 
-                    Matrix.CreateTranslation(new Vector3(-myPosition, 0)) * 
-                    Matrix.CreateScale(myZoom, myZoom, 1.0f) * 
+                    Matrix.CreateTranslation(new Vector3(-myPosition, 0)) *               
+                    Matrix.CreateScale(myZoom, myZoom, 1.0f) *
                     Matrix.CreateTranslation(new Vector3(ViewportCenter, 0));
             }
         }
@@ -43,8 +43,8 @@ namespace Tower_Defense
         public static void Initialize(GameWindow aWindow, Vector2 aPosition)
         {
             myPosition = aPosition;
-
             myViewportSize = aWindow.ClientBounds.Size.ToVector2();
+            myOldMousePosition = Point.Zero;
             myZoom = 1.0f;
         }
 
@@ -52,16 +52,16 @@ namespace Tower_Defense
         {
             if (KeyMouseReader.LeftClick())
             {
-                myOldMousePosition = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
+                myOldMousePosition = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
             }
-            if (KeyMouseReader.LeftHold() && myOldMousePosition != Vector2.Zero)
+            if (KeyMouseReader.LeftHold() && myOldMousePosition != Point.Zero)
             {
-                Vector2 tempNewPos = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
-                Vector2 tempDeltaPos = myOldMousePosition - tempNewPos;
+                Point tempNewPos = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
+                Point tempDeltaPos = myOldMousePosition - tempNewPos;
 
-                myPosition += tempDeltaPos;
+                myPosition += tempDeltaPos.ToVector2();
 
-                myOldMousePosition = KeyMouseReader.CurrentMouseState.Position.ToVector2() * (1 / myZoom);
+                myOldMousePosition = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
             }
 
             if (KeyMouseReader.ScrollUp())
@@ -74,6 +74,11 @@ namespace Tower_Defense
                 myZoom -= 0.05f;
                 myZoom = MathHelper.Clamp(myZoom, 0.5f, 2.0f);
             }
+        }
+
+        public static Vector2 ViewToWorld(Vector2 aPosition)
+        {
+            return Vector2.Transform(aPosition, Matrix.Invert(TranslationMatrix));
         }
     }
 }

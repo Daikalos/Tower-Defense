@@ -6,7 +6,9 @@ namespace Tower_Defense
     class Button : StaticObject
     {
         private SpriteFont my8bitFont;
-        private Rectangle myOffset;
+        private Rectangle
+            myDrawRect,
+            myOffset;
         private OnClick myIsClicked; //Uncertain about naming
         private string myDisplayText;
         private float myTextSize;
@@ -21,17 +23,23 @@ namespace Tower_Defense
             this.myIsClicked = aClickFunction;
             this.myDisplayText = aDisplayText;
             this.myTextSize = aTextSize;
-
-            this.myOffset = new Rectangle(
-                (int)aPosition.X - (aSize.X / 96),
-                (int)aPosition.Y - (aSize.Y / 96),
-                aSize.X + (aSize.X / 48),
-                aSize.Y + (aSize.Y / 48));
         }
 
         public override void Update()
         {
             base.Update();
+
+            myDrawRect = new Rectangle(
+                (int)(Camera.TopLeftCorner.X + (float)DestRect.X / Camera.Zoom),
+                (int)(Camera.TopLeftCorner.Y + (float)DestRect.Y / Camera.Zoom),
+                (int)((float)DestRect.Width / Camera.Zoom),
+                (int)((float)DestRect.Height / Camera.Zoom));
+
+            myOffset = new Rectangle(
+                (int)(myDrawRect.X - (mySize.X / 96)),
+                (int)(myDrawRect.Y - (mySize.Y / 96)),
+                (int)(myDrawRect.Width + (mySize.X / 48)),
+                (int)(myDrawRect.Height + (mySize.Y / 48)));
 
             if (IsClicked())
             {
@@ -39,19 +47,14 @@ namespace Tower_Defense
             }
             if (IsHold())
             {
-                DestRect = myOffset;
+                myDrawRect = myOffset;
             }
         }
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            Rectangle tempDrawRect = new Rectangle(
-                (int)Camera.Position.X + DestRect.X, 
-                (int)Camera.Position.Y + DestRect.Y,
-                DestRect.Width, DestRect.Height);
-
-            aSpriteBatch.Draw(myTexture, tempDrawRect, SourceRect, Color.White);
-            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, tempDrawRect.Center.ToVector2(), Color.Black, myTextSize);
+            aSpriteBatch.Draw(myTexture, myDrawRect, SourceRect, Color.White);
+            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), Color.Black, myTextSize);
         }
 
         public bool IsClicked()

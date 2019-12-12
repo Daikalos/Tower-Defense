@@ -29,12 +29,25 @@ namespace Tower_Defense
 
         public static Tuple<Tile, bool> TileAtPos(Vector2 aPos)
         {
-            int tempX = (int)(aPos.X / myTileSize.X);
-            int tempY = (int)(aPos.Y / myTileSize.Y);
+            Matrix tempMatrix = Matrix.Identity;
+
+            tempMatrix.M11 = TileSize.X / 2; //Origin
+            tempMatrix.M21 = -TileSize.X / 2;
+            tempMatrix.M12 = TileSize.Y / 2;
+            tempMatrix.M22 = TileSize.Y / 2;
+
+            tempMatrix.M31 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
+            tempMatrix.M32 = GetTiles[0, 0].Position.Y;
+            tempMatrix.M33 = 1;
+
+            tempMatrix = Matrix.Invert(tempMatrix);
+
+            int tempX = (int)Math.Floor((aPos.X * tempMatrix.M11 + aPos.Y * tempMatrix.M21 + tempMatrix.M31));
+            int tempY = (int)Math.Floor((aPos.X * tempMatrix.M12 + aPos.Y * tempMatrix.M22 + tempMatrix.M32));
 
             if (CheckIn(tempX, tempY))
-            {
-                return new Tuple<Tile, bool>(myTiles[tempX, tempY], true);
+            {                                                                                                                                                                                                    
+                return new Tuple<Tile, bool>(myTiles[tempX, tempY], true);                                                                                                                                                  
             }
 
             return new Tuple<Tile, bool>(myTiles[0, 0], false);
@@ -108,8 +121,8 @@ namespace Tower_Defense
                 {
                     for (int y = 0; y < tempSizeY; y++) //Isometric
                     {
-                        int tempX = (y * myTileSize.X / 2) + (x * myTileSize.X / 2) - (aWindow.ClientBounds.Width / 2) + (aWindow.ClientBounds.Width - (tempSizeX * myTileSize.Y));
-                        int tempY = (x * myTileSize.Y / 2) - (y * myTileSize.Y / 2) + (aWindow.ClientBounds.Height / 2);
+                        int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + (aWindow.ClientBounds.Width / 2) - (myTileSize.X / 2);
+                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + (aWindow.ClientBounds.Height / 2) - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
 
                         myTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
