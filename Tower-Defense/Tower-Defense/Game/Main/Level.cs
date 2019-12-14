@@ -152,22 +152,6 @@ namespace Tower_Defense
 
                 GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-');
 
-                for (int x = 0; x < tempSizeX; x++)
-                {
-                    for (int y = 0; y < tempSizeY; y++)
-                    {
-                        if (!GameInfo.Path.Contains(myTiles[x, y]))
-                        {
-                            if (myTiles[x, y].TileType == '/')
-                            {
-                                myTiles[x, y].TileType = '-';
-                                myTiles[x, y].DefineTileProperties();
-                                myTiles[x, y].SetTexture();
-                            }
-                        }
-                    }
-                }
-
                 myMapSize = new Point(
                     myTiles.GetLength(0) * myTileSize.X,
                     myTiles.GetLength(1) * myTileSize.Y);

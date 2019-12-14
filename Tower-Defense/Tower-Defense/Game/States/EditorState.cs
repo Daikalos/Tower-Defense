@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -290,6 +290,20 @@ namespace Tower_Defense
                 if (GameInfo.Path.Count > 1)
                 {
                     myEditorState = EditorStates.isSaving;
+
+                    for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Level.GetTiles.GetLength(1); j++)
+                        {
+                            if (!GameInfo.Path.Contains(Level.GetTiles[i, j]))
+                            {
+                                if (Level.GetTiles[i, j].TileType == '/')
+                                {
+                                    Level.GetTiles[i, j].TileType = '-';
+                                }
+                            }
+                        }
+                    }
 
                     for (int i = 0; i < myLevel.GetLength(0); i++)
                     {
