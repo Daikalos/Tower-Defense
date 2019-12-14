@@ -8,12 +8,13 @@ namespace Tower_Defense
     {
         private SpriteFont my8bitFont;
         private Button myBackButton;
+        private ShopManager myShop;
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
             //EnemyManager.Initialize();
 
-            GameInfo.Initialize(0.5f);
+            GameInfo.Initialize();
             GameInfo.LoadHighScore(GameInfo.LevelName);
 
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
@@ -33,7 +34,6 @@ namespace Tower_Defense
                 Camera.MoveCamera();
                 Level.Update();
                 //EnemyManager.Update(aGameTime);
-                GameInfo.Update(aGameTime);
             }
             else
             {
@@ -53,13 +53,15 @@ namespace Tower_Defense
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 null, null, null, null, Camera.TranslationMatrix);
 
-            Level.DrawTiles(aSpriteBatch, aGameTime);
+            Level.DrawTiles(aSpriteBatch);
             //EnemyManager.Draw(aSpriteBatch, aGameTime);
             GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
 
+            StringManager.Draw(aSpriteBatch, my8bitFont);
+
             if (GameInfo.IsPaused)
             {
-                StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "PAUSED", 
+                StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "PAUSED", 
                     new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), Color.Black, 1.5f);
                 myBackButton.Draw(aSpriteBatch);
             }

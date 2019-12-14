@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 
 namespace Tower_Defense
 {
@@ -50,11 +48,11 @@ namespace Tower_Defense
 
         public static void MoveCamera()
         {
-            if (KeyMouseReader.LeftClick())
+            if (KeyMouseReader.MiddleMouseClick())
             {
                 myOldMousePosition = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
             }
-            if (KeyMouseReader.LeftHold() && myOldMousePosition != Point.Zero)
+            if (KeyMouseReader.MiddleMouseHold() && myOldMousePosition != Point.Zero)
             {
                 Point tempNewPos = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
                 Point tempDeltaPos = myOldMousePosition - tempNewPos;

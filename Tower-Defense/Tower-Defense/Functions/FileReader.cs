@@ -15,6 +15,7 @@ namespace Tower_Defense
                 {
                     string[] tempFoundInfo;
                     int tempInfoSize = 0;
+                    int tempAddInfo = 0;
 
                     string[] tempReadFile = File.ReadAllLines(aPath);
                     string[] tempFoundValues = new string[tempReadFile.Length];
@@ -33,7 +34,8 @@ namespace Tower_Defense
                     {
                         if (tempFoundValues[i] != null)
                         {
-                            tempFoundInfo[i] = tempFoundValues[i];
+                            tempFoundInfo[tempAddInfo] = tempFoundValues[i];
+                            tempAddInfo++;
                         }
                     }
                     return tempFoundInfo;

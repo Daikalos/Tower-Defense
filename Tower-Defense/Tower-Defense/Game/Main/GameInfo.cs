@@ -9,17 +9,22 @@ namespace Tower_Defense
 {
     static class GameInfo
     {
-        private static List<DrawScore> myDrawScore;
+        private static List<Tile> myPath;
         private static bool myIsPaused;
-        private static float myDrawScoreDelay;
         private static int[] myHighScores;
         private static int myScore;
         private static string
             myLevelName,
+            myTerrainType,
             myFolderLevels,
             myFolderLevelsInfo,
             myFolderHighScores;
 
+        public static List<Tile> Path
+        {
+            get => myPath;
+            set => myPath = value;
+        }
         public static bool IsPaused
         {
             get => myIsPaused;
@@ -60,14 +65,12 @@ namespace Tower_Defense
         }
         public static string TerrainType
         {
-            get => FileReader.FindInfo(FolderLevelsInfo + myLevelName + "_Info.txt", "Terrain", '=').First();
+            get => myTerrainType;
+            set => myTerrainType = value;
         }
 
-        public static void Initialize(float aDrawScoreDelay)
+        public static void Initialize()
         {
-            myDrawScoreDelay = aDrawScoreDelay;
-
-            myDrawScore = new List<DrawScore>();
             myScore = 0;
         }
 
@@ -106,76 +109,28 @@ namespace Tower_Defense
             }
         }
 
-        public static void Update(GameTime aGameTime)
-        {
-            for (int i = myDrawScore.Count - 1; i >= 0; i--)
-            {
-                if (myDrawScore[i].DrawScoreTimer > 0)
-                {
-                    myDrawScore[i].DrawScoreTimer -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
-                }
-                else
-                {
-                    myDrawScore.RemoveAt(i);
-                }
-            }
-        }
-
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
-            StringManager.DrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), 
-                new Vector2(32, 64), Color.Black, 0.7f);
-            StringManager.DrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), 
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), 
+                new Vector2(32, 96), Color.Black, 0.7f);
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, GameInfo.LevelName,
+                new Vector2(32, 32), Color.Black, 0.7f);
+            StringManager.CameraDrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.7f);
-            StringManager.DrawStringRight(aSpriteBatch, aFont, GameInfo.LevelName, 
-                new Vector2((aWindow.ClientBounds.Width - 32), 64), Color.Black, 0.7f);
 
-            for (int i = myDrawScore.Count - 1; i >= 0; i--)
+            if (myPath.Count > 1)
             {
-                if (myDrawScore[i].DrawScoreTimer > 0)
-                {
-                    StringManager.DrawStringMid(aSpriteBatch, aFont, myDrawScore[i].DrawScoreValue.ToString(), myDrawScore[i].DrawScorePosition, Color.Black, 0.3f);
-                }
+                StringManager.DrawStringMid(aSpriteBatch, aFont, "Start", myPath[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);
+                StringManager.DrawStringMid(aSpriteBatch, aFont, "Goal", myPath[myPath.Count - 1].DestRect.Center.ToVector2(), Color.Black, 0.3f);
             }
         }
 
-        public static void AddScore(Vector2 aPos, int someScore)
+        public static void AddScore(Vector2 aPos, float aDelay, int someScore)
         {
             myScore += someScore;
 
-            myDrawScore.Add(new DrawScore(new Vector2(aPos.X, aPos.Y - Level.TileSize.Y),
-                myDrawScoreDelay, someScore));
-        }
-    }
-
-    class DrawScore
-    {
-        private Vector2 myDrawScorePosition;
-        private float myDrawScoreTimer;
-        private int myDrawScoreValue;
-
-        public Vector2 DrawScorePosition
-        {
-            get => myDrawScorePosition;
-            set => myDrawScorePosition = value;
-        }
-        public float DrawScoreTimer
-        {
-            get => myDrawScoreTimer;
-            set => myDrawScoreTimer = value;
-        }
-        public int DrawScoreValue
-        {
-            get => myDrawScoreValue;
-            set => myDrawScoreValue = value;
-        }
-
-
-        public DrawScore(Vector2 aDrawScorePosition, float aDrawScoreTimer, int aDrawScoreValue)
-        {
-            this.myDrawScorePosition = aDrawScorePosition;
-            this.myDrawScoreTimer = aDrawScoreTimer;
-            this.myDrawScoreValue = aDrawScoreValue;
+            StringManager.DrawStrings.Add(new DrawString(new Vector2(aPos.X, aPos.Y - Level.TileSize.Y),
+                Color.Black, false, aDelay, 0.4f, 1, someScore.ToString()));
         }
     }
 }

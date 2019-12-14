@@ -46,20 +46,32 @@ namespace Tower_Defense
             this.myTileType = aTileType;
             this.myTerrainType = aTerrainType;
 
-            DefineTile();
+            DefineTileProperties();
         }
 
-        public void DefineTile()
+        public override void Draw(SpriteBatch aSpriteBatch)
+        {
+            aSpriteBatch.Draw(myTexture, myDestRect, null, myColor);
+        }
+
+        public void DefineTileProperties()
         {
             switch (myTileType)
             {
                 case '#':
                     this.myIsObstacle = true;
+                    this.myColor = new Color(240, 200, 200);
                     this.myTileForm = StaticRandom.RandomNumber(6, 10);
+                    break;
+                case '/':
+                    this.myIsObstacle = false;
+                    this.myColor = new Color(200, 200, 240);
+                    this.myTileForm = StaticRandom.RandomNumber(4, 6);
                     break;
                 default:
                     this.myIsObstacle = false;
-                    this.myTileForm = StaticRandom.RandomNumber(0, 6);
+                    this.myColor = new Color(255, 255, 255);
+                    this.myTileForm = StaticRandom.RandomNumber(0, 4);
                     break;
             }
         }

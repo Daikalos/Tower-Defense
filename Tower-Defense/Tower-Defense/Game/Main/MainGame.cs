@@ -31,7 +31,9 @@ namespace Tower_Defense
 
             ResourceManager.Initialize();
 
-            GameInfo.Initialize(0.5f);
+            StringManager.Initialize();
+
+            GameInfo.Initialize();
             GameInfo.FolderLevels = "../../../../Levels/Levels/";
             GameInfo.FolderLevelsInfo = "../../../../Levels/Levels_Info/";
             GameInfo.FolderHighScores = "../../../../Levels/HighScores/";
@@ -66,6 +68,8 @@ namespace Tower_Defense
         protected override void Update(GameTime aGameTime)
         {
             KeyMouseReader.Update();
+
+            StringManager.Update(aGameTime);
 
             myGameState.Update(aGameTime, Window);
 

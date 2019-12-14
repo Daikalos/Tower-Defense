@@ -54,7 +54,7 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch)
         {
             aSpriteBatch.Draw(myTexture, myDrawRect, SourceRect, Color.White);
-            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), Color.Black, myTextSize);
+            StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), Color.Black, myTextSize);
         }
 
         public bool IsClicked()

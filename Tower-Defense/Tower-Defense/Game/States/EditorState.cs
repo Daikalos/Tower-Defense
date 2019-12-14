@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,32 +13,24 @@ namespace Tower_Defense
             isEditing,
             isLoading,
             isSaving,
-            isDeleting
+            isDeleting,
+            isEditingInfo,
+            isSelectingPath
         }
 
-        private SpriteFont 
-            my8bitFont;
-
-        /// <summary>
-        /// 0 = Block|#;
-        /// 1 = Player|?;
-        /// 2 = Flag|*;
-        /// 3 = Ladder|%;
-        /// 4 = Goomba|And;
-        /// 6 = Koopa|";
-        /// 7 = Coin_Block|^;
-        /// 8 = Item_Block|/;
-        /// 9 = Gravity_Block|¤;
-        /// </summary>
+        private SpriteFont my8bitFont;
         private Tile[] mySelections;
         private Button[] myLevels;
         private Button 
             myLoadButton,
             mySaveButton,
-            myDeleteButton;
-        private Rectangle 
-            myOffset,
-            mySelectedSource;
+            myDeleteButton,
+            myPathButton,
+            myInfoButton;
+        private Vector2 
+            myStartPosition,
+            myGoalPosition;
+        private Rectangle myOffset;
         private EditorStates myEditorState;
         private char mySelectedTile;
         private char[,] myLevel;
@@ -57,6 +49,8 @@ namespace Tower_Defense
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), null, "LOAD", 0.6f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), null, "SAVE", 0.6f);
             this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), null, "DEL", 0.6f);
+            this.myInfoButton = new Button(new Vector2(192, 32), new Point(128, 48), null, "INFO", 0.6f);
+            this.myPathButton = new Button(new Vector2(192, 96), new Point(128, 48), null, "PATH", 0.6f);
 
             this.myLevel = new char[
                 Level.MapSize.X / Level.TileSize.X,
@@ -64,14 +58,17 @@ namespace Tower_Defense
 
             this.mySelections = new Tile[]
             {
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 64, 64), new Point(64, 32), '#', GameInfo.TerrainType)
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#', GameInfo.TerrainType),
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/', GameInfo.TerrainType)
             };
 
+            this.myStartPosition = Vector2.Zero;
+            this.myGoalPosition = Vector2.Zero;
             this.myEditorState = EditorStates.isEditing;
             this.myOffset = new Rectangle(
                 -Level.TileSize.X / 16, -Level.TileSize.Y / 16, 
                 Level.TileSize.X / 8, Level.TileSize.Y / 8);
-            this.mySelectedTile = ' ';
+            this.mySelectedTile = '-';
             this.myDelay = 0.50f;
             this.myTile = -1;
             this.myLevelName = string.Empty;
@@ -84,14 +81,15 @@ namespace Tower_Defense
                 case EditorStates.isEditing:
                     Camera.MoveCamera();
 
-                    Misc(aWindow, aGameTime);
+                    Misc(aGameTime);
 
                     SelectTile();
                     EditMap();
 
-                    SaveLevel();
+                    SaveLevel(aWindow);
                     LoadLevel(aWindow);
                     DeleteLevel(aWindow);
+                    CreatePath();
                     break;
                 case EditorStates.isLoading:
                     SelectLevelToLoad(aWindow);
@@ -101,6 +99,14 @@ namespace Tower_Defense
                     break;
                 case EditorStates.isDeleting:
                     SelectLevelToDelete();
+                    break;
+                case EditorStates.isEditingInfo:
+
+                    break;
+                case EditorStates.isSelectingPath:
+                    Camera.MoveCamera();
+
+                    SelectPath(aWindow);
                     break;
             }
 
@@ -125,7 +131,7 @@ namespace Tower_Defense
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 null, null, null, null, Camera.TranslationMatrix);
 
-            Level.DrawTiles(aSpriteBatch, aGameTime);
+            Level.DrawTiles(aSpriteBatch);
 
             switch (myEditorState)
             {
@@ -134,39 +140,65 @@ namespace Tower_Defense
 
                     if (myTile >= 0 && myTile < mySelections.Length)
                     {
-                        aSpriteBatch.Draw(mySelections[myTile].Texture, (KeyMouseReader.CurrentMouseState.Position.ToVector2()), mySelectedSource, Color.White);
+                        aSpriteBatch.Draw(mySelections[myTile].Texture,
+                            new Rectangle(
+                                (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).X,
+                                (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).Y,
+                                (int)(mySelections[myTile].BoundingBox.Width / Camera.Zoom),
+                                (int)(mySelections[myTile].BoundingBox.Height / Camera.Zoom)), null, Color.White);
                     }
 
                     myLoadButton.Draw(aSpriteBatch);
                     mySaveButton.Draw(aSpriteBatch);
                     myDeleteButton.Draw(aSpriteBatch);
+                    myInfoButton.Draw(aSpriteBatch);
+                    myPathButton.Draw(aSpriteBatch);
 
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isLoading:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.9f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", Camera.TopLeftCorner + new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isSaving:
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, myLevelName + "_", new Vector2((aWindow.ClientBounds.Width / 2), 96), Color.Black, 0.8f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", Camera.TopLeftCorner + new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myLevelName + "_", new Vector2((aWindow.ClientBounds.Width / 2), 96), Color.Black, 0.8f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isDeleting:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
-                    StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
+                case EditorStates.isSelectingPath:
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and end position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    break;
+            }
+
+            StringManager.Draw(aSpriteBatch, my8bitFont);
+
+            if (myStartPosition != Vector2.Zero)
+            {
+                StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Start", myStartPosition, Color.Black, 0.3f);
+            }
+
+            if (myGoalPosition != Vector2.Zero)
+            {
+                StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Goal", myGoalPosition, Color.Black, 0.3f);
             }
         }
 
-        private void Misc(GameWindow aWindow, GameTime aGameTime)
+        private void Misc(GameTime aGameTime)
         {
             Level.Update();
+
             myLoadButton.Update();
             mySaveButton.Update();
             myDeleteButton.Update();
+            myInfoButton.Update();
+            myPathButton.Update();
 
             if (myTimer > 0)
             {
@@ -180,12 +212,15 @@ namespace Tower_Defense
             {
                 mySelections[i].Update();
 
-                mySelections[i].BoundingBox = new Rectangle((int)(Camera.Position.X + mySelections[i].Position.X), (int)mySelections[i].Position.Y + (48 * i),
-                    mySelections[i].BoundingBox.Width, mySelections[i].BoundingBox.Height);
+                mySelections[i].BoundingBox = new Rectangle(
+                    (int)(Camera.TopLeftCorner.X + (mySelections[i].Position.X / Camera.Zoom)), 
+                    (int)(Camera.TopLeftCorner.Y + (mySelections[i].Position.Y + (48 * i)) / Camera.Zoom),
+                    (int)(mySelections[i].BoundingBox.Width / Camera.Zoom), 
+                    (int)(mySelections[i].BoundingBox.Height / Camera.Zoom));
 
                 Rectangle tempRect = mySelections[i].BoundingBox;
 
-                if (tempRect.Contains(Camera.Position.ToPoint() + KeyMouseReader.CurrentMouseState.Position))
+                if (tempRect.Contains(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2())))
                 {
                     mySelections[i].BoundingBox = new Rectangle(tempRect.X + myOffset.X, tempRect.Y + myOffset.Y,
                         tempRect.Width + myOffset.Width, tempRect.Height + myOffset.Height);
@@ -202,14 +237,14 @@ namespace Tower_Defense
         }
         private void EditMap()
         {
-            if (KeyMouseReader.LeftHold() && mySelectedTile != ' ' && myTimer <= 0)
+            if (KeyMouseReader.LeftHold() && mySelectedTile != '-' && myTimer <= 0)
             {
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
-                if (tempTile.Item2)
+                if (tempTile.Item2 && mySelectedTile != tempTile.Item1.TileType)
                 {
-                    tempTile.Item1.TileType = '#';
-                    tempTile.Item1.DefineTile();
+                    tempTile.Item1.TileType = mySelectedTile;
+                    tempTile.Item1.DefineTileProperties();
                     tempTile.Item1.SetTextureEditor();
                 }
             }
@@ -220,10 +255,10 @@ namespace Tower_Defense
 
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
-                if (tempTile.Item2)
+                if (tempTile.Item2 && mySelectedTile != tempTile.Item1.TileType)
                 {
                     tempTile.Item1.TileType = '-';
-                    tempTile.Item1.DefineTile();
+                    tempTile.Item1.DefineTileProperties();
                     tempTile.Item1.SetTextureEditor();
                 }
             }
@@ -246,18 +281,28 @@ namespace Tower_Defense
                 }
             }
         }
-        private void SaveLevel()
+        private void SaveLevel(GameWindow aWindow)
         {
             if (mySaveButton.IsClicked())
             {
-                myEditorState = EditorStates.isSaving;
+                GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
 
-                for (int i = 0; i < myLevel.GetLength(0); i++)
+                if (GameInfo.Path.Count > 1)
                 {
-                    for (int j = 0; j < myLevel.GetLength(1); j++)
+                    myEditorState = EditorStates.isSaving;
+
+                    for (int i = 0; i < myLevel.GetLength(0); i++)
                     {
-                        myLevel[i, j] = Level.GetTiles[i, j].TileType;
+                        for (int j = 0; j < myLevel.GetLength(1); j++)
+                        {
+                            myLevel[i, j] = Level.GetTiles[i, j].TileType;
+                        }
                     }
+                }
+                else
+                {
+                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                        Color.Red, true, 3.0f, 0.7f, 2, "No path"));
                 }
             }
         }
@@ -284,6 +329,13 @@ namespace Tower_Defense
                 }
             }
         }
+        private void CreatePath()
+        {
+            if (myPathButton.IsClicked())
+            {
+                myEditorState = EditorStates.isSelectingPath;
+            }
+        }
 
         private void SelectLevelToLoad(GameWindow aWindow)
         {
@@ -298,37 +350,32 @@ namespace Tower_Defense
 
                     myEditorState = EditorStates.isEditing;
                     myLevels = null;
+
+                    Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
                 }
             }
         }
         private void TypeNameOfLevel()
         {
-            Keys[] tempKeys = KeyMouseReader.CurrentKeyState.GetPressedKeys();
-
-            if (tempKeys.Length > 0)
+            if (myLevelName.Length < 18) //Name limit
             {
-                string tempLetter = tempKeys[0].ToString();
+                myLevelName += KeyMouseReader.KeyInput(@"[a-zA-Z]");
+            }
 
-                if (Regex.IsMatch(tempLetter, @"[a-zA-Z]") && tempLetter.Length == 1)
-                {
-                    if (KeyMouseReader.PreviousKeyState.IsKeyUp(tempKeys[0]))
-                    {
-                        myLevelName += tempKeys[0].ToString();
-                    }
-                }
-
+            if (myLevelName.Length > 0)
+            {
                 if (KeyMouseReader.KeyPressed(Keys.Space))
                 {
                     myLevelName += "_";
                 }
-                if (KeyMouseReader.KeyPressed(Keys.Back) && myLevelName.Length > 0)
+                if (KeyMouseReader.KeyPressed(Keys.Back))
                 {
                     myLevelName = myLevelName.Remove(myLevelName.Length - 1, 1);
                 }
-                if (KeyMouseReader.KeyPressed(Keys.Enter) && myLevelName.Length > 0)
+                if (KeyMouseReader.KeyPressed(Keys.Enter))
                 {
                     myEditorState = EditorStates.isEditing;
-                    Level.SaveLevel(myLevelName, myLevel);
+                    Level.SaveLevel(myLevelName, myLevel, myStartPosition, myGoalPosition);
                 }
             }
         }
@@ -346,6 +393,49 @@ namespace Tower_Defense
                 }
             }
         }
+        private void SelectPath(GameWindow aWindow)
+        {
+            if (KeyMouseReader.LeftClick())
+            {
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+
+                if (tempTile.Item2)
+                {
+                    if (tempTile.Item1.TileType == '/')
+                    {
+                        myStartPosition = tempTile.Item1.BoundingBox.Center.ToVector2();
+                    }
+                }
+            }
+            if (KeyMouseReader.RightClick())
+            {
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+
+                if (tempTile.Item2)
+                {
+                    if (tempTile.Item1.TileType == '/')
+                    {
+                        myGoalPosition = tempTile.Item1.DestRect.Center.ToVector2();
+                    }
+                }
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.Enter))
+            {
+                GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
+
+                if (GameInfo.Path.Count > 1)
+                {
+                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                        Color.DarkGreen, true, 3.0f, 0.7f, 2, "Path found!"));
+                }
+                else
+                {
+                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                        Color.Red, true, 3.0f, 0.7f, 2, "Path not found..."));
+                }
+            }
+        }
 
         public override void LoadContent()
         {
@@ -356,6 +446,8 @@ namespace Tower_Defense
             myLoadButton.LoadContent();
             mySaveButton.LoadContent();
             myDeleteButton.LoadContent();
+            myInfoButton.LoadContent();
+            myPathButton.LoadContent();
 
             my8bitFont = ResourceManager.RequestFont("8-bit");
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,6 +14,11 @@ namespace Tower_Defense
             myTileSize,
             myMapSize;
 
+        public static Tile[,] GetTiles
+        {
+            get => myTiles;
+        }
+
         public static Point TileSize
         {
             get => myTileSize;
@@ -20,11 +26,6 @@ namespace Tower_Defense
         public static Point MapSize
         {
             get => myMapSize;
-        }
-
-        public static Tile[,] GetTiles
-        {
-            get => myTiles;
         }
 
         public static Tuple<Tile, bool> TileAtPos(Vector2 aPos)
@@ -90,7 +91,7 @@ namespace Tower_Defense
             }
         }
 
-        public static void DrawTiles(SpriteBatch aSpriteBatch, GameTime aGameTime)
+        public static void DrawTiles(SpriteBatch aSpriteBatch)
         {
             for (int i = 0; i < myTiles.GetLength(0); i++)
             {
@@ -115,7 +116,26 @@ namespace Tower_Defense
 
                 myTiles = new Tile[tempSizeX, tempSizeY];
 
-                string tempTerrainType = GameInfo.TerrainType;
+                GameInfo.TerrainType = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Terrain", '=').First();
+                string tempStartPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Start", '=').First();
+                string tempGoalPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Goal", '=').First();
+
+                string tempCleanString = string.Empty;
+                string[] tempSplitString = new string[] { string.Empty };
+
+                tempCleanString = tempStartPosString.Replace("{X:", "");
+                tempCleanString = tempCleanString.Replace("Y:", "");
+                tempCleanString = tempCleanString.Replace("}", "");
+                tempSplitString = tempCleanString.Split(' ');
+
+                Vector2 tempStartPos = new Vector2(float.Parse(tempSplitString[0]), float.Parse(tempSplitString[1]));
+
+                tempCleanString = tempGoalPosString.Replace("{X:", "");
+                tempCleanString = tempCleanString.Replace("Y:", "");
+                tempCleanString = tempCleanString.Replace("}", "");
+                tempSplitString = tempCleanString.Split(' ');
+
+                Vector2 tempGoalPos = new Vector2(float.Parse(tempSplitString[0]), float.Parse(tempSplitString[1]));
 
                 for (int x = 0; x < tempSizeX; x++)
                 {
@@ -126,7 +146,25 @@ namespace Tower_Defense
 
                         myTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
-                            myTileSize, myLevelBuilder[y][x], tempTerrainType);
+                            myTileSize, myLevelBuilder[y][x], GameInfo.TerrainType);
+                    }
+                }
+
+                GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-');
+
+                for (int x = 0; x < tempSizeX; x++)
+                {
+                    for (int y = 0; y < tempSizeY; y++)
+                    {
+                        if (!GameInfo.Path.Contains(myTiles[x, y]))
+                        {
+                            if (myTiles[x, y].TileType == '/')
+                            {
+                                myTiles[x, y].TileType = '-';
+                                myTiles[x, y].DefineTileProperties();
+                                myTiles[x, y].SetTexture();
+                            }
+                        }
                     }
                 }
 
@@ -138,10 +176,11 @@ namespace Tower_Defense
             }
             return false;
         }
-        public static void SaveLevel(string aLevelName, char[,] aLevel)
+        public static void SaveLevel(string aLevelName, char[,] aLevel, Vector2 aStart, Vector2 aGoal)
         {
             string tempPathLevel = GameInfo.FolderLevels + aLevelName + ".txt";
             string tempPathHighScores = GameInfo.FolderHighScores + aLevelName + "_HighScores.txt";
+            string tempPathLevelInfo = GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt";
 
             if (File.Exists(tempPathLevel))
             {
@@ -151,11 +190,18 @@ namespace Tower_Defense
             {
                 File.Delete(tempPathHighScores);
             }
+            if (File.Exists(tempPathLevelInfo))
+            {
+                File.Delete(tempPathLevelInfo);
+            }
 
             FileStream tempFS = File.Create(tempPathLevel);
             tempFS.Close();
 
             tempFS = File.Create(tempPathHighScores);
+            tempFS.Close();
+
+            tempFS = File.Create(tempPathLevelInfo);
             tempFS.Close();
 
             for (int i = 0; i < aLevel.GetLength(1); i++)
@@ -170,12 +216,16 @@ namespace Tower_Defense
                 File.AppendAllText(tempPathLevel, tempLevel);
                 File.AppendAllText(tempPathLevel, Environment.NewLine);
             }
+
+            File.AppendAllText(tempPathLevelInfo, "Terrain=" + GameInfo.TerrainType);
+            File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Start=" + aStart);
+            File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Goal=" + aGoal);
         }
         public static void DeleteLevel(string aLevelName)
         {
             string tempPathLevel = GameInfo.FolderLevels + aLevelName + ".txt";
-
             string tempPathHighScores = GameInfo.FolderHighScores + aLevelName + "_HighScores.txt";
+            string tempPathLevelInfo = GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt";
 
             if (File.Exists(tempPathLevel))
             {
@@ -184,6 +234,10 @@ namespace Tower_Defense
             if (File.Exists(tempPathHighScores))
             {
                 File.Delete(tempPathHighScores);
+            }
+            if (File.Exists(tempPathLevelInfo))
+            {
+                File.Delete(tempPathLevelInfo);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using System.Text.RegularExpressions;
+using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
 {
@@ -28,7 +29,31 @@ namespace Tower_Defense
             get => myPreviousKeyState;
         }
 
+        public static string KeyInput(string aPattern)
+        {
+            Keys[] tempKeys = KeyMouseReader.CurrentKeyState.GetPressedKeys();
 
+            if (tempKeys.Length > 0)
+            {
+                string tempLetter = tempKeys[0].ToString();
+
+                if (Regex.IsMatch(tempLetter, aPattern) && tempLetter.Length == 1)
+                {
+                    if (KeyMouseReader.PreviousKeyState.IsKeyUp(tempKeys[0]))
+                    {
+                        return tempLetter;
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
+
+
+        public static bool MiddleMouseClick()
+        {
+            return myCurrentMouseState.MiddleButton == ButtonState.Pressed && myPreviousMouseState.MiddleButton == ButtonState.Released;
+        }
         public static bool LeftClick()
         {
             return myCurrentMouseState.LeftButton == ButtonState.Pressed && myPreviousMouseState.LeftButton == ButtonState.Released;
@@ -38,6 +63,10 @@ namespace Tower_Defense
             return myCurrentMouseState.RightButton == ButtonState.Pressed && myPreviousMouseState.RightButton == ButtonState.Released;
         }
 
+        public static bool MiddleMouseHold()
+        {
+            return myCurrentMouseState.MiddleButton == ButtonState.Pressed;
+        }
         public static bool LeftHold()
         {
             return myCurrentMouseState.LeftButton == ButtonState.Pressed;

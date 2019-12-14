@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-/*
+
 namespace Tower_Defense
 {
     static class EnemyManager
@@ -22,7 +22,7 @@ namespace Tower_Defense
         {
             for (int i = myEnemies.Count - 1; i >= 0; i--)
             {
-                myEnemies[i].Update(aGameTime);
+                myEnemies[i].Update();
                 if (!myEnemies[i].IsAlive)
                 {
                     myEnemies.RemoveAt(i);
@@ -34,18 +34,11 @@ namespace Tower_Defense
         {
             for (int i = myEnemies.Count - 1; i >= 0; i--)
             {
-                myEnemies[i].Draw(aSpriteBatch, aGameTime);
+                myEnemies[i].Draw(aSpriteBatch);
             }
         }
 
-        public static void AddChaseEnemy(Vector2 aPos)
-        {
-            myEnemies?.Add(new Chase(aPos, new Point(32, 48), new Vector2(1.0f, 0.0f), new Vector2(1.0f, 5.0f)));
-        }
-        public static void AddPatrolEnemy(Vector2 aPos)
-        {
-            myEnemies?.Add(new Patrol(aPos, new Point(32), new Vector2(1.0f, 0.0f), new Vector2(1.0f, 5.0f)));
-        }
+
         public static void RemoveAll()
         {
             myEnemies.RemoveAll(e => e.IsAlive);
@@ -55,16 +48,8 @@ namespace Tower_Defense
         {
             foreach (Enemy enemy in myEnemies)
             {
-                if (enemy is Chase)
-                {
-                    enemy.SetTexture("Koopa_Walking");
-                }
-                if (enemy is Patrol)
-                {
-                    enemy.SetTexture("Goomba_Walking");
-                }
+                
             }
         }
     }
 }
-*/

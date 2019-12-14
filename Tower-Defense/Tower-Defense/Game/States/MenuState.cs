@@ -89,13 +89,19 @@ namespace Tower_Defense
                 myLoadLevel = true;
                 string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
 
-                myLevels = new Button[tempLevelNames.Length];
+                myLevels = new Button[tempLevelNames.Length - 1];
 
-                for (int i = 0; i < myLevels.Length; i++)
+                int tempAddLevel = 0;
+                for (int i = 0; i < tempLevelNames.Length; i++)
                 {
-                    myLevels[i] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (i * 40)),
-                        new Point(226, 32), null, tempLevelNames[i], 0.4f);
-                    myLevels[i].LoadContent();
+                    if (tempLevelNames[i] != "Level_Template")
+                    {
+                        myLevels[tempAddLevel] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (tempAddLevel * 40)),
+                            new Point(226, 32), null, tempLevelNames[i], 0.4f);
+                        myLevels[tempAddLevel].LoadContent();
+
+                        tempAddLevel++;
+                    }
                 }
             }
         }
