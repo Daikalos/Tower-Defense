@@ -102,6 +102,17 @@ namespace Tower_Defense
             }
         }
 
+        public static void DrawTilesEditor(SpriteBatch aSpriteBatch)
+        {
+            for (int i = 0; i < myTiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < myTiles.GetLength(1); j++)
+                {
+                    myTiles[i, j].DrawEditor(aSpriteBatch);
+                }
+            }
+        }
+
         public static bool LoadLevel(GameWindow aWindow, Point aTileSize, string aLevelName)
         {
             if (File.Exists(GameInfo.FolderLevels + aLevelName + ".txt"))

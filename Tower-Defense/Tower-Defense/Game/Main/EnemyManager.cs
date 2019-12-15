@@ -6,7 +6,7 @@ namespace Tower_Defense
 {
     static class EnemyManager
     {
-        static List<Enemy> myEnemies;
+        private static List<Enemy> myEnemies;
 
         public static List<Enemy> Enemies
         {
@@ -18,7 +18,12 @@ namespace Tower_Defense
             myEnemies = new List<Enemy>();
         }
 
-        public static void Update(GameTime aGameTime)
+        public static void AddEnemy(Enemy anEnemy)
+        {
+            myEnemies.Add(anEnemy);
+        }
+
+        public static void Update()
         {
             for (int i = myEnemies.Count - 1; i >= 0; i--)
             {
@@ -30,15 +35,6 @@ namespace Tower_Defense
             }
         }
 
-        public static void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime)
-        {
-            for (int i = myEnemies.Count - 1; i >= 0; i--)
-            {
-                myEnemies[i].Draw(aSpriteBatch);
-            }
-        }
-
-
         public static void RemoveAll()
         {
             myEnemies.RemoveAll(e => e.IsAlive);
@@ -48,8 +44,13 @@ namespace Tower_Defense
         {
             foreach (Enemy enemy in myEnemies)
             {
-                
+                enemy.SetTexture();
             }
         }
+    }
+
+    struct Enemy00
+    {
+
     }
 }

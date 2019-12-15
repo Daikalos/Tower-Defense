@@ -5,7 +5,6 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Fonts/8bit.spritefont</File>
-    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/border.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_00.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_01.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_02.png</File>
@@ -16,9 +15,22 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_07.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_08.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Forest_Tileset/forest_tile_09.png</File>
-    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/null.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_long.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_short.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_small.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_00.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_01.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_02.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_03.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Other/null.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

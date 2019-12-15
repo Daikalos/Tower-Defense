@@ -6,9 +6,12 @@ namespace Tower_Defense
     {
         private static Vector2 
             myPosition,
-            myViewportSize;
+            myViewportSize,
+            myZoomLimit;
         private static Point myOldMousePosition;
-        private static float myZoom;
+        private static float 
+            myZoom,
+            myZoomValue;
 
         public static Vector2 Position
         {
@@ -43,7 +46,9 @@ namespace Tower_Defense
             myPosition = aPosition;
             myViewportSize = aWindow.ClientBounds.Size.ToVector2();
             myOldMousePosition = Point.Zero;
+            myZoomLimit = new Vector2(0.5f, 2.0f);
             myZoom = 1.0f;
+            myZoomValue = 0.05f;
         }
 
         public static void MoveCamera()
@@ -58,19 +63,17 @@ namespace Tower_Defense
                 Point tempDeltaPos = myOldMousePosition - tempNewPos;
 
                 myPosition += tempDeltaPos.ToVector2();
-
-                myOldMousePosition = ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).ToPoint();
             }
 
             if (KeyMouseReader.ScrollUp())
             {
-                myZoom += 0.05f;
-                myZoom = MathHelper.Clamp(myZoom, 0.5f, 2.0f);
+                myZoom += myZoomValue;
+                myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
             }
             if (KeyMouseReader.ScrollDown())
             {
-                myZoom -= 0.05f;
-                myZoom = MathHelper.Clamp(myZoom, 0.5f, 2.0f);
+                myZoom -= myZoomValue;
+                myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
             }
         }
 

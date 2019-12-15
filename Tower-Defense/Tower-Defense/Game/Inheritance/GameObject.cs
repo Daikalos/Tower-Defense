@@ -61,7 +61,12 @@ namespace Tower_Defense
 
         public virtual void Draw(SpriteBatch aSpriteBatch)
         {
-            aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, Color.White);
+            aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+        }
+
+        public virtual void DrawWithDepth(SpriteBatch aSpriteBatch, GameTime aGameTime, float aDepth)
+        {
+            aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, aDepth);
         }
 
         public virtual void SetTexture(string aName)

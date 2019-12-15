@@ -45,8 +45,6 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Wi
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Forest_Tileset\forest_tile_07.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Forest_Tileset\forest_tile_08.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Forest_Tileset\forest_tile_09.xnb
-C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\border.xnb
-C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\null.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Fonts\8bit.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense.exe
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense.pdb
@@ -70,3 +68,11 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x8
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower-Defense.csproj.CopyComplete
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower-Defense.exe
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower-Defense.pdb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Other\null.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\border_long.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\border_short.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\border_small.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\enemy_00.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\enemy_01.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\enemy_02.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\enemy_03.xnb

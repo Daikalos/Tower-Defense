@@ -46,11 +46,11 @@ namespace Tower_Defense
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
                 
-            this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), null, "LOAD", 0.6f);
-            this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), null, "SAVE", 0.6f);
-            this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), null, "DEL", 0.6f);
-            this.myInfoButton = new Button(new Vector2(192, 32), new Point(128, 48), null, "INFO", 0.6f);
-            this.myPathButton = new Button(new Vector2(192, 96), new Point(128, 48), null, "PATH", 0.6f);
+            this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f);
+            this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f);
+            this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f);
+            this.myInfoButton = new Button(new Vector2(192, 32), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f);
+            this.myPathButton = new Button(new Vector2(192, 96), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f);
 
             this.myLevel = new char[
                 Level.MapSize.X / Level.TileSize.X,
@@ -81,32 +81,27 @@ namespace Tower_Defense
                 case EditorStates.isEditing:
                     Camera.MoveCamera();
 
-                    Misc(aGameTime);
+                    Misc(aGameTime, aWindow);
 
                     SelectTile();
                     EditMap();
-
-                    SaveLevel(aWindow);
-                    LoadLevel(aWindow);
-                    DeleteLevel(aWindow);
-                    CreatePath();
                     break;
                 case EditorStates.isLoading:
-                    SelectLevelToLoad(aWindow);
+                    LoadLevel(aWindow);
                     break;
                 case EditorStates.isSaving:
-                    TypeNameOfLevel();
+                    SaveLevel();
                     break;
                 case EditorStates.isDeleting:
-                    SelectLevelToDelete();
+                    DeleteLevel(aWindow);
                     break;
                 case EditorStates.isEditingInfo:
-
+                    EditInfo();
                     break;
                 case EditorStates.isSelectingPath:
                     Camera.MoveCamera();
 
-                    SelectPath(aWindow);
+                    CreatePath(aWindow);
                     break;
             }
 
@@ -129,14 +124,14 @@ namespace Tower_Defense
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                null, null, null, null, Camera.TranslationMatrix);
+                SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Camera.TranslationMatrix);
 
-            Level.DrawTiles(aSpriteBatch);
+            Level.DrawTilesEditor(aSpriteBatch);
 
             switch (myEditorState)
             {
                 case EditorStates.isEditing:
-                    Array.ForEach(mySelections, t => t.Draw(aSpriteBatch));
+                    Array.ForEach(mySelections, t => t.DrawEditor(aSpriteBatch));
 
                     if (myTile >= 0 && myTile < mySelections.Length)
                     {
@@ -144,8 +139,8 @@ namespace Tower_Defense
                             new Rectangle(
                                 (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).X,
                                 (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).Y,
-                                (int)(mySelections[myTile].BoundingBox.Width / Camera.Zoom),
-                                (int)(mySelections[myTile].BoundingBox.Height / Camera.Zoom)), null, Color.White);
+                                (int)(mySelections[myTile].DestRect.Width),
+                                (int)(mySelections[myTile].DestRect.Height)), null, Color.White);
                     }
 
                     myLoadButton.Draw(aSpriteBatch);
@@ -171,6 +166,9 @@ namespace Tower_Defense
                     StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
+                case EditorStates.isEditingInfo:
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    break;
                 case EditorStates.isSelectingPath:
                     StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and end position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
@@ -183,22 +181,35 @@ namespace Tower_Defense
             {
                 StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Start", myStartPosition, Color.Black, 0.3f);
             }
-
+            else
+            {
+                if (GameInfo.Path.Count > 1)
+                {
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Start", GameInfo.Path[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);
+                }
+            }
             if (myGoalPosition != Vector2.Zero)
             {
                 StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Goal", myGoalPosition, Color.Black, 0.3f);
             }
+            else
+            {
+                if (GameInfo.Path.Count > 1)
+                {
+                    StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Goal", GameInfo.Path[GameInfo.Path.Count - 1].DestRect.Center.ToVector2(), Color.Black, 0.3f);
+                }
+            }
         }
 
-        private void Misc(GameTime aGameTime)
+        private void Misc(GameTime aGameTime, GameWindow aWindow)
         {
             Level.Update();
 
-            myLoadButton.Update();
-            mySaveButton.Update();
-            myDeleteButton.Update();
-            myInfoButton.Update();
-            myPathButton.Update();
+            myLoadButton.Update(aWindow);
+            mySaveButton.Update(aWindow);
+            myDeleteButton.Update(aWindow);
+            myInfoButton.Update(aWindow);
+            myPathButton.Update(aWindow);
 
             if (myTimer > 0)
             {
@@ -241,11 +252,14 @@ namespace Tower_Defense
             {
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
-                if (tempTile.Item2 && mySelectedTile != tempTile.Item1.TileType)
+                if (tempTile.Item2)
                 {
-                    tempTile.Item1.TileType = mySelectedTile;
-                    tempTile.Item1.DefineTileProperties();
-                    tempTile.Item1.SetTextureEditor();
+                    if (mySelectedTile != tempTile.Item1.TileType)
+                    {
+                        tempTile.Item1.TileType = mySelectedTile;
+                        tempTile.Item1.DefineTileProperties();
+                        tempTile.Item1.SetTextureEditor();
+                    }
                 }
             }
             if (KeyMouseReader.RightHold())
@@ -255,16 +269,19 @@ namespace Tower_Defense
 
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
-                if (tempTile.Item2 && mySelectedTile != tempTile.Item1.TileType)
+                if (tempTile.Item2)
                 {
-                    tempTile.Item1.TileType = '-';
-                    tempTile.Item1.DefineTileProperties();
-                    tempTile.Item1.SetTextureEditor();
+                    if (mySelectedTile != tempTile.Item1.TileType)
+                    {
+                        tempTile.Item1.TileType = '-';
+                        tempTile.Item1.DefineTileProperties();
+                        tempTile.Item1.SetTextureEditor();
+                    }
                 }
             }
         }
 
-        private void LoadLevel(GameWindow aWindow)
+        private void PressLoadLevel(GameWindow aWindow)
         {
             if (myLoadButton.IsClicked())
             {
@@ -276,12 +293,12 @@ namespace Tower_Defense
                 for (int i = 0; i < myLevels.Length; i++)
                 {
                     myLevels[i] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 200 + (i * 40)),
-                        new Point(226, 32), null, tempLevelNames[i], 0.4f);
+                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
                     myLevels[i].LoadContent();
                 }
             }
         }
-        private void SaveLevel(GameWindow aWindow)
+        private void PressSaveLevel(GameWindow aWindow)
         {
             if (mySaveButton.IsClicked())
             {
@@ -320,7 +337,7 @@ namespace Tower_Defense
                 }
             }
         }
-        private void DeleteLevel(GameWindow aWindow)
+        private void PressDeleteLevel(GameWindow aWindow)
         {
             if (myDeleteButton.IsClicked())
             {
@@ -335,7 +352,7 @@ namespace Tower_Defense
                     if (tempLevelNames[i] != "Level_Template")
                     {
                         myLevels[tempAddButton] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 200 + (tempAddButton * 40)),
-                            new Point(226, 32), null, tempLevelNames[i], 0.4f);
+                            new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
                         myLevels[tempAddButton].LoadContent();
 
                         tempAddButton++;
@@ -343,7 +360,14 @@ namespace Tower_Defense
                 }
             }
         }
-        private void CreatePath()
+        private void PressEditInfo(GameWindow aWindow)
+        {
+            if (myInfoButton.IsClicked())
+            {
+                myEditorState = EditorStates.isEditingInfo;
+            }
+        }
+        private void PressCreatePath(GameWindow aWindow)
         {
             if (myPathButton.IsClicked())
             {
@@ -351,11 +375,11 @@ namespace Tower_Defense
             }
         }
 
-        private void SelectLevelToLoad(GameWindow aWindow)
+        private void LoadLevel(GameWindow aWindow)
         {
             foreach (Button button in myLevels)
             {
-                button.Update();
+                button.Update(aWindow);
                 if (button.IsClicked())
                 {
                     Level.LoadLevel(aWindow, new Point(64, 32), button.DisplayText);
@@ -369,7 +393,7 @@ namespace Tower_Defense
                 }
             }
         }
-        private void TypeNameOfLevel()
+        private void SaveLevel()
         {
             if (myLevelName.Length < 18) //Name limit
             {
@@ -390,14 +414,16 @@ namespace Tower_Defense
                 {
                     myEditorState = EditorStates.isEditing;
                     Level.SaveLevel(myLevelName, myLevel, myStartPosition, myGoalPosition);
+
+                    myLevelName = string.Empty;
                 }
             }
         }
-        private void SelectLevelToDelete()
+        private void DeleteLevel(GameWindow aWindow)
         {
             foreach (Button button in myLevels)
             {
-                button.Update();
+                button.Update(aWindow);
                 if (button.IsClicked())
                 {
                     Level.DeleteLevel(button.DisplayText);
@@ -407,7 +433,11 @@ namespace Tower_Defense
                 }
             }
         }
-        private void SelectPath(GameWindow aWindow)
+        private void EditInfo()
+        {
+
+        }
+        private void CreatePath(GameWindow aWindow)
         {
             if (KeyMouseReader.LeftClick())
             {

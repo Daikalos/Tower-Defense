@@ -17,30 +17,24 @@ namespace Tower_Defense
         {
             aGame.IsMouseVisible = true;
 
+            Depth.Initialize();
+
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
 
             myButtons = new Button[]
             {
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 - 90),
-                    new Point(452, 64),
-                    null,
-                    "PLAY", 1.1f),
+                    new Point(452, 64), Play, 0, "PLAY", 1.1f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 - 10),
-                    new Point(452, 64),
-                    new Button.OnClick(() => Button.Editor(aGame, aWindow)),
-                    "EDITOR", 1.1f),
+                    new Point(452, 64), Editor, 0, "EDITOR", 1.1f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 + 70),
-                    new Point(452, 64),
-                    new Button.OnClick(() => Button.Leaderboard(aGame)),
-                    "LEADERBOARD", 1.1f),
+                    new Point(452, 64), Leaderboard, 0, "LEADERBOARD", 1.1f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 + 150),
-                    new Point(452, 64),
-                    new Button.OnClick(() => Button.Exit(aGame)),
-                    "EXIT", 1.1f),
+                    new Point(452, 64), Exit, 0, "EXIT", 1.1f),
             };
         }
 
@@ -48,7 +42,7 @@ namespace Tower_Defense
         {
             if (!myLoadLevel)
             {
-                Array.ForEach(myButtons, b => b.Update());
+                Array.ForEach(myButtons, b => b.Update(aWindow));
 
                 Play(aWindow);
             }
@@ -97,7 +91,7 @@ namespace Tower_Defense
                     if (tempLevelNames[i] != "Level_Template")
                     {
                         myLevels[tempAddLevel] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (tempAddLevel * 40)),
-                            new Point(226, 32), null, tempLevelNames[i], 0.4f);
+                            new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
                         myLevels[tempAddLevel].LoadContent();
 
                         tempAddLevel++;
@@ -106,11 +100,26 @@ namespace Tower_Defense
             }
         }
 
+        private void Editor(GameWindow aWindow)
+        {
+            myGame.ChangeState(new EditorState(myGame, aWindow));
+        }
+
+        private void Leaderboard(GameWindow aWindow)
+        {
+            myGame.ChangeState(new LeaderboardState(myGame));
+        }
+
+        private void Exit(GameWindow aWindow)
+        {
+            myGame.Exit();
+        }
+
         private void LoadLevel(GameWindow aWindow)
         {
             foreach (Button button in myLevels)
             {
-                button.Update();
+                button.Update(aWindow);
                 if (button.IsClicked())
                 {
                     string tempLevel = button.DisplayText;

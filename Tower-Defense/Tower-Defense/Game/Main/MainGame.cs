@@ -49,8 +49,16 @@ namespace Tower_Defense
 
             ResourceManager.AddFont("8-bit", this.Content.Load<SpriteFont>("Fonts/8bit"));
 
-            ResourceManager.AddTexture("Null", this.Content.Load<Texture2D>("Sprites/null"));
-            ResourceManager.AddTexture("Border", this.Content.Load<Texture2D>("Sprites/border"));
+            ResourceManager.AddTexture("Null", this.Content.Load<Texture2D>("Sprites/other/null"));
+
+            ResourceManager.AddTexture("Border_Long", this.Content.Load<Texture2D>("Sprites/Main/border_long"));
+            ResourceManager.AddTexture("Border_Short", this.Content.Load<Texture2D>("Sprites/Main/border_short"));
+            ResourceManager.AddTexture("Border_Small", this.Content.Load<Texture2D>("Sprites/Main/border_small"));
+
+            for (int i = 0; i < 4; i++)
+            {
+                ResourceManager.AddTexture("Enemy_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Main/enemy_" + Extensions.NumberFormat(i)));
+            }
 
             for (int i = 0; i < 10; i++)
             {
@@ -78,7 +86,7 @@ namespace Tower_Defense
 
         protected override void Draw(GameTime aGameTime)
         {
-            GraphicsDevice.Clear(Color.RoyalBlue);
+            GraphicsDevice.Clear(new Color(30, 30, 90));
 
             mySpriteBatch.Begin();
 

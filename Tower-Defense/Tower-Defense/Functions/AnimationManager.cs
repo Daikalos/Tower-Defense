@@ -36,7 +36,7 @@ namespace Tower_Defense
             this.myIsLoop = aIsLoop;
         }
 
-        public void DrawSpriteSheet(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE)
+        public void DrawSpriteSheet(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE, float aDepth)
         {
             if (myIsFinished) return;
 
@@ -71,7 +71,7 @@ namespace Tower_Defense
 
             mySourceRect = new Rectangle(aFrameSize.X * myCurrentFramePos.X, aFrameSize.Y * myCurrentFramePos.Y, aFrameSize.X, aFrameSize.Y);
 
-            aSpriteBatch.Draw(aTexture, aDestRect, mySourceRect, aColor, aRotation, aOrigin, aSE, 0.0f);
+            aSpriteBatch.Draw(aTexture, aDestRect, mySourceRect, aColor, aRotation, aOrigin, aSE, aDepth);
         }
     }
 }

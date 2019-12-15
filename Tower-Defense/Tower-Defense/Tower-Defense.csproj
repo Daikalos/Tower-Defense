@@ -52,7 +52,8 @@
     <Compile Include="Functions\StringManager.cs" />
     <Compile Include="Game\Main\Button.cs" />
     <Compile Include="Game\Main\Camera.cs" />
-    <Compile Include="Game\Inheritance\Enemy.cs" />
+    <Compile Include="Game\Main\Depth.cs" />
+    <Compile Include="Game\Main\Enemy.cs" />
     <Compile Include="Game\Main\EnemyManager.cs" />
     <Compile Include="Game\Main\GameInfo.cs" />
     <Compile Include="Game\Inheritance\DynamicObject.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Game\States\LeaderboardState.cs" />
     <Compile Include="Game\States\MenuState.cs" />
     <Compile Include="Game\States\PlayState.cs" />
-    <Compile Include="Game\States\WinState.cs" />
     <Compile Include="Game\Main\MainGame.cs" />
     <Compile Include="Game\Main\Tile.cs" />
     <Compile Include="Program.cs" />

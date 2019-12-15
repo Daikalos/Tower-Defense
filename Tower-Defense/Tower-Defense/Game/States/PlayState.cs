@@ -12,19 +12,34 @@ namespace Tower_Defense
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
-            //EnemyManager.Initialize();
+            EnemyManager.Initialize();
 
             GameInfo.Initialize();
             GameInfo.LoadHighScore(GameInfo.LevelName);
 
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
 
+            for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < Level.GetTiles.GetLength(1); j++)
+                {
+                    if (Level.GetTiles[i, j].IsObstacle)
+                    {
+                        Depth.AddObject(Level.GetTiles[i, j]);
+                    }
+                }
+            }
+
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
 
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
-                    new Point(128, 48),
-                    new Button.OnClick(() => Button.Back(aGame, aWindow)),
-                    "MENU", 0.6f);
+                    new Point(128, 48), Menu, 1, "MENU", 0.6f);
+
+            Enemy tempEnemy = new Enemy(new Vector2(100, 100), new Point(64), 2, 3, 0);
+
+            EnemyManager.AddEnemy(tempEnemy);
+
+            Depth.AddObject(tempEnemy);
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
@@ -33,11 +48,11 @@ namespace Tower_Defense
             {
                 Camera.MoveCamera();
                 Level.Update();
-                //EnemyManager.Update(aGameTime);
+                EnemyManager.Update();
             }
             else
             {
-                myBackButton.Update();
+                myBackButton.Update(aWindow);
             }
 
             if (KeyMouseReader.KeyPressed(Keys.Escape))
@@ -50,13 +65,13 @@ namespace Tower_Defense
         {
             aSpriteBatch.End();
 
-            aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                null, null, null, null, Camera.TranslationMatrix);
+            aSpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend,
+                SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Camera.TranslationMatrix);
 
             Level.DrawTiles(aSpriteBatch);
-            //EnemyManager.Draw(aSpriteBatch, aGameTime);
-            GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
+            Depth.Draw(aSpriteBatch, aGameTime);
 
+            GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
             StringManager.Draw(aSpriteBatch, my8bitFont);
 
             if (GameInfo.IsPaused)
@@ -67,11 +82,17 @@ namespace Tower_Defense
             }
         }
 
+        private void Menu(GameWindow aWindow)
+        {
+            myGame.ChangeState(new MenuState(myGame, aWindow));
+        }
+
         public override void LoadContent()
         {
             my8bitFont = ResourceManager.RequestFont("8-bit");
 
             Level.LoadContent();
+            EnemyManager.SetTexture();
             myBackButton.LoadContent();
         }
     }

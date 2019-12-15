@@ -6,6 +6,7 @@ namespace Tower_Defense
 {
     class Tile : StaticObject
     {
+        private Texture2D myGroundTexture;
         private List<Tile> myHistory; //Used for pathfinding
         private Color myColor;
         private bool myIsObstacle;
@@ -51,7 +52,27 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            aSpriteBatch.Draw(myTexture, myDestRect, null, myColor);
+            if (myGroundTexture == null)
+            {
+                aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, myColor, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+            }
+            else
+            {
+                aSpriteBatch.Draw(myGroundTexture, myDestRect, mySourceRect, myColor, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+            }
+        }
+
+        public void DrawEditor(SpriteBatch aSpriteBatch)
+        {
+            if (myGroundTexture == null)
+            {
+                aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, myColor);
+            }
+            else
+            {
+                aSpriteBatch.Draw(myGroundTexture, myDestRect, mySourceRect, myColor);
+                aSpriteBatch.Draw(myTexture, myDestRect, mySourceRect, Color.White);
+            }
         }
 
         public void DefineTileProperties()
@@ -65,7 +86,7 @@ namespace Tower_Defense
                     break;
                 case '/':
                     this.myIsObstacle = false;
-                    this.myColor = new Color(200, 200, 240);
+                    this.myColor = new Color(150, 150, 240);
                     this.myTileForm = StaticRandom.RandomNumber(4, 6);
                     break;
                 default:
@@ -82,9 +103,11 @@ namespace Tower_Defense
             {
                 case '#':
                     SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = ResourceManager.RequestTexture(myTerrainType + "_Tile_00");
                     break;
                 default:
                     SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = null;
                     break;
             }
         }
@@ -94,9 +117,11 @@ namespace Tower_Defense
             {
                 case '#':
                     SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = ResourceManager.RequestTexture(myTerrainType + "_Tile_00");
                     break;
                 default:
                     SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = null;
                     break;
             }
         }

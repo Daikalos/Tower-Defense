@@ -89,6 +89,10 @@ namespace Tower_Defense
         {
             get => myCurrentMouseState;
         }
+        public static MouseState PreviousMouseState
+        {
+            get => myPreviousMouseState;
+        }
 
         //Should be called at beginning of Update in Game
         public static void Update()
