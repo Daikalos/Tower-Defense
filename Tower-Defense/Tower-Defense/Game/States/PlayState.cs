@@ -35,7 +35,7 @@ namespace Tower_Defense
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                     new Point(128, 48), Menu, 1, "MENU", 0.6f);
 
-            Enemy tempEnemy = new Enemy(new Vector2(100, 100), new Point(64), 2, 3, 0);
+            Enemy tempEnemy = new Enemy(new Vector2(100, 100), new Point(64), 2, 3, 3);
 
             EnemyManager.AddEnemy(tempEnemy);
 

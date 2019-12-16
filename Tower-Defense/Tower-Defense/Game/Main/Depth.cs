@@ -25,7 +25,7 @@ namespace Tower_Defense
 
         public static void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime)
         {
-            myObjects.ForEach(o => o.DrawWithDepth(aSpriteBatch, aGameTime, 1 / (o.Position.Y + o.Size.Y)));
+            myObjects.ForEach(o => o.DrawWithDepth(aSpriteBatch, aGameTime, 1.0f / (o.Position.Y + o.Size.Y * 1.3f)));
         }
     }
 }

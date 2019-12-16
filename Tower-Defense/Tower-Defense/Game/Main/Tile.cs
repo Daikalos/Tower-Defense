@@ -59,6 +59,7 @@ namespace Tower_Defense
             else
             {
                 aSpriteBatch.Draw(myGroundTexture, myDestRect, mySourceRect, myColor, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+                //Obstacle texture is drawn within depth class
             }
         }
 

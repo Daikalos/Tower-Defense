@@ -59,10 +59,13 @@ namespace Tower_Defense
                     myEnemyAnimation.DrawSpriteSheet(aSpriteBatch, aGameTime, myTexture, myDestRect, new Point(64), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, aDepth);
                     break;
                 case 1:
+                    myEnemyAnimation.DrawSpriteSheet(aSpriteBatch, aGameTime, myTexture, myDestRect, new Point(64), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, aDepth);
                     break;
                 case 2:
+                    myEnemyAnimation.DrawSpriteSheet(aSpriteBatch, aGameTime, myTexture, myDestRect, new Point(64), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, aDepth);
                     break;
                 case 3:
+                    myEnemyAnimation.DrawSpriteSheet(aSpriteBatch, aGameTime, myTexture, myDestRect, new Point(192), Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, aDepth);
                     break;
             }
         }
