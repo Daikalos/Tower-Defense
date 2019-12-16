@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
 {
@@ -10,6 +11,7 @@ namespace Tower_Defense
             myZoomLimit;
         private static Point myOldMousePosition;
         private static float 
+            myMoveSpeed,
             myZoom,
             myZoomValue;
 
@@ -41,17 +43,18 @@ namespace Tower_Defense
             }
         }
 
-        public static void Initialize(GameWindow aWindow, Vector2 aPosition)
+        public static void Initialize(GameWindow aWindow, Vector2 aPosition, float aSpeed)
         {
             myPosition = aPosition;
             myViewportSize = aWindow.ClientBounds.Size.ToVector2();
+            myMoveSpeed = aSpeed;
             myOldMousePosition = Point.Zero;
             myZoomLimit = new Vector2(0.5f, 2.0f);
             myZoom = 1.0f;
             myZoomValue = 0.05f;
         }
 
-        public static void MoveCamera()
+        public static void MoveCamera(GameTime aGameTime)
         {
             if (KeyMouseReader.MiddleMouseClick())
             {
@@ -73,6 +76,34 @@ namespace Tower_Defense
             if (KeyMouseReader.ScrollDown())
             {
                 myZoom -= myZoomValue;
+                myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
+            }
+
+            if (KeyMouseReader.KeyHold(Keys.Up))
+            {
+                myPosition.Y -= myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (KeyMouseReader.KeyHold(Keys.Down))
+            {
+                myPosition.Y += myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (KeyMouseReader.KeyHold(Keys.Left))
+            {
+                myPosition.X -= myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (KeyMouseReader.KeyHold(Keys.Right))
+            {
+                myPosition.X += myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (KeyMouseReader.KeyHold(Keys.OemPlus))
+            {
+                myZoom += myZoomValue / 2;
+                myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
+            }
+            if (KeyMouseReader.KeyHold(Keys.OemMinus))
+            {
+                myZoom -= myZoomValue / 2;
                 myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
             }
         }

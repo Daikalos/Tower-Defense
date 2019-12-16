@@ -30,25 +30,21 @@ namespace Tower_Defense
                 }
             }
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
+            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
 
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                     new Point(128, 48), Menu, 1, "MENU", 0.6f);
 
-            Enemy tempEnemy = new Enemy(new Vector2(100, 100), new Point(64), 2, 3, 3);
-
-            EnemyManager.AddEnemy(tempEnemy);
-
-            Depth.AddObject(tempEnemy);
+            EnemyManager.AddEnemy(new Enemy(new Vector2(100, 100), new Point(64), 2.0f, 3, 0));
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
         {
             if (!GameInfo.IsPaused)
             {
-                Camera.MoveCamera();
+                Camera.MoveCamera(aGameTime);
                 Level.Update();
-                EnemyManager.Update();
+                EnemyManager.Update(aGameTime);
             }
             else
             {
@@ -71,6 +67,7 @@ namespace Tower_Defense
             Level.DrawTiles(aSpriteBatch);
             Depth.Draw(aSpriteBatch, aGameTime);
 
+            EnemyManager.Draw(aSpriteBatch);
             GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
             StringManager.Draw(aSpriteBatch, my8bitFont);
 

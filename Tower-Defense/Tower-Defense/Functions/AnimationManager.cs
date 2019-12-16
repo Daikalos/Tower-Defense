@@ -36,7 +36,7 @@ namespace Tower_Defense
             this.myIsLoop = aIsLoop;
         }
 
-        public void DrawSpriteSheet(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE, float aDepth)
+        public void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE, float aDepth)
         {
             if (myIsFinished) return;
 
@@ -70,6 +70,43 @@ namespace Tower_Defense
             }
 
             mySourceRect = new Rectangle(aFrameSize.X * myCurrentFramePos.X, aFrameSize.Y * myCurrentFramePos.Y, aFrameSize.X, aFrameSize.Y);
+
+            aSpriteBatch.Draw(aTexture, aDestRect, mySourceRect, aColor, aRotation, aOrigin, aSE, aDepth);
+        }
+
+        public void DrawByRow(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE, float aDepth, int aCurrentRow)
+        {
+            if (myIsFinished) return;
+
+            if (!GameInfo.IsPaused)
+            {
+                myTimer += (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                if (myTimer > myAnimationSpeed)
+                {
+                    myCurrentFrame++;
+                    myCurrentFramePos.X++;
+                    if (myCurrentFrame >= myFrameAmount.X)
+                    {
+                        if (myIsLoop)
+                        {
+                            myCurrentFrame = 0;
+                            myCurrentFramePos = new Point(0, aCurrentRow);
+                        }
+                        else
+                        {
+                            myCurrentFrame = (myFrameAmount.X * aCurrentRow) - 1;
+                            myIsFinished = true;
+                        }
+                    }
+                    if (myCurrentFramePos.X >= myFrameAmount.X) //Animation
+                    {
+                        myCurrentFramePos.X = 0;
+                    }
+                    myTimer = 0;
+                }
+            }
+
+            mySourceRect = new Rectangle(aFrameSize.X * myCurrentFramePos.X, aFrameSize.Y * aCurrentRow, aFrameSize.X, aFrameSize.Y);
 
             aSpriteBatch.Draw(aTexture, aDestRect, mySourceRect, aColor, aRotation, aOrigin, aSE, aDepth);
         }

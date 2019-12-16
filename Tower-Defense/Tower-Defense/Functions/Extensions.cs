@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
 namespace Tower_Defense
 {
@@ -15,6 +11,16 @@ namespace Tower_Defense
                 return "0" + aNumber;
             }
             return aNumber.ToString();
+        }
+
+        public static Vector2 Normalize(Vector2 aVector)
+        {
+            if (aVector != Vector2.Zero)
+            {
+                aVector.Normalize();
+                return aVector;
+            }
+            return new Vector2();
         }
     }
 }

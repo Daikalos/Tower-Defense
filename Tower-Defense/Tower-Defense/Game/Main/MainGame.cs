@@ -55,6 +55,8 @@ namespace Tower_Defense
             ResourceManager.AddTexture("Border_Short", this.Content.Load<Texture2D>("Sprites/Main/border_short"));
             ResourceManager.AddTexture("Border_Small", this.Content.Load<Texture2D>("Sprites/Main/border_small"));
 
+            ResourceManager.AddTexture("Healthbar", this.Content.Load<Texture2D>("Sprites/Main/healthbar"));
+
             for (int i = 0; i < 4; i++)
             {
                 ResourceManager.AddTexture("Enemy_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Main/enemy_" + Extensions.NumberFormat(i)));

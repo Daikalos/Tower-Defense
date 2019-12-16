@@ -21,17 +21,26 @@ namespace Tower_Defense
         public static void AddEnemy(Enemy anEnemy)
         {
             myEnemies.Add(anEnemy);
+            Depth.AddObject(anEnemy);
         }
 
-        public static void Update()
+        public static void Update(GameTime aGameTime)
         {
             for (int i = myEnemies.Count - 1; i >= 0; i--)
             {
-                myEnemies[i].Update();
+                myEnemies[i].Update(aGameTime);
                 if (!myEnemies[i].IsAlive)
                 {
                     myEnemies.RemoveAt(i);
                 }
+            }
+        }
+
+        public static void Draw(SpriteBatch aSpriteBatch)
+        {
+            for (int i = 0; i < myEnemies.Count; i++)
+            {
+                myEnemies[i].Draw(aSpriteBatch);
             }
         }
 

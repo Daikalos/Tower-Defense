@@ -6,7 +6,9 @@ namespace Tower_Defense
 {
     class DynamicObject : GameObject
     {
-        protected float mySpeed;
+        protected float 
+            mySpeed,
+            myCurrentSpeed;
 
         public float Speed
         {

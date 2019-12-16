@@ -44,7 +44,7 @@ namespace Tower_Defense
         {
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
+            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
                 
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f);
@@ -79,7 +79,7 @@ namespace Tower_Defense
             switch(myEditorState)
             {
                 case EditorStates.isEditing:
-                    Camera.MoveCamera();
+                    Camera.MoveCamera(aGameTime);
 
                     Misc(aGameTime, aWindow);
 
@@ -99,7 +99,7 @@ namespace Tower_Defense
                     EditInfo();
                     break;
                 case EditorStates.isSelectingPath:
-                    Camera.MoveCamera();
+                    Camera.MoveCamera(aGameTime);
 
                     CreatePath(aWindow);
                     break;
@@ -389,7 +389,7 @@ namespace Tower_Defense
                     myEditorState = EditorStates.isEditing;
                     myLevels = null;
 
-                    Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
+                    Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
                 }
             }
         }

@@ -19,7 +19,7 @@ namespace Tower_Defense
 
             Depth.Initialize();
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2));
+            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
 
             myButtons = new Button[]
             {
