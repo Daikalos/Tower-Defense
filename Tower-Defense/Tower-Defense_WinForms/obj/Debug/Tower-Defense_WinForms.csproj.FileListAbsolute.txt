@@ -1,0 +1,10 @@
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\bin\Debug\Tower-Defense_WinForms.exe.config
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\bin\Debug\Tower-Defense_WinForms.exe
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\bin\Debug\Tower-Defense_WinForms.pdb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower-Defense_WinForms.csprojAssemblyReference.cache
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower_Defense_WinForms.Properties.Resources.resources
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower-Defense_WinForms.csproj.GenerateResource.cache
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower-Defense_WinForms.exe
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower-Defense_WinForms.pdb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower_Defense_WinForms.LevelInfo.resources
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense_WinForms\obj\Debug\Tower_Defense_WinForms.SaveLevel.resources

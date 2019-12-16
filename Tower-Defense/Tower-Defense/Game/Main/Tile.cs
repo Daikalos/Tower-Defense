@@ -30,7 +30,6 @@ namespace Tower_Defense
             get => myTileType;
             set => myTileType = value;
         }
-
         public int TileForm
         {
             get => myTileForm;

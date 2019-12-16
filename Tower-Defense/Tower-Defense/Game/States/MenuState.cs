@@ -43,8 +43,6 @@ namespace Tower_Defense
             if (!myLoadLevel)
             {
                 Array.ForEach(myButtons, b => b.Update(aWindow));
-
-                Play(aWindow);
             }
             else
             {
@@ -78,24 +76,21 @@ namespace Tower_Defense
 
         private void Play(GameWindow aWindow)
         {
-            if (myButtons[0].IsClicked())
+            myLoadLevel = true;
+            string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
+
+            myLevels = new Button[tempLevelNames.Length - 1];
+
+            int tempAddLevel = 0;
+            for (int i = 0; i < tempLevelNames.Length; i++)
             {
-                myLoadLevel = true;
-                string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
-
-                myLevels = new Button[tempLevelNames.Length - 1];
-
-                int tempAddLevel = 0;
-                for (int i = 0; i < tempLevelNames.Length; i++)
+                if (tempLevelNames[i] != "Level_Template")
                 {
-                    if (tempLevelNames[i] != "Level_Template")
-                    {
-                        myLevels[tempAddLevel] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (tempAddLevel * 40)),
-                            new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
-                        myLevels[tempAddLevel].LoadContent();
+                    myLevels[tempAddLevel] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (tempAddLevel * 40)),
+                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
+                    myLevels[tempAddLevel].LoadContent();
 
-                        tempAddLevel++;
-                    }
+                    tempAddLevel++;
                 }
             }
         }
