@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Tower_Defense_WinForms
 {
-    public partial class SaveLevel : Form
+    public partial class LevelName : Form
     {
-        public SaveLevel()
+        public LevelName()
         {
             InitializeComponent();
         }

@@ -20,14 +20,16 @@ namespace Tower_Defense
         }
 
         private SpriteFont my8bitFont;
-        private Tile[] mySelections;
         private Button[] myLevels;
-        private Button 
+        private Button
             myLoadButton,
             mySaveButton,
             myDeleteButton,
             myPathButton,
             myInfoButton;
+        private Tile[] mySelections;
+        private LevelInfo myLevelInfoForm;
+        private LevelName myLevelNameForm;
         private Vector2 
             myStartPosition,
             myGoalPosition;
@@ -39,7 +41,6 @@ namespace Tower_Defense
             myTimer,
             myDelay;
         private int myTile;
-        private string myLevelName;
 
         public EditorState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
@@ -62,7 +63,8 @@ namespace Tower_Defense
                 new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#', GameInfo.TerrainType),
                 new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/', GameInfo.TerrainType)
             };
-
+            this.myLevelInfoForm = new LevelInfo();
+            this.myLevelNameForm = new LevelName();
             this.myStartPosition = Vector2.Zero;
             this.myGoalPosition = Vector2.Zero;
             this.myEditorState = EditorStates.isEditing;
@@ -72,7 +74,6 @@ namespace Tower_Defense
             this.mySelectedTile = '-';
             this.myDelay = 0.50f;
             this.myTile = -1;
-            this.myLevelName = string.Empty;
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
@@ -91,13 +92,13 @@ namespace Tower_Defense
                     LoadLevel(aWindow);
                     break;
                 case EditorStates.isSaving:
-                    SaveLevel();
+                    //Saving in forms
                     break;
                 case EditorStates.isDeleting:
                     DeleteLevel(aWindow);
                     break;
                 case EditorStates.isEditingInfo:
-                    EditInfo();
+                    //Editing in forms
                     break;
                 case EditorStates.isSelectingPath:
                     Camera.MoveCamera(aGameTime);
@@ -108,14 +109,33 @@ namespace Tower_Defense
 
             if (KeyMouseReader.KeyPressed(Keys.Escape))
             {
-                switch (myEditorState)
+                if (!myLevelInfoForm.Visible && !myLevelNameForm.Visible)
                 {
-                    case EditorStates.isEditing:
-                        myGame.ChangeState(new MenuState(myGame, aWindow));
-                        break;
-                    default:
-                        myEditorState = EditorStates.isEditing;
-                        break;
+                    switch (myEditorState)
+                    {
+                        case EditorStates.isEditing:
+                            myGame.ChangeState(new MenuState(myGame, aWindow));
+                            break;
+                        default:
+                            myEditorState = EditorStates.isEditing;
+                            break;
+                    }
+
+                    myLevelInfoForm = new LevelInfo();
+                    myLevelNameForm = new LevelName();
+                }
+                else
+                {
+                    if (myLevelInfoForm.Visible)
+                    {
+                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                            Color.Red, true, 3.0f, 0.7f, 2, "Please close info window"));
+                    }
+                    if (myLevelNameForm.Visible)
+                    {
+                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                            Color.Red, true, 3.0f, 0.7f, 2, "Please close save window"));
+                    }
                 }
             }
         }
@@ -159,7 +179,6 @@ namespace Tower_Defense
                     break;
                 case EditorStates.isSaving:
                     StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myLevelName + "_", new Vector2((aWindow.ClientBounds.Width / 2), 96), Color.Black, 0.8f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isDeleting:
@@ -168,6 +187,7 @@ namespace Tower_Defense
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isEditingInfo:
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit info of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isSelectingPath:
@@ -284,96 +304,83 @@ namespace Tower_Defense
 
         private void PressLoadLevel(GameWindow aWindow)
         {
-            if (myLoadButton.IsClicked())
+            myEditorState = EditorStates.isLoading;
+            string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
+
+            myLevels = new Button[tempLevelNames.Length];
+
+            for (int i = 0; i < myLevels.Length; i++)
             {
-                myEditorState = EditorStates.isLoading;
-                string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
-
-                myLevels = new Button[tempLevelNames.Length];
-
-                for (int i = 0; i < myLevels.Length; i++)
-                {
-                    myLevels[i] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 200 + (i * 40)),
-                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
-                    myLevels[i].LoadContent();
-                }
+                myLevels[i] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, 64 + (i * 40)),
+                    new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
+                myLevels[i].LoadContent();
             }
         }
         private void PressSaveLevel(GameWindow aWindow)
         {
-            if (mySaveButton.IsClicked())
+            GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
+
+            if (GameInfo.Path.Count > 1)
             {
-                GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
+                myEditorState = EditorStates.isSaving;
+                myLevelNameForm.Show();
 
-                if (GameInfo.Path.Count > 1)
+                for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
                 {
-                    myEditorState = EditorStates.isSaving;
-
-                    for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
+                    for (int j = 0; j < Level.GetTiles.GetLength(1); j++)
                     {
-                        for (int j = 0; j < Level.GetTiles.GetLength(1); j++)
+                        if (!GameInfo.Path.Contains(Level.GetTiles[i, j]))
                         {
-                            if (!GameInfo.Path.Contains(Level.GetTiles[i, j]))
+                            if (Level.GetTiles[i, j].TileType == '/')
                             {
-                                if (Level.GetTiles[i, j].TileType == '/')
-                                {
-                                    Level.GetTiles[i, j].TileType = '-';
-                                }
+                                Level.GetTiles[i, j].TileType = '-'; //Remove unneccesary path tiles
                             }
                         }
                     }
+                }
 
-                    for (int i = 0; i < myLevel.GetLength(0); i++)
+                for (int i = 0; i < myLevel.GetLength(0); i++)
+                {
+                    for (int j = 0; j < myLevel.GetLength(1); j++)
                     {
-                        for (int j = 0; j < myLevel.GetLength(1); j++)
-                        {
-                            myLevel[i, j] = Level.GetTiles[i, j].TileType;
-                        }
+                        myLevel[i, j] = Level.GetTiles[i, j].TileType;
                     }
                 }
-                else
-                {
-                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                        Color.Red, true, 3.0f, 0.7f, 2, "No path"));
-                }
+            }
+            else
+            {
+                StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                    Color.Red, true, 3.0f, 0.7f, 2, "No path"));
             }
         }
         private void PressDeleteLevel(GameWindow aWindow)
         {
-            if (myDeleteButton.IsClicked())
+            myEditorState = EditorStates.isDeleting;
+            string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
+
+            myLevels = new Button[tempLevelNames.Length - 1];
+
+            int tempAddButton = 0;
+            for (int i = 0; i < tempLevelNames.Length; i++)
             {
-                myEditorState = EditorStates.isDeleting;
-                string[] tempLevelNames = FileReader.FindFileNames(GameInfo.FolderLevels);
-
-                myLevels = new Button[tempLevelNames.Length - 1];
-
-                int tempAddButton = 0;
-                for (int i = 0; i < tempLevelNames.Length; i++)
+                if (tempLevelNames[i] != "Level_Template")
                 {
-                    if (tempLevelNames[i] != "Level_Template")
-                    {
-                        myLevels[tempAddButton] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 200 + (tempAddButton * 40)),
-                            new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
-                        myLevels[tempAddButton].LoadContent();
+                    myLevels[tempAddButton] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, 64 + (tempAddButton * 40)),
+                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
+                    myLevels[tempAddButton].LoadContent();
 
-                        tempAddButton++;
-                    }
+                    tempAddButton++;
                 }
             }
         }
         private void PressEditInfo(GameWindow aWindow)
         {
-            if (myInfoButton.IsClicked())
-            {
-                myEditorState = EditorStates.isEditingInfo;
-            }
+            myEditorState = EditorStates.isEditingInfo;
+            myLevelInfoForm.Show();
         }
         private void PressCreatePath(GameWindow aWindow)
         {
-            if (myPathButton.IsClicked())
-            {
-                myEditorState = EditorStates.isSelectingPath;
-            }
+            myEditorState = EditorStates.isSelectingPath;
         }
 
         private void LoadLevel(GameWindow aWindow)
@@ -394,32 +401,6 @@ namespace Tower_Defense
                 }
             }
         }
-        private void SaveLevel()
-        {
-            if (myLevelName.Length < 18) //Name limit
-            {
-                myLevelName += KeyMouseReader.KeyInput(@"[a-zA-Z]");
-            }
-
-            if (myLevelName.Length > 0)
-            {
-                if (KeyMouseReader.KeyPressed(Keys.Space))
-                {
-                    myLevelName += "_";
-                }
-                if (KeyMouseReader.KeyPressed(Keys.Back))
-                {
-                    myLevelName = myLevelName.Remove(myLevelName.Length - 1, 1);
-                }
-                if (KeyMouseReader.KeyPressed(Keys.Enter))
-                {
-                    myEditorState = EditorStates.isEditing;
-                    Level.SaveLevel(myLevelName, myLevel, myStartPosition, myGoalPosition);
-
-                    myLevelName = string.Empty;
-                }
-            }
-        }
         private void DeleteLevel(GameWindow aWindow)
         {
             foreach (Button button in myLevels)
@@ -433,10 +414,6 @@ namespace Tower_Defense
                     myLevels = null;
                 }
             }
-        }
-        private void EditInfo()
-        {
-
         }
         private void CreatePath(GameWindow aWindow)
         {
@@ -471,12 +448,12 @@ namespace Tower_Defense
 
                 if (GameInfo.Path.Count > 1)
                 {
-                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                    StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
                         Color.DarkGreen, true, 3.0f, 0.7f, 2, "Path found!"));
                 }
                 else
                 {
-                    StringManager.DrawStrings.Add(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                    StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
                         Color.Red, true, 3.0f, 0.7f, 2, "Path not found..."));
                 }
             }

@@ -14,6 +14,11 @@ namespace Tower_Defense
             set => myDrawStrings = value;
         }
 
+        public static void AddString(DrawString aString)
+        {
+            myDrawStrings.Add(aString);
+        }
+
         public static void Initialize()
         {
             myDrawStrings = new List<DrawString>();

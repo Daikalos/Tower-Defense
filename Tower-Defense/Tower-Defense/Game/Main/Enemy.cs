@@ -12,7 +12,7 @@ namespace Tower_Defense
         private int
             myDirection,
             myHealthPoints,
-            myMaxHealthPints,
+            myMaxHealthPoints,
             myEnemyType,
             myWalkToTile;
 
@@ -32,7 +32,7 @@ namespace Tower_Defense
         public Enemy(Vector2 aPosition, Point aSize, float aSpeed, int someHP, int anEnemyType) : base(aPosition, aSize, aSpeed)
         {
             this.myHealthPoints = someHP;
-            this.myMaxHealthPints = someHP;
+            this.myMaxHealthPoints = someHP;
             this.myEnemyType = anEnemyType;
 
             this.myPosition = GameInfo.Path[0].Position;
@@ -78,7 +78,7 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            Rectangle tempSource = new Rectangle(0, 0, myHealthbarSource.Width * (myHealthPoints / myMaxHealthPints), myHealthbarSource.Height);
+            Rectangle tempSource = new Rectangle(0, 0, myHealthbarSource.Width * (myHealthPoints / myMaxHealthPoints), myHealthbarSource.Height);
             aSpriteBatch.Draw(myHealthbar, myHealthbarDest, tempSource, Color.White * 0.8f, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
         }
 
