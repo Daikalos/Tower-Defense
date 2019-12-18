@@ -35,7 +35,7 @@ namespace Tower_Defense
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                     new Point(128, 48), Menu, 1, "MENU", 0.6f);
 
-            EnemyManager.AddEnemy(new Enemy(new Vector2(100, 100), new Point(64), 2.0f, 3, 0));
+            EnemyManager.AddEnemy(new Enemy(new Vector2(100, 100), new Point(64), 2.0f, 3, 3));
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
