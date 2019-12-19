@@ -71,6 +71,7 @@
             this.Controls.Add(this.SaveLevelButton);
             this.Controls.Add(this.LevelNameBox);
             this.Controls.Add(this.LevelNameLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LevelName";
             this.Text = "Level Name";
             this.ResumeLayout(false);

@@ -12,7 +12,8 @@ namespace Tower_Defense
         private static Tile[,] myTiles;
         private static Point
             myTileSize,
-            myMapSize;
+            myMapSize,
+            myOffset;
 
         public static Tile[,] GetTiles
         {
@@ -82,11 +83,13 @@ namespace Tower_Defense
         public static void DrawTiles(SpriteBatch aSpriteBatch)
         {
             Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
-            Vector2 tempCameraDimensions = new Vector2(100, 100); //Fix size
+            Vector2 tempCameraDimensions = new Vector2(
+                ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2,
+                ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);
 
-            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i++)
+            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i += TileSize.X / 2)
             {
-                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j++)
+                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j += TileSize.Y / 2)
                 {
                     Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
                     if (tempTile.Item2)
@@ -99,11 +102,13 @@ namespace Tower_Defense
         public static void DrawTilesEditor(SpriteBatch aSpriteBatch)
         {
             Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
-            Vector2 tempCameraDimensions = new Vector2(100, 100); //Fix size
+            Vector2 tempCameraDimensions = new Vector2(
+                ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2, 
+                ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);
 
-            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i++)
+            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i += TileSize.X / 2)
             {
-                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j++)
+                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j += TileSize.Y / 2)
                 {
                     Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
                     if (tempTile.Item2)
@@ -119,6 +124,7 @@ namespace Tower_Defense
             if (File.Exists(GameInfo.FolderLevels + aLevelName + ".txt"))
             {
                 GameInfo.LevelName = aLevelName;
+                myOffset = new Point((aWindow.ClientBounds.Width / 2), (aWindow.ClientBounds.Height / 2));
 
                 string[] myLevelBuilder = File.ReadAllLines(GameInfo.FolderLevels + aLevelName + ".txt");
                 myTileSize = aTileSize;
@@ -153,8 +159,8 @@ namespace Tower_Defense
                 {
                     for (int y = 0; y < tempSizeY; y++) //Isometric
                     {
-                        int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + (aWindow.ClientBounds.Width / 2) - (myTileSize.X / 2);
-                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + (aWindow.ClientBounds.Height / 2) - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
+                        int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + myOffset.X - (myTileSize.X / 2);
+                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + myOffset.Y - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
 
                         myTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
@@ -247,8 +253,8 @@ namespace Tower_Defense
             {
                 for (int y = 0; y < tempSizeY; y++)
                 {
-                    int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2);
-                    int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2);
+                    int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + myOffset.X - (myTileSize.X / 2);
+                    int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + myOffset.Y - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
 
                     myTiles[x, y] = new Tile(
                         new Vector2(tempX, tempY),

@@ -69,6 +69,12 @@
     <Compile Include="Forms\LevelName.Designer.cs">
       <DependentUpon>LevelName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LevelWave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LevelWave.Designer.cs">
+      <DependentUpon>LevelWave.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\AnimationManager.cs" />
     <Compile Include="Functions\CollisionManager.cs" />
     <Compile Include="Functions\Extensions.cs" />
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LevelName.resx">
       <DependentUpon>LevelName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LevelWave.resx">
+      <DependentUpon>LevelWave.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

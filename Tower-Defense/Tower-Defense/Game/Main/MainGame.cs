@@ -59,12 +59,32 @@ namespace Tower_Defense
 
             for (int i = 0; i < 4; i++)
             {
-                ResourceManager.AddTexture("Enemy_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Main/enemy_" + Extensions.NumberFormat(i)));
+                ResourceManager.AddTexture("Enemy_" + Extensions.NumberFormat(i), 
+                    this.Content.Load<Texture2D>("Sprites/Main/enemy_" + Extensions.NumberFormat(i)));
             }
 
             for (int i = 0; i < 10; i++)
             {
-                ResourceManager.AddTexture("Forest_Tile_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Forest_Tileset/forest_tile_" + Extensions.NumberFormat(i)));
+                ResourceManager.AddTexture("Forest_Tile_" + Extensions.NumberFormat(i), 
+                    this.Content.Load<Texture2D>("Sprites/Forest_Tileset/forest_tile_" + Extensions.NumberFormat(i)));
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                ResourceManager.AddTexture("Deep-Forest_Tile_" + Extensions.NumberFormat(i), 
+                    this.Content.Load<Texture2D>("Sprites/Deep-Forest_Tileset/deep-forest_tile_" + Extensions.NumberFormat(i)));
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                ResourceManager.AddTexture("Snow_Tile_" + Extensions.NumberFormat(i), 
+                    this.Content.Load<Texture2D>("Sprites/Snow_Tileset/snow_tile_" + Extensions.NumberFormat(i)));
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                ResourceManager.AddTexture("Barren_Tile_" + Extensions.NumberFormat(i),
+                    this.Content.Load<Texture2D>("Sprites/Barren_Tileset/barren_tile_" + Extensions.NumberFormat(i)));
             }
 
             myGameState.LoadContent();

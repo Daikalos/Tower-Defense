@@ -26,7 +26,7 @@ namespace Tower_Defense
 
         private void LevelNameBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[A-Öa-ö]"))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[A-Öa-ö]") && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }

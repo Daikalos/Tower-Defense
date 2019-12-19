@@ -35,7 +35,7 @@ namespace Tower_Defense
             this.myMaxHealthPoints = someHP;
             this.myEnemyType = anEnemyType;
 
-            this.myPosition = GameInfo.Path[0].Position;
+            this.myPosition = GameInfo.Path[0].Position; //Spawn position
             this.myIsAlive = true;
             this.myWalkToTile = 1;
 

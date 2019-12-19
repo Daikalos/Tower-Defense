@@ -35,7 +35,6 @@ namespace Tower_Defense
         private Rectangle myOffset;
         private EditorStates myEditorState;
         private char mySelectedTile;
-        private char[,] myLevel;
         private float
             myTimer,
             myDelay;
@@ -52,10 +51,6 @@ namespace Tower_Defense
             this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f);
             this.myInfoButton = new Button(new Vector2(192, 32), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f);
             this.myPathButton = new Button(new Vector2(192, 96), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f);
-
-            this.myLevel = new char[
-                Level.MapSize.X / Level.TileSize.X,
-                Level.MapSize.Y / Level.TileSize.Y];
 
             this.mySelections = new Tile[]
             {
@@ -335,15 +330,19 @@ namespace Tower_Defense
                     }
                 }
 
-                for (int i = 0; i < myLevel.GetLength(0); i++)
+                char[,] tempLevel = new char[
+                    Level.MapSize.X / Level.TileSize.X,
+                    Level.MapSize.Y / Level.TileSize.Y];
+
+                for (int i = 0; i < tempLevel.GetLength(0); i++)
                 {
-                    for (int j = 0; j < myLevel.GetLength(1); j++)
+                    for (int j = 0; j < tempLevel.GetLength(1); j++)
                     {
-                        myLevel[i, j] = Level.GetTiles[i, j].TileType;
+                        tempLevel[i, j] = Level.GetTiles[i, j].TileType;
                     }
                 }
 
-                myLevelNameForm.SetLevelInfo(myLevel, myStartPosition, myGoalPosition);
+                myLevelNameForm.SetLevelInfo(tempLevel, myStartPosition, myGoalPosition);
                 myLevelNameForm.Show();
             }
             else

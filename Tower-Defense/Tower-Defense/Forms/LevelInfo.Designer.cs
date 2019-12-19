@@ -99,7 +99,7 @@
             this.DeepForestButton.Size = new System.Drawing.Size(114, 21);
             this.DeepForestButton.TabIndex = 3;
             this.DeepForestButton.TabStop = true;
-            this.DeepForestButton.Text = "Deep_Forest";
+            this.DeepForestButton.Text = "Deep-Forest";
             this.DeepForestButton.UseVisualStyleBackColor = true;
             // 
             // BarrenButton
@@ -228,6 +228,7 @@
             this.Controls.Add(this.TerrainPanel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.SaveInfoButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LevelInfo";
             this.Text = "Level Info";
             this.TerrainPanel.ResumeLayout(false);

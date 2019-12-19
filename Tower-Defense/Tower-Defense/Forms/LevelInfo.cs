@@ -13,14 +13,9 @@ namespace Tower_Defense
             InitializeComponent();
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void xSizeTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]"))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]") && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
@@ -28,7 +23,7 @@ namespace Tower_Defense
 
         private void ySizeTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]"))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]") && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
@@ -36,7 +31,7 @@ namespace Tower_Defense
 
         private void WavesTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]"))
+            if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]") && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
@@ -47,18 +42,21 @@ namespace Tower_Defense
             RadioButton tempCheckedButton = TerrainPanel.Controls.OfType<RadioButton>()
                           .FirstOrDefault(r => r.Checked); //Linq get button
 
-            if (tempCheckedButton != null)
+            if (tempCheckedButton != null && XSizeTextBox.Text != "" && YSizeTextBox.Text != "")
             {
                 int[,] tempSize = new int[
                     Int32.Parse(XSizeTextBox.Text),
                     Int32.Parse(YSizeTextBox.Text)];
 
-                GameInfo.TerrainType = tempCheckedButton.Text;
+                if (tempSize.GetLength(0) != 0 && tempSize.GetLength(1) != 0)
+                {
+                    GameInfo.TerrainType = tempCheckedButton.Text;
 
-                Level.CreateLevel(tempSize);
-                Level.LoadContentEditor();
+                    Level.CreateLevel(tempSize);
+                    Level.LoadContentEditor();
 
-                this.Close();
+                    this.Close();
+                }
             }
         }
     }
