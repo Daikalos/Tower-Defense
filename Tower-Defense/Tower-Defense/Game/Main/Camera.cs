@@ -81,11 +81,11 @@ namespace Tower_Defense
 
             if (KeyMouseReader.KeyHold(Keys.Up))
             {
-                myPosition.Y -= myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                myPosition.Y -= myMoveSpeed * (1 / myZoom) * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
             }
             if (KeyMouseReader.KeyHold(Keys.Down))
             {
-                myPosition.Y += myMoveSpeed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                myPosition.Y += myMoveSpeed * (1 / myZoom) * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
             }
             if (KeyMouseReader.KeyHold(Keys.Left))
             {

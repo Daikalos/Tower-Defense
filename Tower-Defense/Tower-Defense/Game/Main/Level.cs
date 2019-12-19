@@ -32,14 +32,13 @@ namespace Tower_Defense
         {
             Matrix tempMatrix = Matrix.Identity;
 
-            tempMatrix.M11 = TileSize.X / 2; //Origin
+            tempMatrix.M11 = TileSize.X / 2; //Dimensions
             tempMatrix.M21 = -TileSize.X / 2;
             tempMatrix.M12 = TileSize.Y / 2;
             tempMatrix.M22 = TileSize.Y / 2;
 
             tempMatrix.M31 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
             tempMatrix.M32 = GetTiles[0, 0].Position.Y;
-            tempMatrix.M33 = 1;
 
             tempMatrix = Matrix.Invert(tempMatrix);
 
@@ -80,35 +79,37 @@ namespace Tower_Defense
             return tempClosest;
         }
 
-        public static void Update()
-        {
-            for (int i = 0; i < myTiles.GetLength(0); i++)
-            {
-                for (int j = 0; j < myTiles.GetLength(1); j++)
-                {
-                    myTiles[i, j].Update();
-                }
-            }
-        }
-
         public static void DrawTiles(SpriteBatch aSpriteBatch)
         {
-            for (int i = 0; i < myTiles.GetLength(0); i++)
+            Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
+            Vector2 tempCameraDimensions = new Vector2(100, 100); //Fix size
+
+            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i++)
             {
-                for (int j = 0; j < myTiles.GetLength(1); j++)
+                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j++)
                 {
-                    myTiles[i, j].Draw(aSpriteBatch);
+                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
+                    if (tempTile.Item2)
+                    {
+                        Level.TileAtPos(new Vector2(i, j)).Item1.Draw(aSpriteBatch);
+                    }
                 }
             }
         }
-
         public static void DrawTilesEditor(SpriteBatch aSpriteBatch)
         {
-            for (int i = 0; i < myTiles.GetLength(0); i++)
+            Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
+            Vector2 tempCameraDimensions = new Vector2(100, 100); //Fix size
+
+            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i++)
             {
-                for (int j = 0; j < myTiles.GetLength(1); j++)
+                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j++)
                 {
-                    myTiles[i, j].DrawEditor(aSpriteBatch);
+                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
+                    if (tempTile.Item2)
+                    {
+                        Level.TileAtPos(new Vector2(i, j)).Item1.DrawEditor(aSpriteBatch);
+                    }
                 }
             }
         }
@@ -234,6 +235,30 @@ namespace Tower_Defense
             {
                 File.Delete(tempPathLevelInfo);
             }
+        }
+        public static void CreateLevel(int[,] aLevelSize)
+        {
+            int tempSizeX = aLevelSize.GetLength(0);
+            int tempSizeY = aLevelSize.GetLength(1);
+
+            myTiles = new Tile[tempSizeX, tempSizeY];
+
+            for (int x = 0; x  < tempSizeX; x++)
+            {
+                for (int y = 0; y < tempSizeY; y++)
+                {
+                    int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2);
+                    int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2);
+
+                    myTiles[x, y] = new Tile(
+                        new Vector2(tempX, tempY),
+                        myTileSize, '-', GameInfo.TerrainType);
+                }
+            }
+
+            myMapSize = new Point(
+                myTiles.GetLength(0) * myTileSize.X,
+                myTiles.GetLength(1) * myTileSize.Y);
         }
 
         public static bool CheckIn(int anX, int anY)

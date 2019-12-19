@@ -43,7 +43,6 @@ namespace Tower_Defense
             if (!GameInfo.IsPaused)
             {
                 Camera.MoveCamera(aGameTime);
-                Level.Update();
                 EnemyManager.Update(aGameTime);
             }
             else

@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Tower_Defense_WinForms;
 
 namespace Tower_Defense
 {
@@ -224,8 +223,6 @@ namespace Tower_Defense
 
         private void Misc(GameTime aGameTime, GameWindow aWindow)
         {
-            Level.Update();
-
             myLoadButton.Update(aWindow);
             mySaveButton.Update(aWindow);
             myDeleteButton.Update(aWindow);
@@ -323,7 +320,6 @@ namespace Tower_Defense
             if (GameInfo.Path.Count > 1)
             {
                 myEditorState = EditorStates.isSaving;
-                myLevelNameForm.Show();
 
                 for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
                 {
@@ -346,6 +342,9 @@ namespace Tower_Defense
                         myLevel[i, j] = Level.GetTiles[i, j].TileType;
                     }
                 }
+
+                myLevelNameForm.SetLevelInfo(myLevel, myStartPosition, myGoalPosition);
+                myLevelNameForm.Show();
             }
             else
             {

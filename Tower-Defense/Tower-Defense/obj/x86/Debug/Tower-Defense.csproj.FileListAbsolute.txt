@@ -89,6 +89,6 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Wi
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense_WinForms.exe.config
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense.exe.config
 C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense.exe.config
-C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense_WinForms.exe
-C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense_WinForms.pdb
-C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Tower-Defense_WinForms.exe.config
+C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower_Defense.LevelName.resources
+C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower-Defense.csproj.GenerateResource.cache
+C:\Users\tobia\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower_Defense.LevelInfo.resources
