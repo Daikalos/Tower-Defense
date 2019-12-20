@@ -61,6 +61,7 @@
             // 
             // SaveInfoButton
             // 
+            this.SaveInfoButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveInfoButton.Location = new System.Drawing.Point(265, 139);
             this.SaveInfoButton.Name = "SaveInfoButton";
             this.SaveInfoButton.Size = new System.Drawing.Size(75, 23);
@@ -98,7 +99,6 @@
             this.DeepForestButton.Name = "DeepForestButton";
             this.DeepForestButton.Size = new System.Drawing.Size(114, 21);
             this.DeepForestButton.TabIndex = 3;
-            this.DeepForestButton.TabStop = true;
             this.DeepForestButton.Text = "Deep-Forest";
             this.DeepForestButton.UseVisualStyleBackColor = true;
             // 
@@ -110,7 +110,6 @@
             this.BarrenButton.Name = "BarrenButton";
             this.BarrenButton.Size = new System.Drawing.Size(74, 21);
             this.BarrenButton.TabIndex = 2;
-            this.BarrenButton.TabStop = true;
             this.BarrenButton.Text = "Barren";
             this.BarrenButton.UseVisualStyleBackColor = true;
             // 
@@ -122,13 +121,13 @@
             this.SnowButton.Name = "SnowButton";
             this.SnowButton.Size = new System.Drawing.Size(58, 21);
             this.SnowButton.TabIndex = 1;
-            this.SnowButton.TabStop = true;
             this.SnowButton.Text = "Snow";
             this.SnowButton.UseVisualStyleBackColor = true;
             // 
             // ForestButton
             // 
             this.ForestButton.AutoSize = true;
+            this.ForestButton.Checked = true;
             this.ForestButton.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForestButton.Location = new System.Drawing.Point(4, 3);
             this.ForestButton.Name = "ForestButton";

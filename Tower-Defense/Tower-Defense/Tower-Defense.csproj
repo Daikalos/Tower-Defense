@@ -84,6 +84,7 @@
     <Compile Include="Functions\ResourceManager.cs" />
     <Compile Include="Functions\StaticRandom.cs" />
     <Compile Include="Functions\StringManager.cs" />
+    <Compile Include="Game\Main\Background.cs" />
     <Compile Include="Game\Main\Button.cs" />
     <Compile Include="Game\Main\Camera.cs" />
     <Compile Include="Game\Main\Depth.cs" />

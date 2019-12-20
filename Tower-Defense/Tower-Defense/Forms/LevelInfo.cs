@@ -44,18 +44,28 @@ namespace Tower_Defense
 
             if (tempCheckedButton != null && XSizeTextBox.Text != "" && YSizeTextBox.Text != "")
             {
-                int[,] tempSize = new int[
-                    Int32.Parse(XSizeTextBox.Text),
-                    Int32.Parse(YSizeTextBox.Text)];
+                int[,] tempSize;
+                try
+                {
+                    tempSize = new int[
+                        Int32.Parse(XSizeTextBox.Text),
+                        Int32.Parse(YSizeTextBox.Text)];
+                }
+                catch (Exception anException) 
+                {
+                    MessageBox.Show(anException.ToString());
+                    return; 
+                }
 
                 if (tempSize.GetLength(0) != 0 && tempSize.GetLength(1) != 0)
                 {
                     GameInfo.TerrainType = tempCheckedButton.Text;
 
-                    Level.CreateLevel(tempSize);
-                    Level.LoadContentEditor();
-
-                    this.Close();
+                    if (Level.CreateLevel(tempSize))
+                    {
+                        Level.LoadContentEditor();
+                        this.Close();
+                    }
                 }
             }
         }

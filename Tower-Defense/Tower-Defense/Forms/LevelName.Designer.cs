@@ -55,6 +55,7 @@
             // 
             // SaveLevelButton
             // 
+            this.SaveLevelButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SaveLevelButton.Location = new System.Drawing.Point(320, 77);
             this.SaveLevelButton.Name = "SaveLevelButton";
             this.SaveLevelButton.Size = new System.Drawing.Size(75, 23);

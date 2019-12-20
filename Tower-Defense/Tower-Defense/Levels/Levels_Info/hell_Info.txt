@@ -1,3 +1,0 @@
-Terrain=Barren
-Start={X:640 Y:530}
-Goal={X:960 Y:402}

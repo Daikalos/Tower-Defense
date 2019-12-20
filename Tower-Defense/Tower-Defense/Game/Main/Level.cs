@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -33,7 +33,8 @@ namespace Tower_Defense
         {
             Matrix tempMatrix = Matrix.Identity;
 
-            tempMatrix.M11 = TileSize.X / 2; //Dimensions
+            //Tile-space to screen-space
+            tempMatrix.M11 = TileSize.X / 2; //Vector points
             tempMatrix.M21 = -TileSize.X / 2;
             tempMatrix.M12 = TileSize.Y / 2;
             tempMatrix.M22 = TileSize.Y / 2;
@@ -41,9 +42,9 @@ namespace Tower_Defense
             tempMatrix.M31 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
             tempMatrix.M32 = GetTiles[0, 0].Position.Y;
 
-            tempMatrix = Matrix.Invert(tempMatrix);
+            tempMatrix = Matrix.Invert(tempMatrix); //Screen-space to tile-space
 
-            int tempX = (int)Math.Floor((aPos.X * tempMatrix.M11 + aPos.Y * tempMatrix.M21 + tempMatrix.M31));
+            int tempX = (int)Math.Floor((aPos.X * tempMatrix.M11 + aPos.Y * tempMatrix.M21 + tempMatrix.M31)); //Multiply with mouse coordinates
             int tempY = (int)Math.Floor((aPos.X * tempMatrix.M12 + aPos.Y * tempMatrix.M22 + tempMatrix.M32));
 
             if (CheckIn(tempX, tempY))
@@ -160,7 +161,7 @@ namespace Tower_Defense
                     for (int y = 0; y < tempSizeY; y++) //Isometric
                     {
                         int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + myOffset.X - (myTileSize.X / 2);
-                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + myOffset.Y - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
+                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2);
 
                         myTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
@@ -242,29 +243,45 @@ namespace Tower_Defense
                 File.Delete(tempPathLevelInfo);
             }
         }
-        public static void CreateLevel(int[,] aLevelSize)
+        public static bool CreateLevel(int[,] aLevelSize)
         {
             int tempSizeX = aLevelSize.GetLength(0);
             int tempSizeY = aLevelSize.GetLength(1);
+            Tile[,] tempTiles;
 
-            myTiles = new Tile[tempSizeX, tempSizeY];
-
-            for (int x = 0; x  < tempSizeX; x++)
+            try
             {
-                for (int y = 0; y < tempSizeY; y++)
-                {
-                    int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + myOffset.X - (myTileSize.X / 2);
-                    int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2) + myOffset.Y - ((tempSizeY / 2) * myTileSize.Y) - (myTileSize.Y / 2);
+                tempTiles = new Tile[tempSizeX, tempSizeY];
 
-                    myTiles[x, y] = new Tile(
-                        new Vector2(tempX, tempY),
-                        myTileSize, '-', GameInfo.TerrainType);
+                for (int x = 0; x < tempSizeX; x++)
+                {
+                    for (int y = 0; y < tempSizeY; y++)
+                    {
+                        int tempX = (x * myTileSize.X / 2) - (y * myTileSize.X / 2) + myOffset.X - (myTileSize.X / 2);
+                        int tempY = (y * myTileSize.Y / 2) + (x * myTileSize.Y / 2);
+
+                        tempTiles[x, y] = new Tile(
+                            new Vector2(tempX, tempY),
+                            myTileSize, '-', GameInfo.TerrainType);
+                    }
                 }
             }
+            catch (OutOfMemoryException anException)
+            {
+                MessageBox.Show(anException.ToString());
+                return false;
+            }
+
+            myTiles = tempTiles;
 
             myMapSize = new Point(
                 myTiles.GetLength(0) * myTileSize.X,
                 myTiles.GetLength(1) * myTileSize.Y);
+
+            StringManager.AddString(new DrawString(new Vector2(32, 48),
+                Color.Green, true, 3.0f, 0.7f, 0, "Map created"));
+
+            return true;
         }
 
         public static bool CheckIn(int anX, int anY)

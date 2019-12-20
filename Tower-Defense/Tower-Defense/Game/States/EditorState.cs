@@ -15,6 +15,7 @@ namespace Tower_Defense
             isSaving,
             isDeleting,
             isEditingInfo,
+            isEditingWaves,
             isSelectingPath
         }
 
@@ -25,10 +26,12 @@ namespace Tower_Defense
             mySaveButton,
             myDeleteButton,
             myPathButton,
-            myInfoButton;
+            myInfoButton,
+            myWaveButton;
         private Tile[] mySelections;
         private LevelInfo myLevelInfoForm;
         private LevelName myLevelNameForm;
+        private LevelWave myLevelWaveForm;
         private Vector2 
             myStartPosition,
             myGoalPosition;
@@ -49,8 +52,9 @@ namespace Tower_Defense
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f);
             this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f);
-            this.myInfoButton = new Button(new Vector2(192, 32), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f);
-            this.myPathButton = new Button(new Vector2(192, 96), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f);
+            this.myPathButton = new Button(new Vector2(192, 32), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f);
+            this.myInfoButton = new Button(new Vector2(192, 96), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f);
+            this.myWaveButton = new Button(new Vector2(192, 160), new Point(128, 48), PressEditWaves, 1, "WAVE", 0.6f);
 
             this.mySelections = new Tile[]
             {
@@ -59,6 +63,7 @@ namespace Tower_Defense
             };
             this.myLevelInfoForm = new LevelInfo();
             this.myLevelNameForm = new LevelName();
+            this.myLevelWaveForm = new LevelWave();
             this.myStartPosition = Vector2.Zero;
             this.myGoalPosition = Vector2.Zero;
             this.myEditorState = EditorStates.isEditing;
@@ -72,7 +77,7 @@ namespace Tower_Defense
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
         {
-            switch(myEditorState)
+            switch (myEditorState)
             {
                 case EditorStates.isEditing:
                     Camera.MoveCamera(aGameTime);
@@ -91,47 +96,20 @@ namespace Tower_Defense
                 case EditorStates.isDeleting:
                     DeleteLevel(aWindow);
                     break;
-                case EditorStates.isEditingInfo:
-                    //Editing in forms
-                    break;
                 case EditorStates.isSelectingPath:
                     Camera.MoveCamera(aGameTime);
 
                     CreatePath(aWindow);
                     break;
+                case EditorStates.isEditingInfo:
+                    //Editing in forms
+                    break;
+                case EditorStates.isEditingWaves:
+                    //Editing in forms
+                    break;
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.Escape))
-            {
-                if (!myLevelInfoForm.Visible && !myLevelNameForm.Visible)
-                {
-                    switch (myEditorState)
-                    {
-                        case EditorStates.isEditing:
-                            myGame.ChangeState(new MenuState(myGame, aWindow));
-                            break;
-                        default:
-                            myEditorState = EditorStates.isEditing;
-                            break;
-                    }
-
-                    myLevelInfoForm = new LevelInfo();
-                    myLevelNameForm = new LevelName();
-                }
-                else
-                {
-                    if (myLevelInfoForm.Visible)
-                    {
-                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                            Color.Red, true, 3.0f, 0.7f, 2, "Please close info window"));
-                    }
-                    if (myLevelNameForm.Visible)
-                    {
-                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                            Color.Red, true, 3.0f, 0.7f, 2, "Please close save window"));
-                    }
-                }
-            }
+            BackPress(aWindow);
         }
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
@@ -162,8 +140,10 @@ namespace Tower_Defense
                     mySaveButton.Draw(aSpriteBatch);
                     myDeleteButton.Draw(aSpriteBatch);
                     myInfoButton.Draw(aSpriteBatch);
+                    myWaveButton.Draw(aSpriteBatch);
                     myPathButton.Draw(aSpriteBatch);
 
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "{X: " + Level.GetTiles.GetLength(0) + " Y: " + Level.GetTiles.GetLength(1) + "}", new Vector2(332, 48), Color.Black * 0.70f, 0.6f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
                 case EditorStates.isLoading:
@@ -180,12 +160,16 @@ namespace Tower_Defense
                     StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
+                case EditorStates.isSelectingPath:
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and end position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    break;
                 case EditorStates.isEditingInfo:
                     StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit info of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
-                case EditorStates.isSelectingPath:
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and end position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
+                case EditorStates.isEditingWaves:
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit waves", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
                     break;
             }
@@ -221,8 +205,9 @@ namespace Tower_Defense
             myLoadButton.Update(aWindow);
             mySaveButton.Update(aWindow);
             myDeleteButton.Update(aWindow);
-            myInfoButton.Update(aWindow);
             myPathButton.Update(aWindow);
+            myInfoButton.Update(aWindow);
+            myWaveButton.Update(aWindow);
 
             if (myTimer > 0)
             {
@@ -371,14 +356,19 @@ namespace Tower_Defense
                 }
             }
         }
+        private void PressCreatePath(GameWindow aWindow)
+        {
+            myEditorState = EditorStates.isSelectingPath;
+        }
         private void PressEditInfo(GameWindow aWindow)
         {
             myEditorState = EditorStates.isEditingInfo;
             myLevelInfoForm.Show();
         }
-        private void PressCreatePath(GameWindow aWindow)
+        private void PressEditWaves(GameWindow aWindow)
         {
-            myEditorState = EditorStates.isSelectingPath;
+            myEditorState = EditorStates.isEditingWaves;
+            myLevelWaveForm.Show();
         }
 
         private void LoadLevel(GameWindow aWindow)
@@ -394,8 +384,6 @@ namespace Tower_Defense
 
                     myEditorState = EditorStates.isEditing;
                     myLevels = null;
-
-                    Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
                 }
             }
         }
@@ -457,6 +445,48 @@ namespace Tower_Defense
             }
         }
 
+        private void BackPress(GameWindow aWindow)
+        {
+            if (KeyMouseReader.KeyPressed(Keys.Escape))
+            {
+                if (!myLevelInfoForm.Visible && !myLevelNameForm.Visible && !myLevelWaveForm.Visible)
+                {
+                    switch (myEditorState)
+                    {
+                        case EditorStates.isEditing:
+                            myGame.ChangeState(new MenuState(myGame, aWindow));
+                            break;
+                        default:
+                            myEditorState = EditorStates.isEditing;
+                            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+                            break;
+                    }
+
+                    myLevelInfoForm = new LevelInfo();
+                    myLevelNameForm = new LevelName();
+                    myLevelWaveForm = new LevelWave();
+                }
+                else
+                {
+                    if (myLevelInfoForm.Visible)
+                    {
+                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                            Color.Red, true, 3.0f, 0.7f, 2, "Please close info window"));
+                    }
+                    if (myLevelNameForm.Visible)
+                    {
+                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                            Color.Red, true, 3.0f, 0.7f, 2, "Please close save window"));
+                    }
+                    if (myLevelWaveForm.Visible)
+                    {
+                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
+                            Color.Red, true, 3.0f, 0.7f, 2, "Please close wave window"));
+                    }
+                }
+            }
+        }
+
         public override void LoadContent()
         {
             Level.LoadContent();
@@ -467,6 +497,7 @@ namespace Tower_Defense
             mySaveButton.LoadContent();
             myDeleteButton.LoadContent();
             myInfoButton.LoadContent();
+            myWaveButton.LoadContent();
             myPathButton.LoadContent();
 
             my8bitFont = ResourceManager.RequestFont("8-bit");

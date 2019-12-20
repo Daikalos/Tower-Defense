@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Tower_Defense.Forms
+namespace Tower_Defense
 {
     public partial class LevelWave : Form
     {
