@@ -135,7 +135,6 @@ namespace Tower_Defense
 
                 myTiles = new Tile[tempSizeX, tempSizeY];
 
-                GameInfo.TerrainType = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Terrain", '=').First();
                 string tempStartPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Start", '=').First();
                 string tempGoalPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Goal", '=').First();
 
@@ -165,7 +164,7 @@ namespace Tower_Defense
 
                         myTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
-                            myTileSize, myLevelBuilder[y][x], GameInfo.TerrainType);
+                            myTileSize, myLevelBuilder[y][x]);
                     }
                 }
 
@@ -220,8 +219,7 @@ namespace Tower_Defense
                 File.AppendAllText(tempPathLevel, Environment.NewLine);
             }
 
-            File.AppendAllText(tempPathLevelInfo, "Terrain=" + GameInfo.TerrainType);
-            File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Start=" + aStart);
+            File.AppendAllText(tempPathLevelInfo, "Start=" + aStart);
             File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Goal=" + aGoal);
         }
         public static void DeleteLevel(string aLevelName)
@@ -262,7 +260,7 @@ namespace Tower_Defense
 
                         tempTiles[x, y] = new Tile(
                             new Vector2(tempX, tempY),
-                            myTileSize, '-', GameInfo.TerrainType);
+                            myTileSize, '-');
                     }
                 }
             }

@@ -62,9 +62,9 @@ namespace Tower_Defense
         {
             StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, ">",
                 new Vector2(60, 110 + (40 * mySelection)),
-                Color.Black, 0.6f);
+                Color.LightSlateGray, 0.6f);
 
-            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "LEVELS", new Vector2(64, 64), Color.Black, 0.9f);
+            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "LEVELS", new Vector2(64, 64), Color.LightSlateGray, 0.9f);
             for (int i = 0; i < myLevelNames.Length; i++)
             {
                 string tempName = myLevelNames[i];
@@ -72,17 +72,17 @@ namespace Tower_Defense
 
                 StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, tempName,
                 new Vector2(80, 110 + (40 * i)),
-                Color.Black, 0.5f);
+                Color.LightSlateGray, 0.5f);
             }
 
 
-            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "HIGH SCORE", new Vector2(aWindow.ClientBounds.Width / 2, 64), Color.Black, 0.9f);
+            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "HIGH SCORE", new Vector2(aWindow.ClientBounds.Width / 2, 64), Color.LightSlateGray, 0.9f);
             for (int i = 0; i < GameInfo.HighScores.Length; i++)
             {
-                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, GameInfo.HighScores[i].ToString(), new Vector2((aWindow.ClientBounds.Width / 2) + 16, 110 + (40 * i)), Color.Black, 0.7f);
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, GameInfo.HighScores[i].ToString(), new Vector2((aWindow.ClientBounds.Width / 2) + 16, 110 + (40 * i)), Color.LightSlateGray, 0.7f);
             }
 
-            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.8f, 0.5f);
+            StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.8f, 0.5f);
         }
 
         public override void LoadContent()

@@ -39,10 +39,7 @@ namespace Tower_Defense
 
         private void SaveInfoButton_Click(object sender, EventArgs e)
         {
-            RadioButton tempCheckedButton = TerrainPanel.Controls.OfType<RadioButton>()
-                          .FirstOrDefault(r => r.Checked); //Linq get button
-
-            if (tempCheckedButton != null && XSizeTextBox.Text != "" && YSizeTextBox.Text != "")
+            if (XSizeTextBox.Text != "" && YSizeTextBox.Text != "")
             {
                 int[,] tempSize;
                 try
@@ -59,8 +56,6 @@ namespace Tower_Defense
 
                 if (tempSize.GetLength(0) != 0 && tempSize.GetLength(1) != 0)
                 {
-                    GameInfo.TerrainType = tempCheckedButton.Text;
-
                     if (Level.CreateLevel(tempSize))
                     {
                         Level.LoadContentEditor();

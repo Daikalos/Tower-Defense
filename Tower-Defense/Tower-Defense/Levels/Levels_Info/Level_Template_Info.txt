@@ -1,3 +1,2 @@
-Terrain=Forest
 Start={X:0 Y:0}
 Goal={X:0 Y:0}

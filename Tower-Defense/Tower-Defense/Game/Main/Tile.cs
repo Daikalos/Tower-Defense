@@ -12,7 +12,6 @@ namespace Tower_Defense
         private bool myIsObstacle;
         private char myTileType;
         private int myTileForm;
-        private string myTerrainType;
 
         public List<Tile> History
         {
@@ -41,10 +40,9 @@ namespace Tower_Defense
             return new Rectangle(DestRect.X - (int)myOrigin.X, DestRect.Y - (int)myOrigin.Y, mySize.X, mySize.Y).Center.ToVector2();
         }
 
-        public Tile(Vector2 aPosition, Point aSize, char aTileType, string aTerrainType) : base(aPosition, aSize)
+        public Tile(Vector2 aPosition, Point aSize, char aTileType) : base(aPosition, aSize)
         {
             this.myTileType = aTileType;
-            this.myTerrainType = aTerrainType;
 
             DefineTileProperties();
         }
@@ -82,17 +80,17 @@ namespace Tower_Defense
                 case '#':
                     this.myIsObstacle = true;
                     this.myColor = new Color(240, 200, 200);
-                    this.myTileForm = StaticRandom.RandomNumber(6, 10);
+                    this.myTileForm = StaticRandom.RandomNumber(1, 4);
                     break;
                 case '/':
                     this.myIsObstacle = false;
                     this.myColor = new Color(150, 150, 240);
-                    this.myTileForm = StaticRandom.RandomNumber(4, 6);
+                    this.myTileForm = StaticRandom.RandomNumber(4, 5);
                     break;
                 default:
                     this.myIsObstacle = false;
                     this.myColor = new Color(255, 255, 255);
-                    this.myTileForm = StaticRandom.RandomNumber(0, 4);
+                    this.myTileForm = StaticRandom.RandomNumber(0, 1);
                     break;
             }
         }
@@ -102,11 +100,11 @@ namespace Tower_Defense
             switch (myTileType)
             {
                 case '#':
-                    SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
-                    myGroundTexture = ResourceManager.RequestTexture(myTerrainType + "_Tile_00");
+                    SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = ResourceManager.RequestTexture("Tile_00");
                     break;
                 default:
-                    SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
                     myGroundTexture = null;
                     break;
             }
@@ -116,11 +114,11 @@ namespace Tower_Defense
             switch (myTileType)
             {
                 case '#':
-                    SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
-                    myGroundTexture = ResourceManager.RequestTexture(myTerrainType + "_Tile_00");
+                    SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
+                    myGroundTexture = ResourceManager.RequestTexture("Tile_00");
                     break;
                 default:
-                    SetTexture(myTerrainType + "_Tile_" + Extensions.NumberFormat(myTileForm));
+                    SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
                     myGroundTexture = null;
                     break;
             }

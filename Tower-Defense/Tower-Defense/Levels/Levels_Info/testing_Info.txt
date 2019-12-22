@@ -1,3 +1,2 @@
-Terrain=Forest
 Start={X:800 Y:16}
 Goal={X:1440 Y:336}

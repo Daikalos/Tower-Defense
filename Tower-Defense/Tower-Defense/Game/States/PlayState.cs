@@ -27,7 +27,7 @@ namespace Tower_Defense
                     {
                         Depth.AddObject(Level.GetTiles[i, j]);
                     }
-                }
+                }         
             }
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
@@ -35,7 +35,7 @@ namespace Tower_Defense
             myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                     new Point(128, 48), Menu, 1, "MENU", 0.6f);
 
-            EnemyManager.AddEnemy(new Enemy(new Vector2(100, 100), new Point(64), 2.0f, 3, 3));
+            EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].Position, new Point(64), 2.0f, 3, 0));
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
@@ -50,6 +50,10 @@ namespace Tower_Defense
                 myBackButton.Update(aWindow);
             }
 
+            if (KeyMouseReader.KeyPressed(Keys.Space))
+            {
+                Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+            }
             if (KeyMouseReader.KeyPressed(Keys.Escape))
             {
                 GameInfo.IsPaused = !GameInfo.IsPaused;
@@ -61,7 +65,7 @@ namespace Tower_Defense
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend,
-                SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Camera.TranslationMatrix);
+                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
 
             Level.DrawTiles(aSpriteBatch);
             Depth.Draw(aSpriteBatch, aGameTime);

@@ -12,10 +12,11 @@ namespace Tower_Defense
         private static List<Tile> myPath;
         private static bool myIsPaused;
         private static int[] myHighScores;
-        private static int myScore;
+        private static int 
+            myScore,
+            myGameSpeed;
         private static string
             myLevelName,
-            myTerrainType,
             myFolderLevels,
             myFolderLevelsInfo,
             myFolderHighScores;
@@ -43,6 +44,11 @@ namespace Tower_Defense
             get => myScore;
             set => myScore = value;
         }
+        public static int GameSpeed
+        {
+            get => myGameSpeed;
+            set => myGameSpeed = value;
+        }
         public static string LevelName
         {
             get => myLevelName;
@@ -63,15 +69,11 @@ namespace Tower_Defense
             get => myFolderHighScores;
             set => myFolderHighScores = value;
         }
-        public static string TerrainType
-        {
-            get => myTerrainType;
-            set => myTerrainType = value;
-        }
 
         public static void Initialize()
         {
             myScore = 0;
+            myGameSpeed = 1;
         }
 
         public static void LoadHighScore(string aLevelName)
@@ -112,11 +114,11 @@ namespace Tower_Defense
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), 
-                new Vector2(32, 96), Color.Black, 0.7f);
+                new Vector2(32, 96), Color.LightSlateGray, 0.7f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, GameInfo.LevelName,
-                new Vector2(32, 32), Color.Black, 0.7f);
+                new Vector2(32, 32), Color.LightSlateGray, 0.7f);
             StringManager.CameraDrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), 
-                new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.7f);
+                new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
 
             if (myPath.Count > 1)
             {

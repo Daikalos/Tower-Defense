@@ -58,8 +58,8 @@ namespace Tower_Defense
 
             this.mySelections = new Tile[]
             {
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#', GameInfo.TerrainType),
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/', GameInfo.TerrainType)
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#'),
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/')
             };
             this.myLevelInfoForm = new LevelInfo();
             this.myLevelNameForm = new LevelName();
@@ -117,7 +117,7 @@ namespace Tower_Defense
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Camera.TranslationMatrix);
+                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
 
             Level.DrawTilesEditor(aSpriteBatch);
 
@@ -143,34 +143,34 @@ namespace Tower_Defense
                     myWaveButton.Draw(aSpriteBatch);
                     myPathButton.Draw(aSpriteBatch);
 
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "{X: " + Level.GetTiles.GetLength(0) + " Y: " + Level.GetTiles.GetLength(1) + "}", new Vector2(332, 48), Color.Black * 0.70f, 0.6f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "{X: " + Level.GetTiles.GetLength(0) + " Y: " + Level.GetTiles.GetLength(1) + "}", new Vector2(332, 48), Color.LightSlateGray * 0.70f, 0.6f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isLoading:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.9f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "LOAD", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isSaving:
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Type name of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.8f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isDeleting:
                     Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "DELETE", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.LightSlateGray, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isSelectingPath:
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and end position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Select start and goal position of path", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.LightSlateGray, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isEditingInfo:
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit info of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.Black, 0.8f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit info of level", new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.8f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
                 case EditorStates.isEditingWaves:
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit waves", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.Black, 0.9f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black * 0.50f, 0.4f);
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "Edit waves", new Vector2(aWindow.ClientBounds.Width / 2, 32), Color.LightSlateGray, 0.9f);
+                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
             }
 

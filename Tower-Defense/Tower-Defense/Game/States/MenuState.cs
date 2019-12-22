@@ -70,7 +70,7 @@ namespace Tower_Defense
             {
                 Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
                 StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", 
-                    new Vector2(16, aWindow.ClientBounds.Height - 16), Color.Black, 0.4f);
+                    new Vector2(16, aWindow.ClientBounds.Height - 16), Color.DarkSlateGray, 0.4f);
             }
         }
 

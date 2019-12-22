@@ -8,17 +8,23 @@ namespace Tower_Defense
         //Animation-Info
         private Rectangle mySourceRect;
         private Point myCurrentFramePos;
+        private float myAnimationSpeed;
         private float myTimer;
         private int myCurrentFrame;
         private bool myIsFinished;
+
         //Sprite-Info
         private Point myFrameAmount;
-        private float myAnimationSpeed;
         private bool myIsLoop;
 
         public Rectangle SourceRect
         {
             get => mySourceRect;
+        }
+        public float AnimationSpeed
+        {
+            get => myAnimationSpeed;
+            set => myAnimationSpeed = value;
         }
         public bool IsFinished
         {
