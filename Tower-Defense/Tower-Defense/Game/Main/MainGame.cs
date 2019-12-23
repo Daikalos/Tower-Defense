@@ -38,7 +38,7 @@ namespace Tower_Defense
             GameInfo.FolderLevelsInfo = "../../../../Levels/Levels_Info/";
             GameInfo.FolderHighScores = "../../../../Levels/HighScores/";
 
-            Background.Initialize();
+            Background.Initialize(12.0f);
 
             myGameState = new MenuState(this, Window);
 

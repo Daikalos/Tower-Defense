@@ -10,18 +10,21 @@ namespace Tower_Defense
         private static Texture2D myTexture;
         private static Vector2 myPosition;
         private static Point mySize;
-        private static float myAnimationSpeed;
+        private static float 
+            myAnimationSpeed,
+            myParallaxing;
 
-        public static void Initialize()
+        public static void Initialize(float aParallax)
         {
             myBackground = new AnimationManager(new Point(4, 2), 0.15f, true);
             myPosition = Vector2.Zero;
             myAnimationSpeed = 0.15f;
+            myParallaxing = aParallax;
         }
 
         public static void Update()
         {
-            myPosition = -(Camera.Position / 6);
+            myPosition = -(Camera.Position / myParallaxing);
         }
 
         public static void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
