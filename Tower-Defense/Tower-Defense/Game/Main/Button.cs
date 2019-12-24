@@ -59,7 +59,7 @@ namespace Tower_Defense
         {
             aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + new Vector2(myPosition.X + myOrigin.X, myPosition.Y + myOrigin.Y) / Camera.Zoom, 
                 SourceRect, Color.White, 0.0f, myOrigin, myScale / Camera.Zoom, SpriteEffects.None, 0.0f);
-            StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), new Color(79, 96, 113), myTextSize);
+            StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), new Color(59, 76, 93), myTextSize);
         }
 
         public bool IsClicked()

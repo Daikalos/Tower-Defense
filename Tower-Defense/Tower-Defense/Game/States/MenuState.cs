@@ -59,8 +59,8 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Tower-Defense", 
-                new Vector2((aWindow.ClientBounds.Width / 2), (aWindow.ClientBounds.Height / 2) - 200), 
-                new Color(210, 210, 210), 1.5f);
+                new Vector2((aWindow.ClientBounds.Width / 2), (aWindow.ClientBounds.Height / 2) - 200),
+                Color.LightSlateGray, 1.5f);
 
             if (!myLoadLevel)
             {

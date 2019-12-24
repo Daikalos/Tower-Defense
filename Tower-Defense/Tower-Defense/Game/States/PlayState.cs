@@ -32,8 +32,14 @@ namespace Tower_Defense
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
 
-            myBackButton = new Button(new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
-                    new Point(128, 48), Menu, 1, "MENU", 0.6f);
+            myBackButton = new Button(
+                new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
+                new Point(128, 48), Menu, 1, "MENU", 0.6f);
+
+            myShop = new ShopManager(
+                new Vector2(aWindow.ClientBounds.Width, 0), 
+                new Point(aWindow.ClientBounds.Width / 5, aWindow.ClientBounds.Height),
+                new Vector2(32, 0), 18.0f);
 
             EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].Position, new Point(64), 2.0f, 3, 0));
         }
@@ -44,6 +50,7 @@ namespace Tower_Defense
             {
                 Camera.MoveCamera(aGameTime);
                 EnemyManager.Update(aGameTime);
+                myShop.Update(aGameTime, aWindow);
             }
             else
             {
@@ -77,8 +84,12 @@ namespace Tower_Defense
             if (GameInfo.IsPaused)
             {
                 StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "PAUSED", 
-                    new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), Color.Black, 1.5f);
+                    new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), Color.LightSlateGray, 1.5f);
                 myBackButton.Draw(aSpriteBatch);
+            }
+            else
+            {
+                myShop.Draw(aSpriteBatch);
             }
         }
 
@@ -94,6 +105,7 @@ namespace Tower_Defense
             Level.LoadContent();
             EnemyManager.SetTexture();
             myBackButton.LoadContent();
+            myShop.SetTexture("Shop_Menu");
         }
     }
 }

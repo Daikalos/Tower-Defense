@@ -89,3 +89,4 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Wi
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Tileset\tile_02.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Tileset\tile_03.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Tileset\tile_04.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\shop_menu.xnb

@@ -128,18 +128,18 @@ namespace Tower_Defense
                 {
                     myDirection = 0;
                 }
-                else
+                if (GameInfo.Path[myWalkToTile].Position.Y < GameInfo.Path[myWalkToTile - 1].Position.Y)
                 {
                     myDirection = 1;
                 }
             }
-            else
+            if (GameInfo.Path[myWalkToTile].Position.X < GameInfo.Path[myWalkToTile - 1].Position.X)
             {
                 if (GameInfo.Path[myWalkToTile].Position.Y < GameInfo.Path[myWalkToTile - 1].Position.Y)
                 {
                     myDirection = 2;
                 }
-                else
+                if (GameInfo.Path[myWalkToTile].Position.Y > GameInfo.Path[myWalkToTile - 1].Position.Y)
                 {
                     myDirection = 3;
                 }
