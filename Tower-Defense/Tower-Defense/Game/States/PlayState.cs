@@ -34,7 +34,7 @@ namespace Tower_Defense
 
             myBackButton = new Button(
                 new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
-                new Point(128, 48), Menu, 1, "MENU", 0.6f);
+                new Point(128, 48), Menu, 1, "MENU", 0.6f, 1.03f);
 
             myShop = new ShopManager(
                 new Vector2(aWindow.ClientBounds.Width, 0), 
@@ -105,7 +105,7 @@ namespace Tower_Defense
             Level.LoadContent();
             EnemyManager.SetTexture();
             myBackButton.LoadContent();
-            myShop.SetTexture("Shop_Menu");
+            myShop.LoadContent();
         }
     }
 }

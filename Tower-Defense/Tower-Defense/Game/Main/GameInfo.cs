@@ -113,13 +113,13 @@ namespace Tower_Defense
 
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
-            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(), 
-                new Vector2(32, 96), Color.LightSlateGray, 0.7f);
-            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, GameInfo.LevelName,
-                new Vector2(32, 32), Color.LightSlateGray, 0.7f);
-            StringManager.CameraDrawStringMid(aSpriteBatch, aFont, "HighScore: " + HighScore.ToString(), 
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(),
+                new Vector2(32, 64), Color.LightSlateGray, 0.6f);
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: " + myScore.ToString(), 
+                new Vector2(32, 96), Color.MediumSeaGreen, 0.6f);
+            StringManager.CameraDrawStringMid(aSpriteBatch, aFont, GameInfo.LevelName, 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
-
+            
             if (myPath.Count > 1)
             {
                 StringManager.DrawStringMid(aSpriteBatch, aFont, "Start", myPath[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);

@@ -27,15 +27,15 @@ namespace Tower_Defense
             get => myDisplayText;
         }
 
-        public Button(Vector2 aPosition, Point aSize, OnClick aClickFunction, int aButtonType, string aDisplayText, float aTextSize) : base(aPosition, aSize)
+        public Button(Vector2 aPosition, Point aSize, OnClick aClickFunction, int aButtonType, string aDisplayText, float aTextSize, float aUpScale) : base(aPosition, aSize)
         {
             this.myIsClicked = aClickFunction;
             this.myButtonType = (ButtonType)aButtonType;
             this.myDisplayText = aDisplayText;
             this.myTextSize = aTextSize;
+            this.myUpScale = aUpScale;
 
             this.myScale = 1.0f;
-            this.myUpScale = 1.03f;
             this.myResetScale = myScale;
         }
 
@@ -82,16 +82,24 @@ namespace Tower_Defense
             switch (myButtonType)
             {
                 case ButtonType.isLong:
-                    SetTexture("Border_Long");
+                    base.SetTexture("Border_Long");
                     break;
                 case ButtonType.isShort:
-                    SetTexture("Border_Short");
+                    base.SetTexture("Border_Short");
                     break;
                 case ButtonType.isSmall:
-                    SetTexture("Border_Small");
+                    base.SetTexture("Border_Small");
                     break;
             }
 
+            SetOrigin(new Point(1));
+        }
+
+        public override void SetTexture(string aName)
+        {
+            base.SetTexture(aName);
+
+            my8bitFont = ResourceManager.RequestFont("8-bit");
             SetOrigin(new Point(1));
         }
     }

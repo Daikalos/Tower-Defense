@@ -71,6 +71,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Main/border_small.png
 
+#begin Sprites/Main/buy_tower_00.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Main/buy_tower_00.png
+
 #begin Sprites/Main/enemy_00.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -142,6 +154,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Main/shop_menu.png
+
+#begin Sprites/Main/tower_00.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Main/tower_00.png
 
 #begin Sprites/Other/null.png
 /importer:TextureImporter

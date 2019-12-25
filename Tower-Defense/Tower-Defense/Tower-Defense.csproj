@@ -57,22 +57,22 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Forms\LevelInfo.cs">
+    <Compile Include="Game\Forms\LevelInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LevelInfo.Designer.cs">
+    <Compile Include="Game\Forms\LevelInfo.Designer.cs">
       <DependentUpon>LevelInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LevelName.cs">
+    <Compile Include="Game\Forms\LevelName.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LevelName.Designer.cs">
+    <Compile Include="Game\Forms\LevelName.Designer.cs">
       <DependentUpon>LevelName.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\LevelWave.cs">
+    <Compile Include="Game\Forms\LevelWave.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LevelWave.Designer.cs">
+    <Compile Include="Game\Forms\LevelWave.Designer.cs">
       <DependentUpon>LevelWave.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions\AnimationManager.cs" />
@@ -96,7 +96,9 @@
     <Compile Include="Game\Inheritance\State.cs" />
     <Compile Include="Game\Inheritance\StaticObject.cs" />
     <Compile Include="Game\Main\Level.cs" />
+    <Compile Include="Game\Main\ParticleSystem.cs" />
     <Compile Include="Game\Main\ShopManager.cs" />
+    <Compile Include="Game\Main\Tower.cs" />
     <Compile Include="Game\States\DeadState.cs" />
     <Compile Include="Game\States\EditorState.cs" />
     <Compile Include="Game\States\LeaderboardState.cs" />
@@ -126,13 +128,13 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\LevelInfo.resx">
+    <EmbeddedResource Include="Game\Forms\LevelInfo.resx">
       <DependentUpon>LevelInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LevelName.resx">
+    <EmbeddedResource Include="Game\Forms\LevelName.resx">
       <DependentUpon>LevelName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LevelWave.resx">
+    <EmbeddedResource Include="Game\Forms\LevelWave.resx">
       <DependentUpon>LevelWave.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

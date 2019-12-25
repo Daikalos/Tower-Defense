@@ -32,7 +32,7 @@ namespace Tower_Defense
         private LevelInfo myLevelInfoForm;
         private LevelName myLevelNameForm;
         private LevelWave myLevelWaveForm;
-        private Vector2 
+        private Vector2
             myStartPosition,
             myGoalPosition;
         private Rectangle myOffset;
@@ -48,13 +48,13 @@ namespace Tower_Defense
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
-                
-            this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f);
-            this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f);
-            this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f);
-            this.myPathButton = new Button(new Vector2(192, 32), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f);
-            this.myInfoButton = new Button(new Vector2(192, 96), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f);
-            this.myWaveButton = new Button(new Vector2(192, 160), new Point(128, 48), PressEditWaves, 1, "WAVE", 0.6f);
+
+            this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f, 1.03f);
+            this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f, 1.03f);
+            this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f, 1.03f);
+            this.myPathButton = new Button(new Vector2(192, 32), new Point(128, 48), PressCreatePath, 1, "PATH", 0.6f, 1.03f);
+            this.myInfoButton = new Button(new Vector2(192, 96), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f, 1.03f);
+            this.myWaveButton = new Button(new Vector2(192, 160), new Point(128, 48), PressEditWaves, 1, "WAVE", 0.6f, 1.03f);
 
             this.mySelections = new Tile[]
             {
@@ -68,7 +68,7 @@ namespace Tower_Defense
             this.myGoalPosition = Vector2.Zero;
             this.myEditorState = EditorStates.isEditing;
             this.myOffset = new Rectangle(
-                -Level.TileSize.X / 16, -Level.TileSize.Y / 16, 
+                -Level.TileSize.X / 16, -Level.TileSize.Y / 16,
                 Level.TileSize.X / 8, Level.TileSize.Y / 8);
             this.mySelectedTile = '-';
             this.myDelay = 0.50f;
@@ -109,7 +109,7 @@ namespace Tower_Defense
                     break;
             }
 
-            BackPress(aWindow);
+            PressBack(aWindow);
         }
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
@@ -176,6 +176,11 @@ namespace Tower_Defense
 
             StringManager.Draw(aSpriteBatch, my8bitFont);
 
+            DrawPathEnds(aSpriteBatch);
+        }
+
+        private void DrawPathEnds(SpriteBatch aSpriteBatch)
+        {
             if (myStartPosition != Vector2.Zero)
             {
                 StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Start", myStartPosition, Color.Black, 0.3f);
@@ -222,9 +227,9 @@ namespace Tower_Defense
                 mySelections[i].Update();
 
                 mySelections[i].BoundingBox = new Rectangle(
-                    (int)(Camera.TopLeftCorner.X + (mySelections[i].Position.X / Camera.Zoom)), 
+                    (int)(Camera.TopLeftCorner.X + (mySelections[i].Position.X / Camera.Zoom)),
                     (int)(Camera.TopLeftCorner.Y + (mySelections[i].Position.Y + (48 * i)) / Camera.Zoom),
-                    (int)(mySelections[i].BoundingBox.Width / Camera.Zoom), 
+                    (int)(mySelections[i].BoundingBox.Width / Camera.Zoom),
                     (int)(mySelections[i].BoundingBox.Height / Camera.Zoom));
 
                 Rectangle tempRect = mySelections[i].BoundingBox;
@@ -289,7 +294,7 @@ namespace Tower_Defense
             for (int i = 0; i < myLevels.Length; i++)
             {
                 myLevels[i] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, 64 + (i * 40)),
-                    new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
+                    new Point(226, 32), null, 2, tempLevelNames[i], 0.4f, 1.03f);
                 myLevels[i].LoadContent();
             }
         }
@@ -349,7 +354,7 @@ namespace Tower_Defense
                 if (tempLevelNames[i] != "Level_Template")
                 {
                     myLevels[tempAddButton] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, 64 + (tempAddButton * 40)),
-                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f);
+                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f, 1.03f);
                     myLevels[tempAddButton].LoadContent();
 
                     tempAddButton++;
@@ -445,7 +450,7 @@ namespace Tower_Defense
             }
         }
 
-        private void BackPress(GameWindow aWindow)
+        private void PressBack(GameWindow aWindow)
         {
             if (KeyMouseReader.KeyPressed(Keys.Escape))
             {

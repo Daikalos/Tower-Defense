@@ -60,6 +60,12 @@ namespace Tower_Defense
             ResourceManager.AddTexture("Background", this.Content.Load<Texture2D>("Sprites/Main/background"));
             ResourceManager.AddTexture("Shop_Menu", this.Content.Load<Texture2D>("Sprites/Main/shop_menu"));
 
+            for (int i = 0; i < 5; i++)
+            {
+                ResourceManager.AddTexture("Tile_" + Extensions.NumberFormat(i), 
+                    this.Content.Load<Texture2D>("Sprites/Tileset/tile_" + Extensions.NumberFormat(i)));
+            }
+
             for (int i = 0; i < 4; i++)
             {
                 ResourceManager.AddTexture("Enemy_" + Extensions.NumberFormat(i), 
@@ -67,9 +73,16 @@ namespace Tower_Defense
             }
             ResourceManager.AddTexture("Healthbar", this.Content.Load<Texture2D>("Sprites/Main/healthbar"));
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 1; i++)
             {
-                ResourceManager.AddTexture("Tile_" + Extensions.NumberFormat(i), this.Content.Load<Texture2D>("Sprites/Tileset/tile_" + Extensions.NumberFormat(i)));
+                ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i),
+                    this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i)));
+            }
+
+            for (int i = 0; i < 1; i++)
+            {
+                ResourceManager.AddTexture("Buy_Tower_" + Extensions.NumberFormat(i),
+                    this.Content.Load<Texture2D>("Sprites/Main/buy_tower_" + Extensions.NumberFormat(i)));
             }
 
             Background.LoadContent();
@@ -84,9 +97,7 @@ namespace Tower_Defense
         protected override void Update(GameTime aGameTime)
         {
             KeyMouseReader.Update();
-
             StringManager.Update(aGameTime);
-
             Background.Update();
 
             myGameState.Update(aGameTime, Window);
