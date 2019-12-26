@@ -25,16 +25,16 @@ namespace Tower_Defense
             {
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 - 90),
-                    new Point(452, 64), Play, 0, "PLAY", 1.1f, 1.03f),
+                    new Point(452, 64), Play, 0, "PLAY", 1.1f, 1.0f, 1.03f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 - 10),
-                    new Point(452, 64), Editor, 0, "EDITOR", 1.1f, 1.03f),
+                    new Point(452, 64), Editor, 0, "EDITOR", 1.1f, 1.0f, 1.03f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 + 70),
-                    new Point(452, 64), Leaderboard, 0, "LEADERBOARD", 1.1f, 1.03f),
+                    new Point(452, 64), Leaderboard, 0, "LEADERBOARD", 1.1f, 1.0f, 1.03f),
                 new Button(
                     new Vector2((aWindow.ClientBounds.Width / 2) - 226, (aWindow.ClientBounds.Height / 2) - 32 + 150),
-                    new Point(452, 64), Exit, 0, "EXIT", 1.1f, 1.03f),
+                    new Point(452, 64), Exit, 0, "EXIT", 1.1f, 1.0f, 1.03f),
             };
         }
 
@@ -87,7 +87,7 @@ namespace Tower_Defense
                 if (tempLevelNames[i] != "Level_Template")
                 {
                     myLevels[tempAddLevel] = new Button(new Vector2((aWindow.ClientBounds.Width / 2) - 113, (aWindow.ClientBounds.Height / 2) - 64 - 90 + (tempAddLevel * 40)),
-                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f, 1.03f);
+                        new Point(226, 32), null, 2, tempLevelNames[i], 0.4f, 1.0f, 1.03f);
                     myLevels[tempAddLevel].LoadContent();
 
                     tempAddLevel++;

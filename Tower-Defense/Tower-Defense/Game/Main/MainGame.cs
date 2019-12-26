@@ -73,16 +73,12 @@ namespace Tower_Defense
             }
             ResourceManager.AddTexture("Healthbar", this.Content.Load<Texture2D>("Sprites/Main/healthbar"));
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i),
                     this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i)));
-            }
-
-            for (int i = 0; i < 1; i++)
-            {
-                ResourceManager.AddTexture("Buy_Tower_" + Extensions.NumberFormat(i),
-                    this.Content.Load<Texture2D>("Sprites/Main/buy_tower_" + Extensions.NumberFormat(i)));
+                ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i) + "_Buy",
+                    this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i) + "_buy"));
             }
 
             Background.LoadContent();

@@ -83,7 +83,7 @@ namespace Tower_Defense
                     this.myTileForm = StaticRandom.RandomNumber(1, 4);
                     break;
                 case '/':
-                    this.myIsObstacle = false;
+                    this.myIsObstacle = true;
                     this.myColor = new Color(150, 150, 240);
                     this.myTileForm = StaticRandom.RandomNumber(4, 5);
                     break;

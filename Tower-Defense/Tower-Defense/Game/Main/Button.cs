@@ -20,30 +20,30 @@ namespace Tower_Defense
             myTextSize,
             myScale,
             myUpScale,
-            myResetScale;
+            mySaveScale;
 
         public string DisplayText
         {
             get => myDisplayText;
         }
 
-        public Button(Vector2 aPosition, Point aSize, OnClick aClickFunction, int aButtonType, string aDisplayText, float aTextSize, float aUpScale) : base(aPosition, aSize)
+        public Button(Vector2 aPosition, Point aSize, OnClick aClickFunction, int aButtonType, string aDisplayText, float aTextSize, float aScale, float aUpScale) : base(aPosition, aSize)
         {
             this.myIsClicked = aClickFunction;
             this.myButtonType = (ButtonType)aButtonType;
             this.myDisplayText = aDisplayText;
             this.myTextSize = aTextSize;
+            this.myScale = aScale;
             this.myUpScale = aUpScale;
 
-            this.myScale = 1.0f;
-            this.myResetScale = myScale;
+            this.mySaveScale = myScale;
         }
 
         public void Update(GameWindow aWindow)
         {
             base.Update();
 
-            myScale = myResetScale;
+            myScale = mySaveScale;
 
             if (IsClicked())
             {
@@ -57,7 +57,7 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + new Vector2(myPosition.X + myOrigin.X, myPosition.Y + myOrigin.Y) / Camera.Zoom, 
+            aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + new Vector2(myPosition.X + myOrigin.X * mySaveScale, myPosition.Y + myOrigin.Y * mySaveScale) / Camera.Zoom, 
                 SourceRect, Color.White, 0.0f, myOrigin, myScale / Camera.Zoom, SpriteEffects.None, 0.0f);
             StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, myDisplayText, myDestRect.Center.ToVector2(), new Color(59, 76, 93), myTextSize);
         }

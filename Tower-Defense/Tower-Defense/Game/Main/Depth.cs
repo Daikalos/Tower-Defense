@@ -18,9 +18,17 @@ namespace Tower_Defense
             myObjects = new List<GameObject>();
         }
 
-        public static void AddObject(params GameObject[] aObject)
+        public static void AddObject(params GameObject[] someObject)
         {
-            myObjects.AddRange(aObject);
+            myObjects.AddRange(someObject);
+        }
+
+        public static void RemoveObject(params GameObject[] someObject)
+        {
+            foreach (GameObject obj in someObject)
+            {
+                myObjects.Remove(obj);
+            }
         }
 
         public static void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime)

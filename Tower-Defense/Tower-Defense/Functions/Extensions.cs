@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Tower_Defense
 {
@@ -21,6 +22,14 @@ namespace Tower_Defense
                 return aVector;
             }
             return new Vector2();
+        }
+
+        /// <summary>
+        /// In degrees 0-360
+        /// </summary>
+        public static float AngleToPoint(Vector2 aPointA, Vector2 aPointB)
+        {
+            return (float)Math.Atan2((aPointB.Y - aPointA.Y), (aPointB.X - aPointA.X)) * (180.0f / (float)Math.PI);
         }
     }
 }

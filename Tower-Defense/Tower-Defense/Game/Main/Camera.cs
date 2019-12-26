@@ -51,7 +51,7 @@ namespace Tower_Defense
             myOldMousePosition = Point.Zero;
             myZoomLimit = new Vector2(0.5f, 2.0f);
             myZoom = 1.0f;
-            myZoomValue = 0.05f;
+            myZoomValue = 0.05f; //Fixed values
         }
 
         public static void MoveCamera(GameTime aGameTime)

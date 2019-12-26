@@ -14,6 +14,8 @@ namespace Tower_Defense
         private static int[] myHighScores;
         private static int 
             myScore,
+            myMoney,
+            myHealth,
             myGameSpeed;
         private static string
             myLevelName,
@@ -35,14 +37,20 @@ namespace Tower_Defense
         {
             get => myHighScores;
         }
-        public static int HighScore
-        {
-            get => myHighScores.Max();
-        }
         public static int Score
         {
             get => myScore;
             set => myScore = value;
+        }
+        public static int Money
+        {
+            get => myMoney;
+            set => myMoney = value;
+        }
+        public static int Health
+        {
+            get => myHealth;
+            set => myHealth = value;
         }
         public static int GameSpeed
         {
@@ -74,6 +82,8 @@ namespace Tower_Defense
         {
             myScore = 0;
             myGameSpeed = 1;
+            myHealth = 100;
+            myMoney = 500; //Starting values
         }
 
         public static void LoadHighScore(string aLevelName)
@@ -115,8 +125,10 @@ namespace Tower_Defense
         {
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(),
                 new Vector2(32, 64), Color.LightSlateGray, 0.6f);
-            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: " + myScore.ToString(), 
-                new Vector2(32, 96), Color.MediumSeaGreen, 0.6f);
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: " + myMoney.ToString(), 
+                new Vector2(32, 128), Color.MediumSeaGreen, 0.6f);
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Health: " + myHealth.ToString(),
+                new Vector2(32, 160), Color.IndianRed, 0.6f);
             StringManager.CameraDrawStringMid(aSpriteBatch, aFont, GameInfo.LevelName, 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
             

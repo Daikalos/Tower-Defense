@@ -88,14 +88,20 @@ namespace Tower_Defense
                 ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2,
                 ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);
 
-            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i += TileSize.X / 2)
+            int tempXPosition = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2));
+            int tempXLength = (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2);
+
+            int tempYPosition = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2));
+            int tempYLength = (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2);
+
+            for (int x = tempXPosition; x < tempXLength; x += TileSize.X / 2)
             {
-                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j += TileSize.Y / 2)
+                for (int y = tempYPosition; y < tempYLength; y += TileSize.Y / 2)
                 {
-                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
+                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(x, y));
                     if (tempTile.Item2)
                     {
-                        Level.TileAtPos(new Vector2(i, j)).Item1.Draw(aSpriteBatch);
+                        Level.TileAtPos(new Vector2(x, y)).Item1.Draw(aSpriteBatch);
                     }
                 }
             }
@@ -104,17 +110,23 @@ namespace Tower_Defense
         {
             Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
             Vector2 tempCameraDimensions = new Vector2(
-                ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2, 
+                ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2,
                 ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);
 
-            for (int i = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2)); i < (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2); i += TileSize.X / 2)
+            int tempXPosition = (int)(tempCameraOffset.X - (tempCameraDimensions.X / 2));
+            int tempXLength = (int)tempCameraOffset.X + (int)Math.Ceiling(tempCameraDimensions.X / 2);
+
+            int tempYPosition = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2));
+            int tempYLength = (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2);
+
+            for (int x = tempXPosition; x < tempXLength; x += TileSize.X / 2)
             {
-                for (int j = (int)(tempCameraOffset.Y - (tempCameraDimensions.Y / 2)); j < (int)tempCameraOffset.Y + (int)Math.Ceiling(tempCameraDimensions.Y / 2); j += TileSize.Y / 2)
+                for (int y = tempYPosition; y < tempYLength; y += TileSize.Y / 2)
                 {
-                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(i, j));
+                    Tuple<Tile, bool> tempTile = Level.TileAtPos(new Vector2(x, y));
                     if (tempTile.Item2)
                     {
-                        Level.TileAtPos(new Vector2(i, j)).Item1.DrawEditor(aSpriteBatch);
+                        Level.TileAtPos(new Vector2(x, y)).Item1.DrawEditor(aSpriteBatch);
                     }
                 }
             }
