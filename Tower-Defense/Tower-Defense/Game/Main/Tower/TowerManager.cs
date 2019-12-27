@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using LilyPath;
 
 namespace Tower_Defense
 {
@@ -18,22 +19,20 @@ namespace Tower_Defense
             myTowers = new List<Tower>();
         }
 
-        public static void AddTower(Tower aTower)
-        {
-            myTowers.Add(aTower);
-            Depth.AddObject(aTower);
-
-            aTower.SetTexture();
-        }
-
-        public static void Update(GameTime aGameTime)
+        public static void Update(GameTime aGameTime, UpgradeManager aUpgrade)
         {
             for (int i = myTowers.Count - 1; i >= 0; i--)
             {
                 myTowers[i].Update(aGameTime);
                 if (!myTowers[i].IsAlive)
                 {
+                    Depth.RemoveObject(myTowers[i]);
                     myTowers.RemoveAt(i);
+                }
+
+                if (myTowers[i].IsClicked())
+                {
+                    aUpgrade.SelectedTower = myTowers[i];
                 }
             }
         }
@@ -46,6 +45,13 @@ namespace Tower_Defense
             }
         }
 
+        public static void AddTower(Tower aTower)
+        {
+            myTowers.Add(aTower);
+            Depth.AddObject(aTower);
+
+            aTower.LoadContent();
+        }
         public static void RemoveAll()
         {
             myTowers.RemoveAll(e => e.IsAlive);
@@ -55,18 +61,7 @@ namespace Tower_Defense
         {
             foreach (Tower tower in myTowers)
             {
-                if (tower is Tower_00)
-                {
-                    tower.SetTexture("Tower_00");
-                }
-                if (tower is Tower_01)
-                {
-                    tower.SetTexture("Tower_01");
-                }
-                if (tower is Tower_02)
-                {
-                    tower.SetTexture("Tower_02");
-                }
+                tower.SetTexture(tower.GetType().Name);
             }
         }
     }

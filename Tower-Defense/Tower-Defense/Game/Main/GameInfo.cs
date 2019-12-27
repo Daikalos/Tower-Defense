@@ -83,7 +83,7 @@ namespace Tower_Defense
             myScore = 0;
             myGameSpeed = 1;
             myHealth = 100;
-            myMoney = 500; //Starting values
+            myMoney = 500000; //Starting values
         }
 
         public static void LoadHighScore(string aLevelName)
@@ -125,7 +125,7 @@ namespace Tower_Defense
         {
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + myScore.ToString(),
                 new Vector2(32, 64), Color.LightSlateGray, 0.6f);
-            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: " + myMoney.ToString(), 
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: $" + myMoney.ToString(), 
                 new Vector2(32, 128), Color.MediumSeaGreen, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Health: " + myHealth.ToString(),
                 new Vector2(32, 160), Color.IndianRed, 0.6f);

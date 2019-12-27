@@ -7,8 +7,13 @@ namespace Tower_Defense
 {
     class ShopManager : DynamicObject
     {
+        //LilyPath
+        private DrawBatch myDrawBatch;
+
+        //Shop
         private SpriteFont my8bitFont;
         private Button[] myBuyOptions;
+        private Tile myCurrentTile;
         private Vector2[] myBuyOptionsOffset;
         private Vector2 
             myShowPosition,
@@ -16,8 +21,10 @@ namespace Tower_Defense
         private int[] myBuyPrice;
         private int mySelectedTower;
 
-        public ShopManager(Vector2 aPosition, Point aSize, Vector2 aOffset, float aSpeed) : base(aPosition, aSize, aSpeed)
+        public ShopManager(Vector2 aPosition, Point aSize, float aSpeed, GraphicsDevice aDevice, Vector2 aOffset) : base(aPosition, aSize, aSpeed)
         {
+            this.myDrawBatch = new DrawBatch(aDevice);
+
             this.myBuyOptions = new Button[]
             {
                 new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, (1.0f / 3.0f), 0.36f),
@@ -39,13 +46,13 @@ namespace Tower_Defense
                 switch (i) //Because price is individual, switch or similiar method must be used
                 {
                     case 0:
-                        myBuyPrice[i] = 200;
+                        myBuyPrice[i] = TowerProperties.Tower_00.Price;
                         break;
                     case 1:
-                        myBuyPrice[i] = 325;
+                        myBuyPrice[i] = TowerProperties.Tower_01.Price;
                         break;
                     case 2:
-                        myBuyPrice[i] = 615;
+                        myBuyPrice[i] = TowerProperties.Tower_02.Price;
                         break;
                 }
             }
@@ -54,39 +61,67 @@ namespace Tower_Defense
         public void Update(GameTime aGameTime, GameWindow aWindow)
         {
             MenuSlide(aGameTime);
-
             PlaceTower();
 
-            for (int i = 0; i < myBuyOptions.Length; i++)
-            {
-                myBuyOptions[i].Update(aWindow);
-                myBuyOptions[i].Position = myPosition + myBuyOptionsOffset[i];
-
-                if (myBuyOptions[i].IsClicked())
-                {
-                    mySelectedTower = i;
-                }
-            }
+            UpdateButtons(aWindow);
         }
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + myPosition / Camera.Zoom, 
+            DrawTowerRange();
+
+            aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + myPosition / Camera.Zoom,
                 SourceRect, Color.White, 0.0f, Vector2.Zero, 1.0f / Camera.Zoom, SpriteEffects.None, 0.0f);
 
             Array.ForEach(myBuyOptions, o => o.Draw(aSpriteBatch));
 
             for (int i = 0; i < myBuyPrice.Length; i++)
             {
-                StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "$" + myBuyPrice[i].ToString(), 
+                StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "$" + myBuyPrice[i].ToString(),
                     new Vector2(myBuyOptions[i].Position.X + 2, myBuyOptions[i].Position.Y + 105), Color.MediumSeaGreen, 0.5f);
             }
 
             if (mySelectedTower >= 0 && mySelectedTower < myBuyOptions.Length)
             {
-                aSpriteBatch.Draw(myBuyOptions[mySelectedTower].Texture, Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()), 
+                aSpriteBatch.Draw(myBuyOptions[mySelectedTower].Texture, Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()),
                     null, Color.White, 0.0f, Vector2.Zero, 0.25f / Camera.Zoom, SpriteEffects.None, 0.0f);
             }
+        }
+
+        private void DrawTowerRange()
+        {
+            myDrawBatch.Begin(DrawSortMode.Deferred, BlendState.AlphaBlend,
+                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
+
+            if (myCurrentTile != null)
+            {
+                switch (mySelectedTower)
+                {
+                    case 0: //Tower_00
+                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                            (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_00.Range / 2)),
+                            (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_00.Range / 4)),
+                            (int)(TowerProperties.Tower_00.Range),
+                            (int)(TowerProperties.Tower_00.Range / 2)));
+                        break;
+                    case 1: //Tower_01
+                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                            (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_01.Range / 2)),
+                            (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_01.Range / 4)),
+                            (int)(TowerProperties.Tower_01.Range),
+                            (int)(TowerProperties.Tower_01.Range / 2)));
+                        break;
+                    case 2: //Tower_02
+                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                            (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_02.Range / 2)),
+                            (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_02.Range / 4)),
+                            (int)(TowerProperties.Tower_02.Range),
+                            (int)(TowerProperties.Tower_02.Range / 2)));
+                        break;
+                }
+            }
+
+            myDrawBatch.End();
         }
 
         private void MenuSlide(GameTime aGameTime)
@@ -116,18 +151,18 @@ namespace Tower_Defense
                 }
             }
         }
-
         private void PlaceTower()
         {
             if (mySelectedTower != -1)
             {
-                if (KeyMouseReader.LeftClick() && GameInfo.Money >= myBuyPrice[mySelectedTower])
-                {
-                    Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
-                    if (tempTile.Item2)
+                if (tempTile.Item2)
+                {
+                    if (!tempTile.Item1.IsObstacle)
                     {
-                        if (!tempTile.Item1.IsObstacle)
+                        myCurrentTile = tempTile.Item1;
+                        if (KeyMouseReader.LeftClick() && GameInfo.Money >= myBuyPrice[mySelectedTower])
                         {
                             switch (mySelectedTower)
                             {
@@ -146,12 +181,31 @@ namespace Tower_Defense
                             GameInfo.Money -= myBuyPrice[mySelectedTower];
 
                             mySelectedTower = -1;
+                            myCurrentTile = null;
                         }
+                    }
+                    else
+                    {
+                        myCurrentTile = null;
                     }
                 }
                 if (KeyMouseReader.RightClick())
                 {
                     mySelectedTower = -1;
+                    myCurrentTile = null;
+                }
+            }
+        }
+        private void UpdateButtons(GameWindow aWindow)
+        {
+            for (int i = 0; i < myBuyOptions.Length; i++)
+            {
+                myBuyOptions[i].Update(aWindow);
+                myBuyOptions[i].Position = myPosition + myBuyOptionsOffset[i];
+
+                if (myBuyOptions[i].IsClicked())
+                {
+                    mySelectedTower = i;
                 }
             }
         }
@@ -165,7 +219,7 @@ namespace Tower_Defense
 
             for (int i = 0; i < myBuyOptions.Length; i++)
             {
-                myBuyOptions[i].SetTexture("Tower_" + Extensions.NumberFormat(i) + "_Buy");
+                myBuyOptions[i].SetTexture("Tower_" + Extensions.NumberFormat(i) + "_Icon");
             }
         }
     }

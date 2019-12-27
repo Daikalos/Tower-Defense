@@ -9,7 +9,8 @@ namespace Tower_Defense
         {
             isLong,
             isShort,
-            isSmall
+            isSmall,
+            isUpgrade
         }
 
         private SpriteFont my8bitFont;
@@ -89,6 +90,9 @@ namespace Tower_Defense
                     break;
                 case ButtonType.isSmall:
                     base.SetTexture("Border_Small");
+                    break;
+                case ButtonType.isUpgrade:
+                    base.SetTexture("Border_Upgrade");
                     break;
             }
 

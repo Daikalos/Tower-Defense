@@ -23,7 +23,7 @@ namespace Tower_Defense
             myEnemies.Add(anEnemy);
             Depth.AddObject(anEnemy);
 
-            anEnemy.SetTexture();
+            anEnemy.LoadContent();
         }
 
         public static void Update(GameTime aGameTime)
@@ -56,7 +56,7 @@ namespace Tower_Defense
         {
             foreach (Enemy enemy in myEnemies)
             {
-                enemy.SetTexture();
+                enemy.LoadContent();
             }
         }
     }

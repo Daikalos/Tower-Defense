@@ -1,12 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
 {
-    class Tower : StaticObject
+    abstract class Tower : StaticObject
     {
-        private Vector2 myOffsetPosition;
+        protected Tower_Properties myProperties;
+
+        private Vector2 myOffsetPosition; //Middle of tile
         private bool myIsAlive; //Incase if tower is sold
+
+        public Tower_Properties Properties
+        {
+            get => myProperties;
+            set => myProperties = value;
+        }
 
         public Vector2 OffsetPosition
         {
@@ -27,29 +36,84 @@ namespace Tower_Defense
 
             this.myDestRect = new Rectangle((int)myPosition.X, (int)myPosition.Y, mySize.X, mySize.Y); //Update destination rect after new values
             this.myIsAlive = true;
+
+            this.myProperties = new Tower_Properties();
+
+            this.myProperties.TowerLevels = new int[]
+            {
+                1, 1, 1, 1
+            };
+
+            this.myProperties.FireSpeedLevel = myProperties.TowerLevels[0];
+            this.myProperties.RangeLevel = myProperties.TowerLevels[1];
+            this.myProperties.DamageLevel = myProperties.TowerLevels[2];
+            this.myProperties.NumberOfTargetsLevel = myProperties.TowerLevels[3];
         }
 
         public virtual void Update(GameTime aGameTime) //Template for manager
         {
             base.Update();
+
+            myProperties.TowerLevels[0] = myProperties.FireSpeedLevel;
+            myProperties.TowerLevels[1] = myProperties.RangeLevel;
+            myProperties.TowerLevels[2] = myProperties.DamageLevel;
+            myProperties.TowerLevels[3] = myProperties.NumberOfTargetsLevel;
+
+            IsClicked();
+            Attack(aGameTime);
         }
 
-        public void SetTexture()
+        private void Attack(GameTime aGameTime)
         {
-            if (this is Tower_00)
+            myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            if (myProperties.FireSpeed <= 0)
             {
-                base.SetTexture("Tower_00");
-                SourceRect = new Rectangle(0, 0, myTexture.Width / 2, myTexture.Height / 2);
+                //Improvements, convert shortest distance from outer bounds of ellipse (help...)
+                Vector2[] tempDistToEnemy = new Vector2[EnemyManager.Enemies.Count];
+
+
+
+                myProperties.FireSpeed = myProperties.FireSpeedDelay;
             }
-            if (this is Tower_01)
+        }
+
+        public bool IsClicked()
+        {
+            if (KeyMouseReader.LeftClick())
             {
-                base.SetTexture("Tower_01");
-                SourceRect = new Rectangle(0, 0, myTexture.Width / 2, myTexture.Height / 2);
+                Tile tempTile1 = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2())).Item1;
+                Tile tempTile2 = Level.TileAtPos(myOffsetPosition).Item1;
+
+                if (tempTile1 == tempTile2)
+                {
+                    return true;
+                }
             }
-            if (this is Tower_02)
-            {
-                base.SetTexture("Tower_02");
-            }
+            return false;
+        }
+
+        public abstract void LoadContent();
+
+        public class Tower_Properties
+        {
+            public string Name { get; set; }
+
+            public float FireSpeed { get; set; }
+            public float FireSpeedDelay { get; set; }
+            public float Range { get; set; }
+            public int Damage { get; set; }
+            public int NumberOfTargets { get; set; }
+
+            public int[] TowerLevels { get; set; }
+            public int FireSpeedLevel { get; set; }
+            public int RangeLevel { get; set; }
+            public int DamageLevel { get; set; }
+            public int NumberOfTargetsLevel { get; set; }
+
+            public int FireSpeed_Price { get; set; }
+            public int Range_Price { get; set; }
+            public int Damage_Price { get; set; }
+            public int NumberOfTargets_Price { get; set; }
         }
     }
 }

@@ -90,6 +90,11 @@
     <Compile Include="Game\Main\Depth.cs" />
     <Compile Include="Game\Main\Enemy\Enemy.cs" />
     <Compile Include="Game\Main\Enemy\EnemyManager.cs" />
+    <Compile Include="Game\Main\Enemy\EnemyProperties.cs" />
+    <Compile Include="Game\Main\Enemy\Enemy_00.cs" />
+    <Compile Include="Game\Main\Enemy\Enemy_01.cs" />
+    <Compile Include="Game\Main\Enemy\Enemy_02.cs" />
+    <Compile Include="Game\Main\Enemy\Enemy_03.cs" />
     <Compile Include="Game\Main\GameInfo.cs" />
     <Compile Include="Game\Inheritance\DynamicObject.cs" />
     <Compile Include="Game\Inheritance\GameObject.cs" />
@@ -100,9 +105,11 @@
     <Compile Include="Game\Main\ShopManager.cs" />
     <Compile Include="Game\Main\Tower\Tower.cs" />
     <Compile Include="Game\Main\Tower\TowerManager.cs" />
+    <Compile Include="Game\Main\Tower\TowerProperties.cs" />
     <Compile Include="Game\Main\Tower\Tower_00.cs" />
     <Compile Include="Game\Main\Tower\Tower_01.cs" />
     <Compile Include="Game\Main\Tower\Tower_02.cs" />
+    <Compile Include="Game\Main\UpgradeManager.cs" />
     <Compile Include="Game\States\DeadState.cs" />
     <Compile Include="Game\States\EditorState.cs" />
     <Compile Include="Game\States\LeaderboardState.cs" />

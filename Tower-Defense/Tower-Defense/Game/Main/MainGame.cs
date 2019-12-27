@@ -56,9 +56,11 @@ namespace Tower_Defense
             ResourceManager.AddTexture("Border_Long", this.Content.Load<Texture2D>("Sprites/Main/border_long"));
             ResourceManager.AddTexture("Border_Short", this.Content.Load<Texture2D>("Sprites/Main/border_short"));
             ResourceManager.AddTexture("Border_Small", this.Content.Load<Texture2D>("Sprites/Main/border_small"));
+            ResourceManager.AddTexture("Border_Upgrade", this.Content.Load<Texture2D>("Sprites/Main/border_upgrade"));
 
             ResourceManager.AddTexture("Background", this.Content.Load<Texture2D>("Sprites/Main/background"));
             ResourceManager.AddTexture("Shop_Menu", this.Content.Load<Texture2D>("Sprites/Main/shop_menu"));
+            ResourceManager.AddTexture("Upgrade_Menu", this.Content.Load<Texture2D>("Sprites/Main/upgrade_menu"));
 
             for (int i = 0; i < 5; i++)
             {
@@ -77,8 +79,8 @@ namespace Tower_Defense
             {
                 ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i),
                     this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i)));
-                ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i) + "_Buy",
-                    this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i) + "_buy"));
+                ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i) + "_Icon",
+                    this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i) + "_icon"));
             }
 
             Background.LoadContent();

@@ -18,6 +18,7 @@ namespace Tower_Defense
         public Texture2D Texture
         {
             get => myTexture;
+            set => myTexture = value;
         }
         public Vector2 Position
         {

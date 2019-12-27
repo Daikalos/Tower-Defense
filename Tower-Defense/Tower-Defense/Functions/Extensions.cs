@@ -31,5 +31,11 @@ namespace Tower_Defense
         {
             return (float)Math.Atan2((aPointB.Y - aPointA.Y), (aPointB.X - aPointA.X)) * (180.0f / (float)Math.PI);
         }
+
+        public static bool PointWithinEllipse(Vector2 aPoint, Rectangle anEllipse)
+        {
+
+            return false;
+        }
     }
 }

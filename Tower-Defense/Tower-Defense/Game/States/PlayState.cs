@@ -9,6 +9,7 @@ namespace Tower_Defense
         private SpriteFont my8bitFont;
         private Button myBackButton;
         private ShopManager myShop;
+        private UpgradeManager myUpgrade;
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
@@ -39,23 +40,36 @@ namespace Tower_Defense
 
             myShop = new ShopManager(
                 new Vector2(aWindow.ClientBounds.Width, 0), 
-                new Point(aWindow.ClientBounds.Width / 5, aWindow.ClientBounds.Height),
-                new Vector2(32, 0), 18.0f);
+                new Point(aWindow.ClientBounds.Width / 5, aWindow.ClientBounds.Height), 18.0f,
+                myGame.GraphicsDevice, new Vector2(32, 0));
 
-            EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].GetCenter(), new Point(64), 0.9f, 3, 0));
-            EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].GetCenter(), new Point(64), 0.4f, 3, 1));
-            EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].GetCenter(), new Point(64), 0.5f, 3, 2));
-            EnemyManager.AddEnemy(new Enemy(GameInfo.Path[0].GetCenter(), new Point(64), 1.5f, 3, 3));
+            myUpgrade = new UpgradeManager(
+                new Vector2(0, aWindow.ClientBounds.Height),
+                new Point(aWindow.ClientBounds.Width / 3, aWindow.ClientBounds.Height / 5), 18.0f,
+                myGame.GraphicsDevice, new Vector2(0, 32));
+
+            EnemyManager.AddEnemy(new Enemy_00(GameInfo.Path[0].GetCenter(), new Point(64)));
+            EnemyManager.AddEnemy(new Enemy_01(GameInfo.Path[0].GetCenter(), new Point(64)));
+            EnemyManager.AddEnemy(new Enemy_02(GameInfo.Path[0].GetCenter(), new Point(64)));
+            EnemyManager.AddEnemy(new Enemy_03(GameInfo.Path[0].GetCenter(), new Point(64)));
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
         {
             if (!GameInfo.IsPaused)
             {
+                myShop.Update(aGameTime, aWindow);
+                myUpgrade.Update(aGameTime, aWindow);
+
                 Camera.MoveCamera(aGameTime);
                 EnemyManager.Update(aGameTime);
-                TowerManager.Update(aGameTime);
-                myShop.Update(aGameTime, aWindow);
+                TowerManager.Update(aGameTime, myUpgrade);
+
+                if (GameInfo.Health <= 0)
+                {
+                    GameInfo.SaveHighScore(GameInfo.LevelName);
+                    myGame.ChangeState(new DeadState(myGame));
+                }
             }
             else
             {
@@ -100,7 +114,9 @@ namespace Tower_Defense
             else
             {
                 GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
+
                 myShop.Draw(aSpriteBatch);
+                myUpgrade.Draw(aSpriteBatch);
             }
         }
 
@@ -116,6 +132,7 @@ namespace Tower_Defense
             Level.LoadContent();
             myBackButton.LoadContent();
             myShop.LoadContent();
+            myUpgrade.LoadContent();
         }
     }
 }

@@ -9,6 +9,7 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_long.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_short.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_small.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/border_upgrade.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_00.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_01.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_02.png</File>
@@ -16,9 +17,10 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/healthbar.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/shop_menu.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_00.png</File>
-    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_00_buy.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_00_icon.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_01.png</File>
-    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_01_buy.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_01_icon.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/upgrade_menu.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Other/null.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_00.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_01.png</File>
@@ -27,6 +29,8 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_04.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

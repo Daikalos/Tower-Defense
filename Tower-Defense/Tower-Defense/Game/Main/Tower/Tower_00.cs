@@ -8,13 +8,30 @@ namespace Tower_Defense
     {
         public Tower_00(Vector2 aPosition, Point aSize) : base(aPosition, aSize)
         {
+            this.myProperties.Name = TowerProperties.Tower_00.Name;
 
+            this.myProperties.FireSpeed = TowerProperties.Tower_00.FireSpeed;
+            this.myProperties.Range = TowerProperties.Tower_00.Range;
+            this.myProperties.Damage = TowerProperties.Tower_00.Damage;
+            this.myProperties.NumberOfTargets = TowerProperties.Tower_00.NumberOfTargets;
+
+            this.myProperties.FireSpeed_Price = TowerProperties.Tower_00.FireSpeed_Price;
+            this.myProperties.Range_Price = TowerProperties.Tower_00.Range_Price;
+            this.myProperties.Damage_Price = TowerProperties.Tower_00.Damage_Price;
+            this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_00.NumberOfTargets_Price;
+
+            this.myProperties.FireSpeedDelay = myProperties.FireSpeed;
         }
 
         public override void Update(GameTime aGameTime)
         {
-            base.Update();
+            base.Update(aGameTime);
 
+            RotateTower();
+        }
+
+        private void RotateTower()
+        {
             if (EnemyManager.Enemies.Count > 0)
             {
                 float tempAngle = Extensions.AngleToPoint(OffsetPosition, EnemyManager.Enemies[0].OffsetPosition) + 180.0f; //180 to match spritesheet
@@ -29,11 +46,18 @@ namespace Tower_Defense
                 tempRotateTowerX = (int)(tempRotateTowerX % 2);
 
                 mySourceRect = new Rectangle(
-                    (int)((myTexture.Width / 2) * tempRotateTowerX), 
-                    (int)((myTexture.Height / 2) * tempRotateTowerY), 
-                    (int)(myTexture.Width / 2), 
+                    (int)((myTexture.Width / 2) * tempRotateTowerX),
+                    (int)((myTexture.Height / 2) * tempRotateTowerY),
+                    (int)(myTexture.Width / 2),
                     (int)(myTexture.Height / 2));
             }
+        }
+
+        public override void LoadContent()
+        {
+            base.SetTexture(this.GetType().Name);
+
+            SourceRect = new Rectangle(0, 0, myTexture.Width / 2, myTexture.Height / 2);
         }
     }
 }
