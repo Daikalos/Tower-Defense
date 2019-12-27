@@ -98,21 +98,21 @@ namespace Tower_Defense
                 switch (mySelectedTower)
                 {
                     case 0: //Tower_00
-                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                        myDrawBatch.DrawEllipse(Pen.Black, new Rectangle(
                             (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_00.Range / 2)),
                             (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_00.Range / 4)),
                             (int)(TowerProperties.Tower_00.Range),
                             (int)(TowerProperties.Tower_00.Range / 2)));
                         break;
                     case 1: //Tower_01
-                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                        myDrawBatch.DrawEllipse(Pen.Black, new Rectangle(
                             (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_01.Range / 2)),
                             (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_01.Range / 4)),
                             (int)(TowerProperties.Tower_01.Range),
                             (int)(TowerProperties.Tower_01.Range / 2)));
                         break;
                     case 2: //Tower_02
-                        myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                        myDrawBatch.DrawEllipse(Pen.Black, new Rectangle(
                             (int)(myCurrentTile.GetCenter().X - (TowerProperties.Tower_02.Range / 2)),
                             (int)(myCurrentTile.GetCenter().Y - (TowerProperties.Tower_02.Range / 4)),
                             (int)(TowerProperties.Tower_02.Range),

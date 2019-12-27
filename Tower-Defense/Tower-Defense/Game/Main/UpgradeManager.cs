@@ -118,7 +118,7 @@ namespace Tower_Defense
 
             if (mySelectedTower != null)
             {
-                myDrawBatch.DrawEllipse(Pen.Gray, new Rectangle(
+                myDrawBatch.DrawEllipse(Pen.Black, new Rectangle(
                     (int)(mySelectedTower.OffsetPosition.X - (mySelectedTower.Properties.Range / 2)),
                     (int)(mySelectedTower.OffsetPosition.Y - (mySelectedTower.Properties.Range / 4)),
                     (int)(mySelectedTower.Properties.Range),
@@ -229,7 +229,7 @@ namespace Tower_Defense
                 GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
                 mySelectedTower.Properties.FireSpeedLevel++;
-                mySelectedTower.Properties.FireSpeedDelay *= 0.9f;
+                mySelectedTower.Properties.FireSpeedDelay *= TowerProperties.Tower_Upgrade.FireSpeed_Upgrade;
             }
         }
         public void UpgradeRange(GameWindow aWindow)
@@ -239,7 +239,7 @@ namespace Tower_Defense
                 GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
                 mySelectedTower.Properties.RangeLevel++;
-                mySelectedTower.Properties.Range += 8;
+                mySelectedTower.Properties.Range += TowerProperties.Tower_Upgrade.Range_Upgrade;
             }
         }
         public void UpgradeDamage(GameWindow aWindow)
@@ -249,7 +249,7 @@ namespace Tower_Defense
                 GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
                 mySelectedTower.Properties.DamageLevel++;
-                mySelectedTower.Properties.Damage++;
+                mySelectedTower.Properties.Damage += TowerProperties.Tower_Upgrade.Damage_Upgrade;
             }
         }
         public void UpgradeNumberOfTargets(GameWindow aWindow)
@@ -259,7 +259,7 @@ namespace Tower_Defense
                 GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
                 mySelectedTower.Properties.NumberOfTargetsLevel++;
-                mySelectedTower.Properties.NumberOfTargets++;
+                mySelectedTower.Properties.NumberOfTargets += TowerProperties.Tower_Upgrade.NumberOfTargets_Upgrade;
             }
         }
 

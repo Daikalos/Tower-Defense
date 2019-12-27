@@ -60,5 +60,14 @@ namespace Tower_Defense
             public static int Damage_Price => 150;
             public static int NumberOfTargets_Price => 150;
         }
+
+        public static class Tower_Upgrade
+        {
+            //Tower Upgrade values
+            public static float FireSpeed_Upgrade => 0.9f;
+            public static float Range_Upgrade => 8.0f;
+            public static int Damage_Upgrade => 1;
+            public static int NumberOfTargets_Upgrade => 1;
+        }
     }
 }
