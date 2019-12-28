@@ -12,7 +12,7 @@ namespace Tower_Defense
 
             this.myMaxHealthPoints = myProperties.HealthPoints;
 
-            this.myEnemyAnimation = new AnimationManager(new Point(8, 4), 0.12f, true);
+            this.myEnemyAnimation = new AnimationManager(new Point(8, 4), 0.07f, true);
             this.myOffset = new Vector2(-(aSize.X / 2), -(aSize.Y - (Level.TileSize.Y / 2)) + 8);
 
             this.myPosition += myOffset;

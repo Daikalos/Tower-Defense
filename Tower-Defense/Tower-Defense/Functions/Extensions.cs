@@ -34,6 +34,13 @@ namespace Tower_Defense
 
         public static bool PointWithinEllipse(Vector2 aPoint, Rectangle anEllipse)
         {
+            float tempX = (float)(Math.Pow(aPoint.X - anEllipse.Center.X, 2) / Math.Pow(anEllipse.Width / 2, 2));
+            float tempY = (float)(Math.Pow(aPoint.Y - anEllipse.Center.Y, 2) / Math.Pow(anEllipse.Height / 2, 2));
+
+            if (tempX + tempY <= 1.0f)
+            {
+                return true;
+            }
 
             return false;
         }

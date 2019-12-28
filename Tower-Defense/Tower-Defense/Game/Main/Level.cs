@@ -147,8 +147,8 @@ namespace Tower_Defense
 
                 myTiles = new Tile[tempSizeX, tempSizeY];
 
-                string tempStartPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Start", '=').First();
-                string tempGoalPosString = FileReader.FindInfo(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Goal", '=').First();
+                string tempStartPosString = FileReader.FindInfoOfName(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Start", '=');
+                string tempGoalPosString = FileReader.FindInfoOfName(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Goal", '=');
 
                 string tempCleanString = string.Empty;
                 string[] tempSplitString = new string[] { string.Empty };

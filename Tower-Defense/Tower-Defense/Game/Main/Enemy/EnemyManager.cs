@@ -18,12 +18,44 @@ namespace Tower_Defense
             myEnemies = new List<Enemy>();
         }
 
-        public static void AddEnemy(Enemy anEnemy)
+        public static void AddEnemy(int aType)
         {
-            myEnemies.Add(anEnemy);
-            Depth.AddObject(anEnemy);
+            Enemy tempEnemy;
+            switch(aType)
+            {
+                case 0:
+                    tempEnemy = new Enemy_00(GameInfo.Path[0].GetCenter(), new Point(64));
 
-            anEnemy.LoadContent();
+                    myEnemies.Add(tempEnemy);
+                    Depth.AddObject(tempEnemy);
+
+                    tempEnemy.LoadContent();
+                    break;
+                case 1:
+                    tempEnemy = new Enemy_01(GameInfo.Path[0].GetCenter(), new Point(64));
+
+                    myEnemies.Add(tempEnemy);
+                    Depth.AddObject(tempEnemy);
+
+                    tempEnemy.LoadContent();
+                    break;
+                case 2:
+                    tempEnemy = new Enemy_02(GameInfo.Path[0].GetCenter(), new Point(64));
+
+                    myEnemies.Add(tempEnemy);
+                    Depth.AddObject(tempEnemy);
+
+                    tempEnemy.LoadContent();
+                    break;
+                case 3:
+                    tempEnemy = new Enemy_03(GameInfo.Path[0].GetCenter(), new Point(64));
+
+                    myEnemies.Add(tempEnemy);
+                    Depth.AddObject(tempEnemy);
+
+                    tempEnemy.LoadContent();
+                    break;
+            }
         }
 
         public static void Update(GameTime aGameTime)

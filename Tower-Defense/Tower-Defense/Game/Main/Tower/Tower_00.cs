@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -34,22 +35,44 @@ namespace Tower_Defense
         {
             if (EnemyManager.Enemies.Count > 0)
             {
-                float tempAngle = Extensions.AngleToPoint(OffsetPosition, EnemyManager.Enemies[0].OffsetPosition) + 180.0f; //180 to match spritesheet
+                Tuple<Enemy, float>[] tempDistToEnemy = new Tuple<Enemy, float>[EnemyManager.Enemies.Count];
+                Rectangle tempRange = new Rectangle(
+                    (int)(OffsetPosition.X - (myProperties.Range / 2)),
+                    (int)(OffsetPosition.Y - (myProperties.Range / 4)),
+                    (int)(myProperties.Range),
+                    (int)(myProperties.Range / 2));
 
-                float
-                    tempRotateTowerX = 0.0f,
-                    tempRotateTowerY = 0.0f;
+                for (int i = 0; i < tempDistToEnemy.Length; i++)
+                {
+                    tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i], float.MaxValue);
+                    if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
+                    {
+                        tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i],
+                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition));
+                    }
+                }
 
-                tempRotateTowerX = (tempAngle / 360.0f) * 4; //4 = total of frames
+                if (tempDistToEnemy.Length > 0 && Array.Exists(tempDistToEnemy, d => d.Item2 != float.MaxValue))
+                {
+                    Tuple<Enemy, float>[] tempSortedArray = tempDistToEnemy.OrderBy(d => d.Item2).ToArray();
 
-                tempRotateTowerY = (int)(tempRotateTowerX / 2);
-                tempRotateTowerX = (int)(tempRotateTowerX % 2);
+                    float tempAngle = Extensions.AngleToPoint(OffsetPosition, tempSortedArray.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
 
-                mySourceRect = new Rectangle(
-                    (int)((myTexture.Width / 2) * tempRotateTowerX),
-                    (int)((myTexture.Height / 2) * tempRotateTowerY),
-                    (int)(myTexture.Width / 2),
-                    (int)(myTexture.Height / 2));
+                    float
+                        tempRotateTowerX = 0.0f,
+                        tempRotateTowerY = 0.0f;
+
+                    tempRotateTowerX = (tempAngle / 360.0f) * 4; //4 = total of frames
+
+                    tempRotateTowerY = (int)(tempRotateTowerX / 2);
+                    tempRotateTowerX = (int)(tempRotateTowerX % 2);
+
+                    mySourceRect = new Rectangle(
+                        (int)((myTexture.Width / 2) * tempRotateTowerX),
+                        (int)((myTexture.Height / 2) * tempRotateTowerY),
+                        (int)(myTexture.Width / 2),
+                        (int)(myTexture.Height / 2));
+                }
             }
         }
 

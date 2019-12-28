@@ -69,10 +69,39 @@ namespace Tower_Defense
             myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
             if (myProperties.FireSpeed <= 0)
             {
-                //Improvements, convert shortest distance from outer bounds of ellipse (help...)
-                Vector2[] tempDistToEnemy = new Vector2[EnemyManager.Enemies.Count];
+                Tuple<Enemy, float>[] tempDistToEnemy = new Tuple<Enemy, float>[EnemyManager.Enemies.Count];
+                Rectangle tempRange = new Rectangle(
+                    (int)(OffsetPosition.X - (myProperties.Range / 2)),
+                    (int)(OffsetPosition.Y - (myProperties.Range / 4)),
+                    (int)(myProperties.Range),
+                    (int)(myProperties.Range / 2));
 
+                for (int i = 0; i < tempDistToEnemy.Length; i++)
+                {
+                    tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i], float.MaxValue);
+                    if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
+                    {
+                        tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i],
+                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition));
+                    }
+                }
 
+                if (tempDistToEnemy.Length > 0)
+                {
+                    Tuple<Enemy, float>[] tempFilteredArray = Array.FindAll(tempDistToEnemy, d => d.Item2 != float.MaxValue);
+                    Tuple<Enemy, float>[] tempSortedArray = tempFilteredArray.OrderBy(d => d.Item2).ToArray();
+
+                    if (tempSortedArray.Length > 0)
+                    {
+                        for (int i = 0; i < myProperties.NumberOfTargets; i++)
+                        {
+                            if (i < tempSortedArray.Length)
+                            {
+                                tempSortedArray[i].Item1.Properties.HealthPoints -= myProperties.Damage;
+                            }
+                        }
+                    }
+                }
 
                 myProperties.FireSpeed = myProperties.FireSpeedDelay;
             }

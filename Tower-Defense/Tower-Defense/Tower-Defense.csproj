@@ -101,8 +101,11 @@
     <Compile Include="Game\Inheritance\State.cs" />
     <Compile Include="Game\Inheritance\StaticObject.cs" />
     <Compile Include="Game\Main\Level.cs" />
-    <Compile Include="Game\Main\ParticleSystem.cs" />
+    <Compile Include="Game\Main\Particle\Explosion.cs" />
+    <Compile Include="Game\Main\Particle\ParticleSystem.cs" />
     <Compile Include="Game\Main\ShopManager.cs" />
+    <Compile Include="Game\Main\Spawner\SpawnInfo.cs" />
+    <Compile Include="Game\Main\Spawner\SpawnManager.cs" />
     <Compile Include="Game\Main\Tower\Tower.cs" />
     <Compile Include="Game\Main\Tower\TowerManager.cs" />
     <Compile Include="Game\Main\Tower\TowerProperties.cs" />

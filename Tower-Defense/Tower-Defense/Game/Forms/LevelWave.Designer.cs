@@ -30,12 +30,46 @@
         {
             this.WaveFormatLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.EasyWaveButton = new System.Windows.Forms.RadioButton();
-            this.NormalWaveButton = new System.Windows.Forms.RadioButton();
             this.HardWaveButton = new System.Windows.Forms.RadioButton();
-            this.CustomWaveButton = new System.Windows.Forms.RadioButton();
+            this.NormalWaveButton = new System.Windows.Forms.RadioButton();
+            this.EasyWaveButton = new System.Windows.Forms.RadioButton();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.textBox12 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // WaveFormatLabel
@@ -50,25 +84,24 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.CustomWaveButton);
             this.panel1.Controls.Add(this.HardWaveButton);
             this.panel1.Controls.Add(this.NormalWaveButton);
             this.panel1.Controls.Add(this.EasyWaveButton);
             this.panel1.Location = new System.Drawing.Point(12, 30);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(127, 100);
+            this.panel1.Size = new System.Drawing.Size(80, 78);
             this.panel1.TabIndex = 2;
             // 
-            // EasyWaveButton
+            // HardWaveButton
             // 
-            this.EasyWaveButton.AutoSize = true;
-            this.EasyWaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EasyWaveButton.Location = new System.Drawing.Point(4, 4);
-            this.EasyWaveButton.Name = "EasyWaveButton";
-            this.EasyWaveButton.Size = new System.Drawing.Size(54, 20);
-            this.EasyWaveButton.TabIndex = 0;
-            this.EasyWaveButton.Text = "Easy";
-            this.EasyWaveButton.UseVisualStyleBackColor = true;
+            this.HardWaveButton.AutoSize = true;
+            this.HardWaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HardWaveButton.Location = new System.Drawing.Point(4, 52);
+            this.HardWaveButton.Name = "HardWaveButton";
+            this.HardWaveButton.Size = new System.Drawing.Size(54, 20);
+            this.HardWaveButton.TabIndex = 2;
+            this.HardWaveButton.Text = "Hard";
+            this.HardWaveButton.UseVisualStyleBackColor = true;
             // 
             // NormalWaveButton
             // 
@@ -83,43 +116,325 @@
             this.NormalWaveButton.Text = "Normal";
             this.NormalWaveButton.UseVisualStyleBackColor = true;
             // 
-            // HardWaveButton
+            // EasyWaveButton
             // 
-            this.HardWaveButton.AutoSize = true;
-            this.HardWaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HardWaveButton.Location = new System.Drawing.Point(4, 52);
-            this.HardWaveButton.Name = "HardWaveButton";
-            this.HardWaveButton.Size = new System.Drawing.Size(54, 20);
-            this.HardWaveButton.TabIndex = 2;
-            this.HardWaveButton.Text = "Hard";
-            this.HardWaveButton.UseVisualStyleBackColor = true;
-            // 
-            // CustomWaveButton
-            // 
-            this.CustomWaveButton.AutoSize = true;
-            this.CustomWaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomWaveButton.Location = new System.Drawing.Point(4, 76);
-            this.CustomWaveButton.Name = "CustomWaveButton";
-            this.CustomWaveButton.Size = new System.Drawing.Size(68, 20);
-            this.CustomWaveButton.TabIndex = 3;
-            this.CustomWaveButton.Text = "Custom";
-            this.CustomWaveButton.UseVisualStyleBackColor = true;
+            this.EasyWaveButton.AutoSize = true;
+            this.EasyWaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EasyWaveButton.Location = new System.Drawing.Point(4, 4);
+            this.EasyWaveButton.Name = "EasyWaveButton";
+            this.EasyWaveButton.Size = new System.Drawing.Size(54, 20);
+            this.EasyWaveButton.TabIndex = 0;
+            this.EasyWaveButton.Text = "Easy";
+            this.EasyWaveButton.UseVisualStyleBackColor = true;
             // 
             // SaveButton
             // 
             this.SaveButton.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveButton.Location = new System.Drawing.Point(277, 132);
+            this.SaveButton.Location = new System.Drawing.Point(365, 410);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 3;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(106, 16);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Enemy_00 Start";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(141, 16);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Enemy_00 Spawn Rate";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(113, 16);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Enemy_00 Amount";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(128, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(223, 15);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Start = Wave the enemy starts spawning";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(128, 58);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(259, 15);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Spawn Rate = Enemy initial spawn rate at start";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(128, 73);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(268, 15);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Amount = Enemy initial amount to spawn at start";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.textBox3);
+            this.panel2.Controls.Add(this.textBox2);
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Location = new System.Drawing.Point(12, 114);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 135);
+            this.panel2.TabIndex = 10;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.textBox6);
+            this.panel3.Controls.Add(this.textBox5);
+            this.panel3.Controls.Add(this.textBox4);
+            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.label9);
+            this.panel3.Location = new System.Drawing.Point(16, 271);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(200, 130);
+            this.panel3.TabIndex = 11;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 16);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Enemy_01 Start";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(3, 41);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(141, 16);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Enemy_01 Spawn Rate";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(3, 88);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(113, 16);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Enemy_01 Amount";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.textBox9);
+            this.panel4.Controls.Add(this.textBox8);
+            this.panel4.Controls.Add(this.textBox7);
+            this.panel4.Controls.Add(this.label11);
+            this.panel4.Controls.Add(this.label12);
+            this.panel4.Controls.Add(this.label13);
+            this.panel4.Location = new System.Drawing.Point(240, 114);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 135);
+            this.panel4.TabIndex = 11;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(3, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(106, 16);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Enemy_02 Start";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(3, 41);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(141, 16);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Enemy_02 Spawn Rate";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(3, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 16);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "Enemy_02 Amount";
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.textBox12);
+            this.panel5.Controls.Add(this.textBox11);
+            this.panel5.Controls.Add(this.textBox10);
+            this.panel5.Controls.Add(this.label14);
+            this.panel5.Controls.Add(this.label15);
+            this.panel5.Controls.Add(this.label16);
+            this.panel5.Location = new System.Drawing.Point(240, 271);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(200, 133);
+            this.panel5.TabIndex = 12;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(3, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(106, 16);
+            this.label14.TabIndex = 4;
+            this.label14.Text = "Enemy_03 Start";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(3, 41);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(141, 16);
+            this.label15.TabIndex = 5;
+            this.label15.Text = "Enemy_03 Spawn Rate";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(3, 88);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(113, 16);
+            this.label16.TabIndex = 6;
+            this.label16.Text = "Enemy_03 Amount";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 18);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 7;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(6, 60);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 8;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(6, 107);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 9;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(6, 18);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 10;
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(6, 60);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(100, 20);
+            this.textBox5.TabIndex = 11;
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(6, 107);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(100, 20);
+            this.textBox6.TabIndex = 12;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(6, 18);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 20);
+            this.textBox7.TabIndex = 13;
+            // 
+            // textBox8
+            // 
+            this.textBox8.Location = new System.Drawing.Point(6, 60);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.Size = new System.Drawing.Size(100, 20);
+            this.textBox8.TabIndex = 14;
+            // 
+            // textBox9
+            // 
+            this.textBox9.Location = new System.Drawing.Point(6, 107);
+            this.textBox9.Name = "textBox9";
+            this.textBox9.Size = new System.Drawing.Size(100, 20);
+            this.textBox9.TabIndex = 15;
+            // 
+            // textBox10
+            // 
+            this.textBox10.Location = new System.Drawing.Point(6, 18);
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(100, 20);
+            this.textBox10.TabIndex = 16;
+            // 
+            // textBox11
+            // 
+            this.textBox11.Location = new System.Drawing.Point(6, 60);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(100, 20);
+            this.textBox11.TabIndex = 17;
+            // 
+            // textBox12
+            // 
+            this.textBox12.Location = new System.Drawing.Point(6, 107);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(100, 20);
+            this.textBox12.TabIndex = 18;
+            // 
             // LevelWave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 167);
+            this.ClientSize = new System.Drawing.Size(452, 445);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.WaveFormatLabel);
@@ -128,6 +443,14 @@
             this.Text = "Level Wave";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,10 +460,40 @@
 
         private System.Windows.Forms.Label WaveFormatLabel;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton CustomWaveButton;
         private System.Windows.Forms.RadioButton HardWaveButton;
         private System.Windows.Forms.RadioButton NormalWaveButton;
         private System.Windows.Forms.RadioButton EasyWaveButton;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox textBox10;
     }
 }

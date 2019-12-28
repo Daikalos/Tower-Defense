@@ -19,6 +19,8 @@ namespace Tower_Defense
             GameInfo.Initialize();
             GameInfo.LoadHighScore(GameInfo.LevelName);
 
+            SpawnManager.Initialize();
+
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
 
             for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
@@ -47,17 +49,14 @@ namespace Tower_Defense
                 new Vector2(0, aWindow.ClientBounds.Height),
                 new Point(aWindow.ClientBounds.Width / 3, aWindow.ClientBounds.Height / 5), 18.0f,
                 myGame.GraphicsDevice, new Vector2(0, 32));
-
-            EnemyManager.AddEnemy(new Enemy_00(GameInfo.Path[0].GetCenter(), new Point(64)));
-            EnemyManager.AddEnemy(new Enemy_01(GameInfo.Path[0].GetCenter(), new Point(64)));
-            EnemyManager.AddEnemy(new Enemy_02(GameInfo.Path[0].GetCenter(), new Point(64)));
-            EnemyManager.AddEnemy(new Enemy_03(GameInfo.Path[0].GetCenter(), new Point(64)));
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
         {
             if (!GameInfo.IsPaused)
             {
+                SpawnManager.Update(aGameTime);
+
                 myShop.Update(aGameTime, aWindow);
                 myUpgrade.Update(aGameTime, aWindow);
 
@@ -69,6 +68,11 @@ namespace Tower_Defense
                 {
                     GameInfo.SaveHighScore(GameInfo.LevelName);
                     myGame.ChangeState(new DeadState(myGame));
+                }
+
+                if (KeyMouseReader.KeyPressed(Keys.Enter))
+                {
+                    SpawnManager.InitiateWave();
                 }
             }
             else

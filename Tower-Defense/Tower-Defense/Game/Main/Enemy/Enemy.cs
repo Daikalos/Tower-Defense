@@ -67,14 +67,33 @@ namespace Tower_Defense
 
             myOffsetPosition = myPosition - myOffset;
 
+            if (myProperties.HealthPoints <= 0)
+            {
+                GameInfo.Score += myMaxHealthPoints;
+                GameInfo.Money += myMaxHealthPoints * EnemyProperties.Enemy_Info.Enemy_Value;
+
+                myIsAlive = false;
+            }
+
             Movement(aGameTime);
             SetDirection();
         }
 
         public override void Draw(SpriteBatch aSpriteBatch)
         {
-            Rectangle tempSource = new Rectangle(0, 0, myHealthbarSource.Width * (myProperties.HealthPoints / myMaxHealthPoints), myHealthbarSource.Height);
-            aSpriteBatch.Draw(myHealthbar, myHealthbarDest, tempSource, Color.White * 0.8f, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
+            Rectangle tempDest = new Rectangle(
+                myHealthbarDest.X,
+                myHealthbarDest.Y,
+                (int)(myHealthbarDest.Width * ((float)myProperties.HealthPoints / (float)myMaxHealthPoints)),
+                myHealthbarDest.Height);
+
+            Rectangle tempSource = new Rectangle(
+                0, 
+                0, 
+                (int)(myHealthbarSource.Width * ((float)myProperties.HealthPoints / (float)myMaxHealthPoints)), 
+                myHealthbarSource.Height);
+
+            aSpriteBatch.Draw(myHealthbar, tempDest, tempSource, Color.White);
         }
 
         private void Movement(GameTime aGameTime)
