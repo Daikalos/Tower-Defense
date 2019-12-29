@@ -17,7 +17,8 @@ namespace Tower_Defense
             TowerManager.Initialize();
 
             GameInfo.Initialize();
-            GameInfo.LoadHighScore(GameInfo.LevelName);
+
+            ParticleManager.Initialize(myGame.GraphicsDevice);
 
             SpawnManager.Initialize();
 
@@ -64,15 +65,32 @@ namespace Tower_Defense
                 EnemyManager.Update(aGameTime);
                 TowerManager.Update(aGameTime, myUpgrade);
 
+                ParticleManager.Update(aGameTime);
+
+                if (GameInfo.Wave >= GameInfo.TotalWaves)
+                {
+                    myGame.ChangeState(new WinState(myGame));
+                }
                 if (GameInfo.Health <= 0)
                 {
+                    GameInfo.LoadHighScore(GameInfo.LevelName);
                     GameInfo.SaveHighScore(GameInfo.LevelName);
+
                     myGame.ChangeState(new DeadState(myGame));
                 }
 
                 if (KeyMouseReader.KeyPressed(Keys.Enter))
                 {
                     SpawnManager.InitiateWave();
+                }
+
+                if (KeyMouseReader.KeyPressed(Keys.I))
+                {
+                    GameInfo.GameSpeed /= 2;
+                }
+                if (KeyMouseReader.KeyPressed(Keys.O))
+                {
+                    GameInfo.GameSpeed *= 2;
                 }
             }
             else
@@ -102,12 +120,13 @@ namespace Tower_Defense
 
             EnemyManager.Draw(aSpriteBatch);
             TowerManager.Draw(aSpriteBatch);
-            StringManager.Draw(aSpriteBatch, my8bitFont);
 
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix); //Reset spritebatch to ignore depth
+
+            ParticleManager.Draw(aSpriteBatch, aGameTime);
 
             if (GameInfo.IsPaused)
             {

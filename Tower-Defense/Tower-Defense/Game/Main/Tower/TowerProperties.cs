@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Tower_Defense
+﻿namespace Tower_Defense
 {
-    //Used to draw values in shop manager and acts as starting values for each tower type
-
     static class TowerProperties
     {
         public static class Tower_00
@@ -22,8 +17,14 @@ namespace Tower_Defense
             public static int Price => 200;
             public static int FireSpeed_Price => 500;
             public static int Range_Price => 150;
-            public static int Damage_Price => 600;
-            public static int NumberOfTargets_Price => 1200;
+            public static int Damage_Price => 700;
+            public static int NumberOfTargets_Price => 1500;
+
+            //Tower Max Level
+            public static int FireSpeed_Level_Max => 25;
+            public static int Range_Level_Max => 20;
+            public static int Damage_Level_Max => 10;
+            public static int NumberOfTargets_Level_Max => 5;
         }
 
         public static class Tower_01
@@ -40,9 +41,15 @@ namespace Tower_Defense
             //Tower prices
             public static int Price => 325;
             public static int FireSpeed_Price => 450;
-            public static int Range_Price => 200;
-            public static int Damage_Price => 1400;
+            public static int Range_Price => 300;
+            public static int Damage_Price => 1000;
             public static int NumberOfTargets_Price => 1800;
+
+            //Tower Max Level
+            public static int FireSpeed_Level_Max => 15;
+            public static int Range_Level_Max => 10;
+            public static int Damage_Level_Max => 15;
+            public static int NumberOfTargets_Level_Max => 10;
         }
 
         public static class Tower_02
@@ -62,6 +69,12 @@ namespace Tower_Defense
             public static int Range_Price => 150;
             public static int Damage_Price => 150;
             public static int NumberOfTargets_Price => 150;
+
+            //Tower Max Level
+            public static int FireSpeed_Level_Max => 25;
+            public static int Range_Level_Max => 25;
+            public static int Damage_Level_Max => 25;
+            public static int NumberOfTargets_Level_Max => 25;
         }
 
         public static class Tower_Upgrade

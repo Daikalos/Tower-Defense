@@ -11,7 +11,7 @@ namespace Tower_Defense
         {
             //Start values for each enemy
             public static float Speed => 0.9f;
-            public static int HealthPoints => 2;
+            public static int HealthPoints => 3;
         }
 
         public static class Enemy_01
@@ -32,17 +32,18 @@ namespace Tower_Defense
         {
             //Start values for each enemy
             public static float Speed => 1.5f;
-            public static int HealthPoints => 1;
+            public static int HealthPoints => 2;
         }
 
         public static class Enemy_Info
         {
             //General info about enemies
+            public static int HealthPoint_Increase => 5;
             public static float AmountToSpawn_Increase => 1.20f;
             public static float SpawnDelay_Decrease => 0.95f;
             public static float SpawnDelay_Min => 0.05f;
 
-            public static int Enemy_Value => 50;
+            public static int Enemy_Value => 10;
         }
     }
 }

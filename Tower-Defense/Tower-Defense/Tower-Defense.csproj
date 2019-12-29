@@ -75,7 +75,7 @@
     <Compile Include="Game\Forms\LevelWave.Designer.cs">
       <DependentUpon>LevelWave.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions\AnimationManager.cs" />
+    <Compile Include="Functions\Animation.cs" />
     <Compile Include="Functions\CollisionManager.cs" />
     <Compile Include="Functions\Extensions.cs" />
     <Compile Include="Functions\FileReader.cs" />
@@ -102,7 +102,9 @@
     <Compile Include="Game\Inheritance\StaticObject.cs" />
     <Compile Include="Game\Main\Level.cs" />
     <Compile Include="Game\Main\Particle\Explosion.cs" />
-    <Compile Include="Game\Main\Particle\ParticleSystem.cs" />
+    <Compile Include="Game\Main\Particle\Laser.cs" />
+    <Compile Include="Game\Main\Particle\Particle.cs" />
+    <Compile Include="Game\Main\Particle\ParticleManager.cs" />
     <Compile Include="Game\Main\ShopManager.cs" />
     <Compile Include="Game\Main\Spawner\SpawnInfo.cs" />
     <Compile Include="Game\Main\Spawner\SpawnManager.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Game\States\PlayState.cs" />
     <Compile Include="Game\Main\MainGame.cs" />
     <Compile Include="Game\Main\Tile.cs" />
+    <Compile Include="Game\States\WinState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

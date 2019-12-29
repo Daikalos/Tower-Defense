@@ -1,5 +1,6 @@
 Start={X:0 Y:0}
 Goal={X:0 Y:0}
+Waves=50
 Enemy_00_Start=1
 Enemy_00_Amount=5
 Enemy_00_SpawnRate=3

@@ -10,9 +10,14 @@ namespace Tower_Defense
             this.myProperties.Speed = EnemyProperties.Enemy_02.Speed;
             this.myProperties.HealthPoints = EnemyProperties.Enemy_02.HealthPoints;
 
+            if (GameInfo.Wave >= EnemyProperties.Enemy_Info.HealthPoint_Increase)
+            {
+                this.myProperties.HealthPoints *= GameInfo.Wave / EnemyProperties.Enemy_Info.HealthPoint_Increase; //So that it is possible for the game to end sometime
+            }
+
             this.myMaxHealthPoints = myProperties.HealthPoints;
 
-            this.myEnemyAnimation = new AnimationManager(new Point(16, 4), 0.12f, true);
+            this.myEnemyAnimation = new Animation(new Point(16, 4), 0.12f, true);
             this.myOffset = new Vector2(-(aSize.X / 2), -(aSize.Y - (Level.TileSize.Y / 2)) - 8);
 
             this.myPosition += myOffset;

@@ -11,6 +11,8 @@ namespace Tower_Defense
         public LevelInfo()
         {
             InitializeComponent();
+
+            WaveTextBox.Text = GameInfo.TotalWaves.ToString();
         }
 
         private void xSizeTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -29,7 +31,7 @@ namespace Tower_Defense
             }
         }
 
-        private void WavesTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void WaveTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Regex.IsMatch(e.KeyChar.ToString(), @"[0-9]") && e.KeyChar != (char)Keys.Back)
             {
@@ -47,10 +49,11 @@ namespace Tower_Defense
                     tempSize = new int[
                         Int32.Parse(XSizeTextBox.Text),
                         Int32.Parse(YSizeTextBox.Text)];
+                    GameInfo.TotalWaves = Int32.Parse(WaveTextBox.Text);
                 }
                 catch (Exception anException) 
                 {
-                    MessageBox.Show(anException.ToString());
+                    MessageBox.Show(anException.Message);
                     return; 
                 }
 

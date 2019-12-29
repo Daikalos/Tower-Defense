@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
 {
-    internal class AnimationManager
+    internal class Animation
     {
         //Animation-Info
         private Rectangle mySourceRect;
@@ -32,7 +32,7 @@ namespace Tower_Defense
             set => myIsFinished = value;
         }
 
-        public AnimationManager(Point aFrameAmount, float aAnimationSpeed, bool aIsLoop)
+        public Animation(Point aFrameAmount, float aAnimationSpeed, bool aIsLoop)
         {
             this.myCurrentFrame = 0;
             this.myIsFinished = false;
@@ -48,7 +48,7 @@ namespace Tower_Defense
 
             if (!GameInfo.IsPaused)
             {
-                myTimer += (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                myTimer += (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
                 if (myTimer > myAnimationSpeed)
                 {
                     myCurrentFrame++;
@@ -86,7 +86,7 @@ namespace Tower_Defense
 
             if (!GameInfo.IsPaused)
             {
-                myTimer += (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                myTimer += (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
                 if (myTimer > myAnimationSpeed)
                 {
                     myCurrentFrame++;

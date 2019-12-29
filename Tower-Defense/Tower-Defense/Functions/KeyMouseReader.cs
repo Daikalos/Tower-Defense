@@ -29,27 +29,6 @@ namespace Tower_Defense
             get => myPreviousKeyState;
         }
 
-        public static string KeyInput(string aPattern)
-        {
-            Keys[] tempKeys = KeyMouseReader.CurrentKeyState.GetPressedKeys();
-
-            if (tempKeys.Length > 0)
-            {
-                string tempLetter = tempKeys[0].ToString();
-
-                if (Regex.IsMatch(tempLetter, aPattern) && tempLetter.Length == 1)
-                {
-                    if (KeyMouseReader.PreviousKeyState.IsKeyUp(tempKeys[0]))
-                    {
-                        return tempLetter;
-                    }
-                }
-            }
-
-            return string.Empty;
-        }
-
-
         public static bool MiddleMouseClick()
         {
             return myCurrentMouseState.MiddleButton == ButtonState.Pressed && myPreviousMouseState.MiddleButton == ButtonState.Released;

@@ -31,12 +31,7 @@ namespace Tower_Defense
 
             ResourceManager.Initialize();
 
-            StringManager.Initialize();
-
             GameInfo.Initialize();
-            GameInfo.FolderLevels = "../../../../Levels/Levels/";
-            GameInfo.FolderLevelsInfo = "../../../../Levels/Levels_Info/";
-            GameInfo.FolderHighScores = "../../../../Levels/HighScores/";
 
             Background.Initialize(12.0f);
 
@@ -62,7 +57,7 @@ namespace Tower_Defense
             ResourceManager.AddTexture("Shop_Menu", this.Content.Load<Texture2D>("Sprites/Main/shop_menu"));
             ResourceManager.AddTexture("Upgrade_Menu", this.Content.Load<Texture2D>("Sprites/Main/upgrade_menu"));
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 ResourceManager.AddTexture("Tile_" + Extensions.NumberFormat(i), 
                     this.Content.Load<Texture2D>("Sprites/Tileset/tile_" + Extensions.NumberFormat(i)));
@@ -83,6 +78,12 @@ namespace Tower_Defense
                     this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i) + "_icon"));
             }
 
+            for (int i = 0; i < 1; i++)
+            {
+                ResourceManager.AddTexture("Explosion_" + Extensions.NumberFormat(i),
+                    this.Content.Load<Texture2D>("Sprites/Main/explosion_" + Extensions.NumberFormat(i)));
+            }
+
             Background.LoadContent();
             myGameState.LoadContent();
         }
@@ -95,7 +96,6 @@ namespace Tower_Defense
         protected override void Update(GameTime aGameTime)
         {
             KeyMouseReader.Update();
-            StringManager.Update(aGameTime);
             Background.Update();
 
             myGameState.Update(aGameTime, Window);

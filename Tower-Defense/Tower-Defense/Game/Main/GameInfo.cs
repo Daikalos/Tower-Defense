@@ -13,25 +13,32 @@ namespace Tower_Defense
 
         public static bool IsPaused { get; set; }
 
+        public static float GameSpeed { get; set; }
+
         public static int[] HighScores { get; set; }
         public static int Score { get; set; }
         public static int Money { get; set; }
         public static int Health { get; set; }
-        public static int GameSpeed { get; set; }
         public static int Wave { get; set; }
+        public static int TotalWaves { get; set; }
 
         public static string LevelName { get; set; }
-        public static string FolderLevels { get; set; }
-        public static string FolderLevelsInfo { get; set; }
-        public static string FolderHighScores { get; set; }
+
+        //Get properties, will not change
+        public static int MoneyEachWave => 50;
+
+        public static string FolderLevels => "../../../../Levels/Levels/";
+        public static string FolderLevelsInfo => "../../../../Levels/Levels_Info/";
+        public static string FolderHighScores => "../../../../Levels/HighScores/";
 
         public static void Initialize()
         {
+            //Starting values
             Score = 0;
             GameSpeed = 1;
             Health = 100;
-            Money = 500000; //Starting values
-            Wave = 5;
+            Money = 1000;
+            Wave = 1;
         }
 
         public static void LoadHighScore(string aLevelName)
@@ -75,26 +82,20 @@ namespace Tower_Defense
                 new Vector2(32, 32), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + Score.ToString(),
                 new Vector2(32, 64), Color.LightSlateGray, 0.6f);
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Enemies: " + SpawnManager.TotalAmountToSpawn.ToString(),
+                new Vector2(32, 96), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: $" + Money.ToString(), 
-                new Vector2(32, 128), Color.MediumSeaGreen, 0.6f);
+                new Vector2(32, 160), Color.MediumSeaGreen, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Health: " + Health.ToString(),
-                new Vector2(32, 160), Color.IndianRed, 0.6f);
+                new Vector2(32, 192), Color.IndianRed, 0.6f);
             StringManager.CameraDrawStringMid(aSpriteBatch, aFont, GameInfo.LevelName, 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
             
-            if (Path.Count > 1)
+            if (Path.Count > 1 && !SpawnManager.SpawnEnemies)
             {
                 StringManager.DrawStringMid(aSpriteBatch, aFont, "Start", Path[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);
                 StringManager.DrawStringMid(aSpriteBatch, aFont, "Goal", Path[Path.Count - 1].DestRect.Center.ToVector2(), Color.Black, 0.3f);
             }
-        }
-
-        public static void AddScore(Vector2 aPos, float aDelay, int someScore)
-        {
-            Score += someScore;
-
-            StringManager.DrawStrings.Add(new DrawString(new Vector2(aPos.X, aPos.Y - Level.TileSize.Y),
-                Color.Black, false, aDelay, 0.4f, 1, someScore.ToString()));
         }
     }
 }

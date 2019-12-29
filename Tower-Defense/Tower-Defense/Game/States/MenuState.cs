@@ -17,6 +17,8 @@ namespace Tower_Defense
         {
             aGame.IsMouseVisible = true;
 
+            GameInfo.Initialize();
+
             Depth.Initialize();
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);

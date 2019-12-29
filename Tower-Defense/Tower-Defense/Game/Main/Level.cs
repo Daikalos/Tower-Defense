@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -181,10 +180,21 @@ namespace Tower_Defense
                 }
 
                 GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-');
+                GameInfo.TotalWaves = Int32.Parse(FileReader.FindInfoOfName(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Waves", '='));
 
                 myMapSize = new Point(
                     myTiles.GetLength(0) * myTileSize.X,
                     myTiles.GetLength(1) * myTileSize.Y);
+
+                for (int i = 0; i < GameInfo.Path.Count; i++)
+                {
+                    GameInfo.Path[i].TileForm = 4;
+                    if (i == 0 || i == GameInfo.Path.Count - 1)
+                    {
+                        GameInfo.Path[i].TileForm = 5;
+                    }
+                    GameInfo.Path[i].SetTexture();
+                }
 
                 return true;
             }
@@ -288,8 +298,7 @@ namespace Tower_Defense
                 myTiles.GetLength(0) * myTileSize.X,
                 myTiles.GetLength(1) * myTileSize.Y);
 
-            StringManager.AddString(new DrawString(new Vector2(32, 48),
-                Color.Green, true, 3.0f, 0.7f, 0, "Map created"));
+            MessageBox.Show("Map Created!");
 
             return true;
         }

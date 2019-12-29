@@ -4,11 +4,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
 {
-    class DeadState : State
+    class WinState : State
     {
         private SpriteFont my8bitFont;
 
-        public DeadState(MainGame aGame) : base(aGame)
+        public WinState(MainGame aGame) : base(aGame)
         {
 
         }
@@ -23,7 +23,7 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
-            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "YOU DIED",
+            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "YOU WIN",
                 new Vector2(aWindow.ClientBounds.Width / 2, (aWindow.ClientBounds.Height / 2) - 96), Color.LightSlateGray, 1.2f);
             StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Wave: " + GameInfo.Wave.ToString(),
                 new Vector2(aWindow.ClientBounds.Width / 2, (aWindow.ClientBounds.Height / 2) - 46), Color.LightSlateGray, 0.7f);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -14,6 +15,7 @@ namespace Tower_Defense
         private static float SpawnDelay_Decrease { get; set; }
 
         public static bool SpawnEnemies { get; set; }
+        public static int TotalAmountToSpawn { get => Enemy_AmountToSpawn.Sum(); }
 
         public static void Initialize()
         {
@@ -59,6 +61,16 @@ namespace Tower_Defense
                     }
                 }
 
+                for (int i = 0; i < GameInfo.Path.Count; i++)
+                {
+                    GameInfo.Path[i].TileForm = 5;
+                    if (i == 0 || i == GameInfo.Path.Count - 1)
+                    {
+                        GameInfo.Path[i].TileForm = 4;
+                    }
+                    GameInfo.Path[i].SetTexture();
+                }
+
                 SpawnEnemies = true;
             }
         }
@@ -71,7 +83,7 @@ namespace Tower_Defense
                 {
                     if (Enemy_AmountToSpawn[i] > 0)
                     {
-                        Enemy_SpawnTimer[i] -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
+                        Enemy_SpawnTimer[i] -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
                         if (Enemy_SpawnTimer[i] <= 0)
                         {
                             EnemyManager.AddEnemy(i);
@@ -84,7 +96,19 @@ namespace Tower_Defense
 
                 if (EnemyManager.Enemies.Count <= 0 && Array.TrueForAll(Enemy_AmountToSpawn, a => a <= 0)) //All enemies dead and no longer spawns
                 {
+                    GameInfo.Wave++;
+                    GameInfo.Money += GameInfo.MoneyEachWave * GameInfo.Wave;
                     SpawnEnemies = false;
+
+                    for (int i = 0; i < GameInfo.Path.Count; i++)
+                    {
+                        GameInfo.Path[i].TileForm = 4;
+                        if (i == 0 || i == GameInfo.Path.Count - 1)
+                        {
+                            GameInfo.Path[i].TileForm = 5;
+                        }
+                        GameInfo.Path[i].SetTexture();
+                    }
                 }
             }
         }

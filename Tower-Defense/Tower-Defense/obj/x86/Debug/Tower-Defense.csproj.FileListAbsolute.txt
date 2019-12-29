@@ -97,3 +97,5 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Wi
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\border_upgrade.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\tower_00_icon.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\tower_01_icon.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Tileset\tile_05.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\explosion_00.xnb

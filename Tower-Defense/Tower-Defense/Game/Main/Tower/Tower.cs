@@ -61,50 +61,6 @@ namespace Tower_Defense
             myProperties.TowerLevels[3] = myProperties.NumberOfTargetsLevel;
 
             IsClicked();
-            Attack(aGameTime);
-        }
-
-        private void Attack(GameTime aGameTime)
-        {
-            myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
-            if (myProperties.FireSpeed <= 0)
-            {
-                Tuple<Enemy, float>[] tempDistToEnemy = new Tuple<Enemy, float>[EnemyManager.Enemies.Count];
-                Rectangle tempRange = new Rectangle(
-                    (int)(OffsetPosition.X - (myProperties.Range / 2)),
-                    (int)(OffsetPosition.Y - (myProperties.Range / 4)),
-                    (int)(myProperties.Range),
-                    (int)(myProperties.Range / 2));
-
-                for (int i = 0; i < tempDistToEnemy.Length; i++)
-                {
-                    tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i], float.MaxValue);
-                    if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
-                    {
-                        tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i],
-                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition));
-                    }
-                }
-
-                if (tempDistToEnemy.Length > 0)
-                {
-                    Tuple<Enemy, float>[] tempFilteredArray = Array.FindAll(tempDistToEnemy, d => d.Item2 != float.MaxValue);
-                    Tuple<Enemy, float>[] tempSortedArray = tempFilteredArray.OrderBy(d => d.Item2).ToArray();
-
-                    if (tempSortedArray.Length > 0)
-                    {
-                        for (int i = 0; i < myProperties.NumberOfTargets; i++)
-                        {
-                            if (i < tempSortedArray.Length)
-                            {
-                                tempSortedArray[i].Item1.Properties.HealthPoints -= myProperties.Damage;
-                            }
-                        }
-                    }
-                }
-
-                myProperties.FireSpeed = myProperties.FireSpeedDelay;
-            }
         }
 
         public bool IsClicked()
@@ -135,6 +91,7 @@ namespace Tower_Defense
             public int NumberOfTargets { get; set; }
 
             public int[] TowerLevels { get; set; }
+            public int[] TowerLevelsMax { get; set; }
             public int FireSpeedLevel { get; set; }
             public int RangeLevel { get; set; }
             public int DamageLevel { get; set; }
@@ -144,6 +101,7 @@ namespace Tower_Defense
             public int Range_Price { get; set; }
             public int Damage_Price { get; set; }
             public int NumberOfTargets_Price { get; set; }
+
         }
     }
 }

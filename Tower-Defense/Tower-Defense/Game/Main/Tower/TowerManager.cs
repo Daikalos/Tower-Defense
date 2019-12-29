@@ -27,7 +27,7 @@ namespace Tower_Defense
                 if (!myTowers[i].IsAlive)
                 {
                     Depth.RemoveObject(myTowers[i]);
-                    myTowers.RemoveAt(i);
+                    myTowers.Remove(myTowers[i]);
                 }
 
                 if (myTowers[i].IsClicked())
@@ -47,8 +47,8 @@ namespace Tower_Defense
 
         public static void AddTower(Tower aTower)
         {
-            myTowers.Add(aTower);
             Depth.AddObject(aTower);
+            myTowers.Add(aTower);
 
             aTower.LoadContent();
         }

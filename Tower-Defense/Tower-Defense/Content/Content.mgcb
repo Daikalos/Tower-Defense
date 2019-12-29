@@ -131,6 +131,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Main/enemy_03.png
 
+#begin Sprites/Main/explosion_00.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Main/explosion_00.png
+
 #begin Sprites/Main/healthbar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -286,4 +298,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tileset/tile_04.png
+
+#begin Sprites/Tileset/tile_05.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tileset/tile_05.png
 

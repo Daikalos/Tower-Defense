@@ -6,7 +6,7 @@ namespace Tower_Defense
 {
     static class Background
     {
-        private static AnimationManager myBackground;
+        private static Animation myBackground;
         private static Texture2D myTexture;
         private static Vector2 myPosition;
         private static Point mySize;
@@ -16,7 +16,7 @@ namespace Tower_Defense
 
         public static void Initialize(float aParallax)
         {
-            myBackground = new AnimationManager(new Point(4, 2), 0.15f, true);
+            myBackground = new Animation(new Point(4, 2), 0.15f, true);
             myPosition = Vector2.Zero;
             myAnimationSpeed = 0.15f;
             myParallaxing = aParallax;

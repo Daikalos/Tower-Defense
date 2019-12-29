@@ -1,0 +1,5 @@
+HighScore=3461
+HighScore=198
+HighScore=2595
+HighScore=188832
+HighScore=119704

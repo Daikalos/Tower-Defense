@@ -19,6 +19,14 @@ namespace Tower_Defense
             this.myProperties.Damage_Price = TowerProperties.Tower_02.Damage_Price;
             this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_02.NumberOfTargets_Price;
 
+            this.myProperties.TowerLevelsMax = new int[]
+            {
+                TowerProperties.Tower_02.FireSpeed_Level_Max,
+                TowerProperties.Tower_02.Range_Level_Max,
+                TowerProperties.Tower_02.Damage_Level_Max,
+                TowerProperties.Tower_02.NumberOfTargets_Level_Max
+            };
+
             this.myProperties.FireSpeedDelay = myProperties.FireSpeed;
         }
 

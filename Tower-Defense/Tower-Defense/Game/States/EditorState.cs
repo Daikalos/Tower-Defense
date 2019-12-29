@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
 {
@@ -46,6 +44,8 @@ namespace Tower_Defense
         public EditorState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
+
+            SpawnInfo.Initialize();
 
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
 
@@ -173,8 +173,6 @@ namespace Tower_Defense
                     StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to editor", new Vector2(16, aWindow.ClientBounds.Height - 16), Color.LightSlateGray * 0.50f, 0.4f);
                     break;
             }
-
-            StringManager.Draw(aSpriteBatch, my8bitFont);
 
             DrawPathEnds(aSpriteBatch);
         }
@@ -337,8 +335,7 @@ namespace Tower_Defense
             }
             else
             {
-                StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                    Color.Red, true, 3.0f, 0.7f, 2, "No path"));
+                System.Windows.Forms.MessageBox.Show("No path, please create one first before trying to save");
             }
         }
         private void PressDeleteLevel(GameWindow aWindow)
@@ -433,26 +430,24 @@ namespace Tower_Defense
                 }
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.Enter))
+            if (KeyMouseReader.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
                 GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
 
                 if (GameInfo.Path.Count > 1)
                 {
-                    StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                        Color.DarkGreen, true, 3.0f, 0.7f, 2, "Path found!"));
+                    System.Windows.Forms.MessageBox.Show("Path Found!");
                 }
                 else
                 {
-                    StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                        Color.Red, true, 3.0f, 0.7f, 2, "Path not found..."));
+                    System.Windows.Forms.MessageBox.Show("Path not found...");
                 }
             }
         }
 
         private void PressBack(GameWindow aWindow)
         {
-            if (KeyMouseReader.KeyPressed(Keys.Escape))
+            if (KeyMouseReader.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
             {
                 if (!myLevelInfoForm.Visible && !myLevelNameForm.Visible && !myLevelWaveForm.Visible)
                 {
@@ -475,18 +470,15 @@ namespace Tower_Defense
                 {
                     if (myLevelInfoForm.Visible)
                     {
-                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                            Color.Red, true, 3.0f, 0.7f, 2, "Please close info window"));
+                        System.Windows.Forms.MessageBox.Show("Please close info window");
                     }
                     if (myLevelNameForm.Visible)
                     {
-                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                            Color.Red, true, 3.0f, 0.7f, 2, "Please close save window"));
+                        System.Windows.Forms.MessageBox.Show("Please close save window");
                     }
                     if (myLevelWaveForm.Visible)
                     {
-                        StringManager.AddString(new DrawString(new Vector2(aWindow.ClientBounds.Width - 32, aWindow.ClientBounds.Height - 32),
-                            Color.Red, true, 3.0f, 0.7f, 2, "Please close wave window"));
+                        System.Windows.Forms.MessageBox.Show("Please close wave window");
                     }
                 }
             }

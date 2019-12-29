@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/enemy_03.png</SourceFile>
-  <SourceTime>2019-12-29T12:07:34.5842021+01:00</SourceTime>
-  <DestFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/bin/Windows/Content/Sprites/Main/enemy_03.xnb</DestFile>
-  <DestTime>2019-12-29T12:08:29.5842671+01:00</DestTime>
+  <SourceFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/explosion_00.png</SourceFile>
+  <SourceTime>2019-05-17T13:03:21.9253179+02:00</SourceTime>
+  <DestFile>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/bin/Windows/Content/Sprites/Main/explosion_00.xnb</DestFile>
+  <DestTime>2019-12-29T15:50:41.5786338+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

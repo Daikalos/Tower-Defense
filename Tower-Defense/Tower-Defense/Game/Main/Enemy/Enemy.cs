@@ -3,10 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
 {
-    class Enemy : GameObject
+    abstract class Enemy : GameObject
     {
         //Enemy
-        protected AnimationManager myEnemyAnimation;
+        protected Animation myEnemyAnimation;
         protected Vector2 
             myOffsetPosition,
             myOffset;
@@ -37,11 +37,6 @@ namespace Tower_Defense
             set => myIsAlive = value;
         }
 
-        public Enemy_Properties Properties
-        {
-            get => myProperties;
-        }
-
         public Enemy(Vector2 aPosition, Point aSize) : base(aPosition, aSize)
         {
             this.myOffsetPosition = aPosition;
@@ -56,7 +51,6 @@ namespace Tower_Defense
 
         public void Update(GameTime aGameTime)
         {
-            //A constant speed is not desired in a tower defense, will make game too fast at lower frames
             base.Update();
 
             myHealthbarDest = new Rectangle(
@@ -72,6 +66,7 @@ namespace Tower_Defense
                 GameInfo.Score += myMaxHealthPoints;
                 GameInfo.Money += myMaxHealthPoints * EnemyProperties.Enemy_Info.Enemy_Value;
 
+                ParticleManager.AddParticle(new Explosion(new Vector2(myOffsetPosition.X, myOffsetPosition.Y - (mySize.Y / 2)), new Point(48)));
                 myIsAlive = false;
             }
 
@@ -103,7 +98,7 @@ namespace Tower_Defense
 
             ReachedGoal();
 
-            myCurrentSpeed = myProperties.Speed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            myCurrentSpeed = myProperties.Speed * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
             if (Vector2.Distance(myPosition - myOffset, GameInfo.Path[myWalkToTile].GetCenter()) < myCurrentSpeed)
             {
                 myWalkToTile++;
@@ -123,7 +118,7 @@ namespace Tower_Defense
             if (Vector2.Distance(myPosition - myOffset, GameInfo.Path[GameInfo.Path.Count - 1].GetCenter()) < myCurrentSpeed)
             {
                 myIsAlive = false;
-                GameInfo.Health -= Properties.HealthPoints;
+                GameInfo.Health -= myProperties.HealthPoints;
             }
         }
 
@@ -135,22 +130,27 @@ namespace Tower_Defense
                 {
                     myDirection = 0;
                 }
-                if (GameInfo.Path[myWalkToTile].GetCenter().Y < GameInfo.Path[myWalkToTile - 1].GetCenter().Y)
+                else
                 {
                     myDirection = 1;
                 }
             }
-            if (GameInfo.Path[myWalkToTile].GetCenter().X < GameInfo.Path[myWalkToTile - 1].GetCenter().X)
+            else
             {
                 if (GameInfo.Path[myWalkToTile].GetCenter().Y < GameInfo.Path[myWalkToTile - 1].GetCenter().Y)
                 {
                     myDirection = 2;
                 }
-                if (GameInfo.Path[myWalkToTile].GetCenter().Y > GameInfo.Path[myWalkToTile - 1].GetCenter().Y)
+                else
                 {
                     myDirection = 3;
                 }
             }
+        }
+
+        public void RecieveDamage(int anAmount)
+        {
+            myProperties.HealthPoints -= anAmount;
         }
 
         public void LoadContent()
@@ -165,21 +165,10 @@ namespace Tower_Defense
             myHealthbarOffset = new Vector2((myHealthbar.Width / 8) / 2, -8);
         }
 
-        public class Enemy_Properties
+        protected class Enemy_Properties
         {
-            private float mySpeed;
-            private int myHealthPoints;
-
-            public float Speed
-            {
-                get => mySpeed;
-                set => mySpeed = value;
-            }
-            public int HealthPoints
-            {
-                get => myHealthPoints;
-                set => myHealthPoints = value;
-            }
+            public float Speed { get; set; }
+            public int HealthPoints { get; set; }
         }
     }
 }

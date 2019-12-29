@@ -41,30 +41,30 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.Enemy_00_Amount_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_00_SpawnRate_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_00_Start_TextBox = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.Enemy_01_Amount_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_01_SpawnRate_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_01_Start_TextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.Enemy_02_Amount_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_02_SpawnRate_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_02_Start_TextBox = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.Enemy_03_Amount_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_03_SpawnRate_TextBox = new System.Windows.Forms.TextBox();
+            this.Enemy_03_Start_TextBox = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -136,6 +136,7 @@
             this.SaveButton.TabIndex = 3;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // label1
             // 
@@ -183,9 +184,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(128, 58);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(259, 15);
+            this.label5.Size = new System.Drawing.Size(321, 15);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Spawn Rate = Enemy initial spawn rate at start";
+            this.label5.Text = "Spawn Rate = Enemy initial spawn rate at start in seconds";
             // 
             // label6
             // 
@@ -199,9 +200,9 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.textBox2);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.Enemy_00_Amount_TextBox);
+            this.panel2.Controls.Add(this.Enemy_00_SpawnRate_TextBox);
+            this.panel2.Controls.Add(this.Enemy_00_Start_TextBox);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label3);
@@ -210,11 +211,35 @@
             this.panel2.Size = new System.Drawing.Size(200, 135);
             this.panel2.TabIndex = 10;
             // 
+            // Enemy_00_Amount_TextBox
+            // 
+            this.Enemy_00_Amount_TextBox.Location = new System.Drawing.Point(6, 107);
+            this.Enemy_00_Amount_TextBox.Name = "Enemy_00_Amount_TextBox";
+            this.Enemy_00_Amount_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_00_Amount_TextBox.TabIndex = 9;
+            this.Enemy_00_Amount_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_00_Amount_TextBox_KeyPress);
+            // 
+            // Enemy_00_SpawnRate_TextBox
+            // 
+            this.Enemy_00_SpawnRate_TextBox.Location = new System.Drawing.Point(6, 60);
+            this.Enemy_00_SpawnRate_TextBox.Name = "Enemy_00_SpawnRate_TextBox";
+            this.Enemy_00_SpawnRate_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_00_SpawnRate_TextBox.TabIndex = 8;
+            this.Enemy_00_SpawnRate_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_00_SpawnRate_TextBox_KeyPress);
+            // 
+            // Enemy_00_Start_TextBox
+            // 
+            this.Enemy_00_Start_TextBox.Location = new System.Drawing.Point(6, 18);
+            this.Enemy_00_Start_TextBox.Name = "Enemy_00_Start_TextBox";
+            this.Enemy_00_Start_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_00_Start_TextBox.TabIndex = 7;
+            this.Enemy_00_Start_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_00_Start_TextBox_KeyPress);
+            // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.textBox6);
-            this.panel3.Controls.Add(this.textBox5);
-            this.panel3.Controls.Add(this.textBox4);
+            this.panel3.Controls.Add(this.Enemy_01_Amount_TextBox);
+            this.panel3.Controls.Add(this.Enemy_01_SpawnRate_TextBox);
+            this.panel3.Controls.Add(this.Enemy_01_Start_TextBox);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.label8);
             this.panel3.Controls.Add(this.label9);
@@ -222,6 +247,30 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 130);
             this.panel3.TabIndex = 11;
+            // 
+            // Enemy_01_Amount_TextBox
+            // 
+            this.Enemy_01_Amount_TextBox.Location = new System.Drawing.Point(6, 107);
+            this.Enemy_01_Amount_TextBox.Name = "Enemy_01_Amount_TextBox";
+            this.Enemy_01_Amount_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_01_Amount_TextBox.TabIndex = 12;
+            this.Enemy_01_Amount_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_01_Amount_TextBox_KeyPress);
+            // 
+            // Enemy_01_SpawnRate_TextBox
+            // 
+            this.Enemy_01_SpawnRate_TextBox.Location = new System.Drawing.Point(6, 60);
+            this.Enemy_01_SpawnRate_TextBox.Name = "Enemy_01_SpawnRate_TextBox";
+            this.Enemy_01_SpawnRate_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_01_SpawnRate_TextBox.TabIndex = 11;
+            this.Enemy_01_SpawnRate_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_01_SpawnRate_TextBox_KeyPress);
+            // 
+            // Enemy_01_Start_TextBox
+            // 
+            this.Enemy_01_Start_TextBox.Location = new System.Drawing.Point(6, 18);
+            this.Enemy_01_Start_TextBox.Name = "Enemy_01_Start_TextBox";
+            this.Enemy_01_Start_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_01_Start_TextBox.TabIndex = 10;
+            this.Enemy_01_Start_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_01_Start_TextBox_KeyPress);
             // 
             // label7
             // 
@@ -255,9 +304,9 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.textBox9);
-            this.panel4.Controls.Add(this.textBox8);
-            this.panel4.Controls.Add(this.textBox7);
+            this.panel4.Controls.Add(this.Enemy_02_Amount_TextBox);
+            this.panel4.Controls.Add(this.Enemy_02_SpawnRate_TextBox);
+            this.panel4.Controls.Add(this.Enemy_02_Start_TextBox);
             this.panel4.Controls.Add(this.label11);
             this.panel4.Controls.Add(this.label12);
             this.panel4.Controls.Add(this.label13);
@@ -265,6 +314,30 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(200, 135);
             this.panel4.TabIndex = 11;
+            // 
+            // Enemy_02_Amount_TextBox
+            // 
+            this.Enemy_02_Amount_TextBox.Location = new System.Drawing.Point(6, 107);
+            this.Enemy_02_Amount_TextBox.Name = "Enemy_02_Amount_TextBox";
+            this.Enemy_02_Amount_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_02_Amount_TextBox.TabIndex = 15;
+            this.Enemy_02_Amount_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_02_Amount_TextBox_KeyPress);
+            // 
+            // Enemy_02_SpawnRate_TextBox
+            // 
+            this.Enemy_02_SpawnRate_TextBox.Location = new System.Drawing.Point(6, 60);
+            this.Enemy_02_SpawnRate_TextBox.Name = "Enemy_02_SpawnRate_TextBox";
+            this.Enemy_02_SpawnRate_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_02_SpawnRate_TextBox.TabIndex = 14;
+            this.Enemy_02_SpawnRate_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_02_SpawnRate_TextBox_KeyPress);
+            // 
+            // Enemy_02_Start_TextBox
+            // 
+            this.Enemy_02_Start_TextBox.Location = new System.Drawing.Point(6, 18);
+            this.Enemy_02_Start_TextBox.Name = "Enemy_02_Start_TextBox";
+            this.Enemy_02_Start_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_02_Start_TextBox.TabIndex = 13;
+            this.Enemy_02_Start_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_02_Start_TextBox_KeyPress);
             // 
             // label11
             // 
@@ -298,9 +371,9 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.textBox12);
-            this.panel5.Controls.Add(this.textBox11);
-            this.panel5.Controls.Add(this.textBox10);
+            this.panel5.Controls.Add(this.Enemy_03_Amount_TextBox);
+            this.panel5.Controls.Add(this.Enemy_03_SpawnRate_TextBox);
+            this.panel5.Controls.Add(this.Enemy_03_Start_TextBox);
             this.panel5.Controls.Add(this.label14);
             this.panel5.Controls.Add(this.label15);
             this.panel5.Controls.Add(this.label16);
@@ -308,6 +381,30 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(200, 133);
             this.panel5.TabIndex = 12;
+            // 
+            // Enemy_03_Amount_TextBox
+            // 
+            this.Enemy_03_Amount_TextBox.Location = new System.Drawing.Point(6, 107);
+            this.Enemy_03_Amount_TextBox.Name = "Enemy_03_Amount_TextBox";
+            this.Enemy_03_Amount_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_03_Amount_TextBox.TabIndex = 18;
+            this.Enemy_03_Amount_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_03_Amount_TextBox_KeyPress);
+            // 
+            // Enemy_03_SpawnRate_TextBox
+            // 
+            this.Enemy_03_SpawnRate_TextBox.Location = new System.Drawing.Point(6, 60);
+            this.Enemy_03_SpawnRate_TextBox.Name = "Enemy_03_SpawnRate_TextBox";
+            this.Enemy_03_SpawnRate_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_03_SpawnRate_TextBox.TabIndex = 17;
+            this.Enemy_03_SpawnRate_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_03_SpawnRate_TextBox_KeyPress);
+            // 
+            // Enemy_03_Start_TextBox
+            // 
+            this.Enemy_03_Start_TextBox.Location = new System.Drawing.Point(6, 18);
+            this.Enemy_03_Start_TextBox.Name = "Enemy_03_Start_TextBox";
+            this.Enemy_03_Start_TextBox.Size = new System.Drawing.Size(100, 20);
+            this.Enemy_03_Start_TextBox.TabIndex = 16;
+            this.Enemy_03_Start_TextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Enemy_03_Start_TextBox_KeyPress);
             // 
             // label14
             // 
@@ -338,90 +435,6 @@
             this.label16.Size = new System.Drawing.Size(113, 16);
             this.label16.TabIndex = 6;
             this.label16.Text = "Enemy_03 Amount";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 7;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(6, 60);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 8;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(6, 107);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 9;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(6, 18);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 10;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(6, 60);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 11;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(6, 107);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 12;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(6, 18);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 13;
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(6, 60);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 20);
-            this.textBox8.TabIndex = 14;
-            // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(6, 107);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(100, 20);
-            this.textBox9.TabIndex = 15;
-            // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(6, 18);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 20);
-            this.textBox10.TabIndex = 16;
-            // 
-            // textBox11
-            // 
-            this.textBox11.Location = new System.Drawing.Point(6, 60);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(100, 20);
-            this.textBox11.TabIndex = 17;
-            // 
-            // textBox12
-            // 
-            this.textBox12.Location = new System.Drawing.Point(6, 107);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(100, 20);
-            this.textBox12.TabIndex = 18;
             // 
             // LevelWave
             // 
@@ -483,17 +496,17 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox Enemy_00_Amount_TextBox;
+        private System.Windows.Forms.TextBox Enemy_00_SpawnRate_TextBox;
+        private System.Windows.Forms.TextBox Enemy_00_Start_TextBox;
+        private System.Windows.Forms.TextBox Enemy_01_Amount_TextBox;
+        private System.Windows.Forms.TextBox Enemy_01_SpawnRate_TextBox;
+        private System.Windows.Forms.TextBox Enemy_01_Start_TextBox;
+        private System.Windows.Forms.TextBox Enemy_02_Amount_TextBox;
+        private System.Windows.Forms.TextBox Enemy_02_SpawnRate_TextBox;
+        private System.Windows.Forms.TextBox Enemy_02_Start_TextBox;
+        private System.Windows.Forms.TextBox Enemy_03_Amount_TextBox;
+        private System.Windows.Forms.TextBox Enemy_03_SpawnRate_TextBox;
+        private System.Windows.Forms.TextBox Enemy_03_Start_TextBox;
     }
 }

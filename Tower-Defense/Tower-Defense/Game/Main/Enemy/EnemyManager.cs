@@ -20,42 +20,31 @@ namespace Tower_Defense
 
         public static void AddEnemy(int aType)
         {
-            Enemy tempEnemy;
+            Enemy tempEnemy = null;
+
             switch(aType)
             {
                 case 0:
                     tempEnemy = new Enemy_00(GameInfo.Path[0].GetCenter(), new Point(64));
-
-                    myEnemies.Add(tempEnemy);
-                    Depth.AddObject(tempEnemy);
-
-                    tempEnemy.LoadContent();
                     break;
                 case 1:
                     tempEnemy = new Enemy_01(GameInfo.Path[0].GetCenter(), new Point(64));
-
-                    myEnemies.Add(tempEnemy);
-                    Depth.AddObject(tempEnemy);
-
-                    tempEnemy.LoadContent();
                     break;
                 case 2:
                     tempEnemy = new Enemy_02(GameInfo.Path[0].GetCenter(), new Point(64));
-
-                    myEnemies.Add(tempEnemy);
-                    Depth.AddObject(tempEnemy);
-
-                    tempEnemy.LoadContent();
                     break;
                 case 3:
-                    tempEnemy = new Enemy_03(GameInfo.Path[0].GetCenter(), new Point(64));
-
-                    myEnemies.Add(tempEnemy);
-                    Depth.AddObject(tempEnemy);
-
-                    tempEnemy.LoadContent();
+                    tempEnemy = new Enemy_03(GameInfo.Path[0].GetCenter(), new Point(48));
+                    break;
+                default:
+                    tempEnemy = new Enemy_00(GameInfo.Path[0].GetCenter(), new Point(64));
                     break;
             }
+
+            Depth.AddObject(tempEnemy);
+            myEnemies.Add(tempEnemy);
+
+            tempEnemy.LoadContent();
         }
 
         public static void Update(GameTime aGameTime)
@@ -66,7 +55,7 @@ namespace Tower_Defense
                 if (!myEnemies[i].IsAlive)
                 {
                     Depth.RemoveObject(myEnemies[i]);
-                    myEnemies.RemoveAt(i);
+                    myEnemies.Remove(myEnemies[i]);
                 }
             }
         }

@@ -95,16 +95,24 @@ namespace Tower_Defense
                 {
                     myTowerIcon.Draw(aSpriteBatch);
 
-                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, mySelectedTower.Properties.Name, myPosition + myTowerIconOffset + 
+                    StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, mySelectedTower.Properties.Name, myPosition + myTowerIconOffset +
                         new Vector2(58, 104), Color.LightSlateGray, 0.4f);
                 }
 
                 for (int i = 0; i < myUpgradeOptions.Length; i++)
                 {
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, myUpgradeName[i] + ": Lv. " + mySelectedTower.Properties.TowerLevels[i],
-                        new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 7), Color.LightSlateGray, 0.4f);
-                    StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "$" + myUpgradePrice[i].ToString(),
-                        new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 23), Color.MediumSeaGreen, 0.35f);
+                    if (mySelectedTower.Properties.TowerLevels[i] < mySelectedTower.Properties.TowerLevelsMax[i])
+                    {
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, myUpgradeName[i] + ": Lv. " + mySelectedTower.Properties.TowerLevels[i],
+                            new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 7), Color.LightSlateGray, 0.4f);
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "$" + myUpgradePrice[i].ToString(),
+                            new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 23), Color.MediumSeaGreen, 0.35f);
+                    }
+                    else
+                    {
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, myUpgradeName[i] + ": Lv. Max",
+                            new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 7), Color.LightSlateGray, 0.4f);
+                    }
                 }
             }
 
@@ -113,19 +121,19 @@ namespace Tower_Defense
 
         private void DrawTowerRange()
         {
-            myDrawBatch.Begin(DrawSortMode.Deferred, BlendState.AlphaBlend,
-                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
-
             if (mySelectedTower != null)
             {
+                myDrawBatch.Begin(DrawSortMode.Deferred, BlendState.AlphaBlend,
+                    SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
+
                 myDrawBatch.DrawEllipse(Pen.Black, new Rectangle(
                     (int)(mySelectedTower.OffsetPosition.X - (mySelectedTower.Properties.Range / 2)),
                     (int)(mySelectedTower.OffsetPosition.Y - (mySelectedTower.Properties.Range / 4)),
                     (int)(mySelectedTower.Properties.Range),
                     (int)(mySelectedTower.Properties.Range / 2)));
-            }
 
-            myDrawBatch.End();
+                myDrawBatch.End();
+            }
         }
 
         private void MenuSlide(GameTime aGameTime)
@@ -226,40 +234,57 @@ namespace Tower_Defense
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {
-                GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
+                if (mySelectedTower.Properties.TowerLevels[mySelectedUpgrade] < mySelectedTower.Properties.TowerLevelsMax[mySelectedUpgrade])
+                {
+                    GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                mySelectedTower.Properties.FireSpeedLevel++;
-                mySelectedTower.Properties.FireSpeedDelay *= TowerProperties.Tower_Upgrade.FireSpeed_Upgrade;
+                    mySelectedTower.Properties.FireSpeedLevel++;
+                    mySelectedTower.Properties.FireSpeedDelay *= TowerProperties.Tower_Upgrade.FireSpeed_Upgrade;
+
+                    if (mySelectedTower.Properties.FireSpeed >= mySelectedTower.Properties.FireSpeedDelay)
+                    {
+                        mySelectedTower.Properties.FireSpeed = mySelectedTower.Properties.FireSpeedDelay;
+                    }
+                }
             }
         }
         public void UpgradeRange(GameWindow aWindow)
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {
-                GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
+                if (mySelectedTower.Properties.TowerLevels[mySelectedUpgrade] < mySelectedTower.Properties.TowerLevelsMax[mySelectedUpgrade])
+                {
+                    GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                mySelectedTower.Properties.RangeLevel++;
-                mySelectedTower.Properties.Range += TowerProperties.Tower_Upgrade.Range_Upgrade;
+                    mySelectedTower.Properties.RangeLevel++;
+                    mySelectedTower.Properties.Range += TowerProperties.Tower_Upgrade.Range_Upgrade;
+                }
             }
         }
         public void UpgradeDamage(GameWindow aWindow)
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {
-                GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
+                if (mySelectedTower.Properties.TowerLevels[mySelectedUpgrade] < mySelectedTower.Properties.TowerLevelsMax[mySelectedUpgrade])
+                {
+                    GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                mySelectedTower.Properties.DamageLevel++;
-                mySelectedTower.Properties.Damage += TowerProperties.Tower_Upgrade.Damage_Upgrade;
+                    mySelectedTower.Properties.DamageLevel++;
+                    mySelectedTower.Properties.Damage += TowerProperties.Tower_Upgrade.Damage_Upgrade;
+                }
             }
         }
         public void UpgradeNumberOfTargets(GameWindow aWindow)
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {
-                GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
+                if (mySelectedTower.Properties.TowerLevels[mySelectedUpgrade] < mySelectedTower.Properties.TowerLevelsMax[mySelectedUpgrade])
+                {
+                    GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                mySelectedTower.Properties.NumberOfTargetsLevel++;
-                mySelectedTower.Properties.NumberOfTargets += TowerProperties.Tower_Upgrade.NumberOfTargets_Upgrade;
+                    mySelectedTower.Properties.NumberOfTargetsLevel++;
+                    mySelectedTower.Properties.NumberOfTargets += TowerProperties.Tower_Upgrade.NumberOfTargets_Upgrade;
+                }
             }
         }
 

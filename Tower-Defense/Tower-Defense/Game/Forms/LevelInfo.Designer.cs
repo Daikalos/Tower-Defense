@@ -37,6 +37,8 @@
             this.XSizeTextBox = new System.Windows.Forms.TextBox();
             this.WarningLabel = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.label1 = new System.Windows.Forms.Label();
+            this.WaveTextBox = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,13 +65,15 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.WaveTextBox);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.YLabel);
             this.panel2.Controls.Add(this.XLabel);
             this.panel2.Controls.Add(this.YSizeTextBox);
             this.panel2.Controls.Add(this.XSizeTextBox);
             this.panel2.Location = new System.Drawing.Point(15, 34);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(110, 61);
+            this.panel2.Size = new System.Drawing.Size(285, 61);
             this.panel2.TabIndex = 7;
             // 
             // YLabel
@@ -120,6 +124,24 @@
             this.WarningLabel.TabIndex = 8;
             this.WarningLabel.Text = "This will reset your level!";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(108, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(58, 18);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Waves";
+            // 
+            // WaveTextBox
+            // 
+            this.WaveTextBox.Location = new System.Drawing.Point(172, 30);
+            this.WaveTextBox.Name = "WaveTextBox";
+            this.WaveTextBox.Size = new System.Drawing.Size(76, 20);
+            this.WaveTextBox.TabIndex = 5;
+            this.WaveTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WaveTextBox_KeyPress);
+            // 
             // LevelInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -149,6 +171,8 @@
         private System.Windows.Forms.Label YLabel;
         private System.Windows.Forms.Label WarningLabel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.TextBox WaveTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }
 
