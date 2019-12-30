@@ -45,8 +45,6 @@ namespace Tower_Defense
         {
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
 
-            SpawnInfo.Initialize();
-
             Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
 
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f, 1.0f, 1.03f);
@@ -61,15 +59,18 @@ namespace Tower_Defense
                 new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#'),
                 new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/')
             };
+
             this.myLevelInfoForm = new LevelInfo();
             this.myLevelNameForm = new LevelName();
             this.myLevelWaveForm = new LevelWave();
+
             this.myStartPosition = Vector2.Zero;
             this.myGoalPosition = Vector2.Zero;
-            this.myEditorState = EditorStates.isEditing;
             this.myOffset = new Rectangle(
                 -Level.TileSize.X / 16, -Level.TileSize.Y / 16,
                 Level.TileSize.X / 8, Level.TileSize.Y / 8);
+
+            this.myEditorState = EditorStates.isEditing;
             this.mySelectedTile = '-';
             this.myDelay = 0.50f;
             this.myTile = -1;
@@ -381,6 +382,10 @@ namespace Tower_Defense
                 if (button.IsClicked())
                 {
                     Level.LoadLevel(aWindow, new Point(64, 32), button.DisplayText);
+
+                    myLevelInfoForm = new LevelInfo();
+                    myLevelNameForm = new LevelName();
+                    myLevelWaveForm = new LevelWave();
 
                     LoadContent();
 

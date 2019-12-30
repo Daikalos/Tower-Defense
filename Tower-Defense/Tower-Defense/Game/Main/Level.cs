@@ -182,19 +182,11 @@ namespace Tower_Defense
                 GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-');
                 GameInfo.TotalWaves = Int32.Parse(FileReader.FindInfoOfName(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Waves", '='));
 
+                SpawnInfo.Initialize();
+
                 myMapSize = new Point(
                     myTiles.GetLength(0) * myTileSize.X,
                     myTiles.GetLength(1) * myTileSize.Y);
-
-                for (int i = 0; i < GameInfo.Path.Count; i++)
-                {
-                    GameInfo.Path[i].TileForm = 4;
-                    if (i == 0 || i == GameInfo.Path.Count - 1)
-                    {
-                        GameInfo.Path[i].TileForm = 5;
-                    }
-                    GameInfo.Path[i].SetTexture();
-                }
 
                 return true;
             }
@@ -243,6 +235,36 @@ namespace Tower_Defense
 
             File.AppendAllText(tempPathLevelInfo, "Start=" + aStart);
             File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Goal=" + aGoal);
+            File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Waves=" + GameInfo.TotalWaves);
+
+            for (int i = 0; i < EnemyProperties.Enemy_Info.EnemyTypes; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_00_Start=" + SpawnInfo.Enemy_Start[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_00_SpawnRate=" + SpawnInfo.Enemy_SpawnRate[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_00_Amount=" + SpawnInfo.Enemy_Amount[i]);
+                        break;
+                    case 1:
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_01_Start=" + SpawnInfo.Enemy_Start[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_01_SpawnRate=" + SpawnInfo.Enemy_SpawnRate[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_01_Amount=" + SpawnInfo.Enemy_Amount[i]);
+                        break;
+                    case 2:
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_02_Start=" + SpawnInfo.Enemy_Start[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_02_SpawnRate=" + SpawnInfo.Enemy_SpawnRate[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_02_Amount=" + SpawnInfo.Enemy_Amount[i]);
+                        break;
+                    case 3:
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_03_Start=" + SpawnInfo.Enemy_Start[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_03_SpawnRate=" + SpawnInfo.Enemy_SpawnRate[i]);
+                        File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Enemy_03_Amount=" + SpawnInfo.Enemy_Amount[i]);
+                        break;
+                }
+            }
+
+            File.AppendAllText(tempPathLevelInfo, Environment.NewLine + "Difficulty=" + SpawnInfo.Difficulty);
         }
         public static void DeleteLevel(string aLevelName)
         {

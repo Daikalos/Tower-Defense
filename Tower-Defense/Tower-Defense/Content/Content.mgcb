@@ -215,6 +215,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Main/tower_01_icon.png
 
+#begin Sprites/Main/tower_02.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Main/tower_02.png
+
+#begin Sprites/Main/tower_02_icon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Main/tower_02_icon.png
+
 #begin Sprites/Main/upgrade_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using LilyPath;
@@ -17,6 +18,7 @@ namespace Tower_Defense
             this.myProperties.Damage = TowerProperties.Tower_01.Damage;
             this.myProperties.NumberOfTargets = TowerProperties.Tower_01.NumberOfTargets;
 
+            this.myProperties.Price = TowerProperties.Tower_01.Price;
             this.myProperties.FireSpeed_Price = TowerProperties.Tower_01.FireSpeed_Price;
             this.myProperties.Range_Price = TowerProperties.Tower_01.Range_Price;
             this.myProperties.Damage_Price = TowerProperties.Tower_01.Damage_Price;
@@ -37,80 +39,80 @@ namespace Tower_Defense
         {
             base.Update(aGameTime);
 
-            RotateTower(aGameTime);
+            CheckEnemyDistance(aGameTime);
         }
 
-        private void RotateTower(GameTime aGameTime)
+        private void CheckEnemyDistance(GameTime aGameTime)
         {
             if (EnemyManager.Enemies.Count > 0)
             {
-                Tuple<Enemy, float>[] tempDistToEnemy = new Tuple<Enemy, float>[EnemyManager.Enemies.Count];
+                List<Tuple<Enemy, float>> tempDistToEnemy = new List<Tuple<Enemy, float>>();
                 Rectangle tempRange = new Rectangle(
                     (int)(OffsetPosition.X - (myProperties.Range / 2)),
                     (int)(OffsetPosition.Y - (myProperties.Range / 4)),
                     (int)(myProperties.Range),
                     (int)(myProperties.Range / 2));
 
-                for (int i = 0; i < tempDistToEnemy.Length; i++)
+                for (int i = 0; i < EnemyManager.Enemies.Count; i++)
                 {
-                    tempDistToEnemy[i] = new Tuple<Enemy, float>(null, float.MaxValue);
                     if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
                     {
-                        tempDistToEnemy[i] = new Tuple<Enemy, float>(EnemyManager.Enemies[i],
-                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition));
+                        tempDistToEnemy.Add(new Tuple<Enemy, float>(EnemyManager.Enemies[i],
+                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition)));
                     }
                 }
 
-                Tuple<Enemy, float>[] tempFilteredArray = Array.FindAll(tempDistToEnemy, d => d.Item2 != float.MaxValue);
-                Tuple<Enemy, float>[] tempSortedArray = tempFilteredArray.OrderBy(d => d.Item2).ToArray();
+                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderBy(d => d.Item2).ToList();
 
-                if (tempSortedArray.Length > 0)
+                if (tempSortedList.Count > 0)
                 {
-                    float tempAngle = Extensions.AngleToPoint(OffsetPosition, tempSortedArray.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
+                    float tempAngle = Extensions.AngleToPoint(OffsetPosition, tempSortedList.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
+                    RotateTower(tempAngle);
 
-                    float
-                        tempRotateTowerX = 0.0f,
-                        tempRotateTowerY = 0.0f;
-
-                    tempRotateTowerX = (tempAngle / 360.0f) * 4; //4 = total of frames
-
-                    tempRotateTowerY = (int)(tempRotateTowerX / 2);
-                    tempRotateTowerX = (int)(tempRotateTowerX % 2);
-
-                    mySourceRect = new Rectangle(
-                        (int)((myTexture.Width / 2) * tempRotateTowerX),
-                        (int)((myTexture.Height / 2) * tempRotateTowerY),
-                        (int)(myTexture.Width / 2),
-                        (int)(myTexture.Height / 2));
-
-                    Attack(aGameTime, tempSortedArray);
+                    Attack(aGameTime, tempSortedList);
                 }
             }
         }
 
-        private void Attack(GameTime aGameTime, Tuple<Enemy, float>[] someEnemies)
+        private void RotateTower(float aAngle)
+        {
+            float
+                tempRotateTowerX = 0.0f, 
+                tempRotateTowerY = 0.0f;
+
+            tempRotateTowerX = (aAngle / 360.0f) * 4; //4 = total of frames
+
+            tempRotateTowerY = (int)(tempRotateTowerX / 2);
+            tempRotateTowerX = (int)(tempRotateTowerX % 2);
+
+            mySourceRect = new Rectangle(
+                (int)((myTexture.Width / 2) * tempRotateTowerX),
+                (int)((myTexture.Height / 2) * tempRotateTowerY),
+                (int)(myTexture.Width / 2),
+                (int)(myTexture.Height / 2));
+        }
+
+        private void Attack(GameTime aGameTime, List<Tuple<Enemy, float>> someEnemies)
         {
             myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
             if (myProperties.FireSpeed <= 0)
             {
-                if (someEnemies.Length > 0)
+                if (someEnemies.Count > 0)
                 {
-                    Vector2[] tempPositions = new Vector2[someEnemies.Length + 1];
-                    tempPositions[0] = OffsetPosition;
+                    List<Vector2> tempPositions = new List<Vector2>();
+                    tempPositions.Add(OffsetPosition);
 
                     for (int i = 0; i < myProperties.NumberOfTargets; i++)
                     {
-                        if (i < someEnemies.Length)
+                        if (i < someEnemies.Count)
                         {
-                            tempPositions[i + 1] = someEnemies[i].Item1.DestRect.Center.ToVector2();
+                            tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
 
                             someEnemies[i].Item1.RecieveDamage(myProperties.Damage);
                         }
                     }
 
-                    Vector2[] tempFilteredArray = Array.FindAll(tempPositions, p => p != Vector2.Zero && p != null); //Filter out empty positions
-
-                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, Pen.Purple, 1.0f, tempFilteredArray));
+                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, Pen.Purple, 1.0f, tempPositions.ToArray()));
                 }
 
                 myProperties.FireSpeed = myProperties.FireSpeedDelay;

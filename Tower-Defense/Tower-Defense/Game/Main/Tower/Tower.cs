@@ -92,11 +92,13 @@ namespace Tower_Defense
 
             public int[] TowerLevels { get; set; }
             public int[] TowerLevelsMax { get; set; }
+
             public int FireSpeedLevel { get; set; }
             public int RangeLevel { get; set; }
             public int DamageLevel { get; set; }
             public int NumberOfTargetsLevel { get; set; }
 
+            public int Price { get; set; }
             public int FireSpeed_Price { get; set; }
             public int Range_Price { get; set; }
             public int Damage_Price { get; set; }

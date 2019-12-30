@@ -10,6 +10,7 @@ namespace Tower_Defense
         List<TextBox> myEnemyStart_TextBoxes;
         List<TextBox> myEnemySpawnRate_TextBoxes;
         List<TextBox> myEnemyAmount_TextBoxes;
+        List<RadioButton> myLevelDifficulty;
 
         public LevelWave()
         {
@@ -33,6 +34,11 @@ namespace Tower_Defense
             myEnemyAmount_TextBoxes.Add(Enemy_02_Amount_TextBox);
             myEnemyAmount_TextBoxes.Add(Enemy_03_Amount_TextBox);
 
+            myLevelDifficulty = new List<RadioButton>();
+            myLevelDifficulty.Add(EasyWaveButton);
+            myLevelDifficulty.Add(NormalWaveButton);
+            myLevelDifficulty.Add(HardWaveButton);
+
             for (int i = 0; i < myEnemyStart_TextBoxes.Count; i++)
             {
                 myEnemyStart_TextBoxes[i].Text = SpawnInfo.Enemy_Start[i].ToString();
@@ -47,6 +53,8 @@ namespace Tower_Defense
             {
                 myEnemyAmount_TextBoxes[i].Text = SpawnInfo.Enemy_Amount[i].ToString();
             }
+
+            myLevelDifficulty[SpawnInfo.Difficulty].Checked = true;
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
@@ -67,6 +75,8 @@ namespace Tower_Defense
                 {
                     SpawnInfo.Enemy_Amount[i] = Int32.Parse(myEnemyAmount_TextBoxes[i].Text);
                 }
+
+                SpawnInfo.Difficulty = myLevelDifficulty.FindIndex(r => r.Checked);
 
                 this.Close();
             } 

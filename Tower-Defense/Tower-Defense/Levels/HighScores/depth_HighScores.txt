@@ -1,2 +1,0 @@
-HighScore=12
-HighScore=6000

@@ -24,7 +24,7 @@ namespace Tower_Defense
 
         public static string LevelName { get; set; }
 
-        //Get properties, will not change
+        //Get properties, will not change during runtime
         public static int MoneyEachWave => 50;
 
         public static string FolderLevels => "../../../../Levels/Levels/";

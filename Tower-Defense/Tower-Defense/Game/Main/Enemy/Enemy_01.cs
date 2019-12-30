@@ -10,9 +10,9 @@ namespace Tower_Defense
             this.myProperties.Speed = EnemyProperties.Enemy_01.Speed;
             this.myProperties.HealthPoints = EnemyProperties.Enemy_01.HealthPoints;
 
-            if (GameInfo.Wave >= EnemyProperties.Enemy_Info.HealthPoint_Increase)
+            if (GameInfo.Wave >= (int)(1.0f / EnemyProperties.Enemy_Info.HealthPoint_Increase))
             {
-                this.myProperties.HealthPoints *= GameInfo.Wave / EnemyProperties.Enemy_Info.HealthPoint_Increase; //So that it is possible for the game to end sometime
+                this.myProperties.HealthPoints *= (int)(GameInfo.Wave * EnemyProperties.Enemy_Info.HealthPoint_Increase); //So that it is possible for the game to end sometime
             }
 
             this.myMaxHealthPoints = myProperties.HealthPoints;

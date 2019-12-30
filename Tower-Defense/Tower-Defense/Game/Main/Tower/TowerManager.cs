@@ -24,15 +24,17 @@ namespace Tower_Defense
             for (int i = myTowers.Count - 1; i >= 0; i--)
             {
                 myTowers[i].Update(aGameTime);
-                if (!myTowers[i].IsAlive)
-                {
-                    Depth.RemoveObject(myTowers[i]);
-                    myTowers.Remove(myTowers[i]);
-                }
-
                 if (myTowers[i].IsClicked())
                 {
                     aUpgrade.SelectedTower = myTowers[i];
+                }
+
+                if (!myTowers[i].IsAlive)
+                {
+                    Level.TileAtPos(myTowers[i].OffsetPosition).Item1.IsObstacle = false;
+
+                    Depth.RemoveObject(myTowers[i]);
+                    myTowers.Remove(myTowers[i]);
                 }
             }
         }
@@ -45,8 +47,26 @@ namespace Tower_Defense
             }
         }
 
-        public static void AddTower(Tower aTower)
+        public static void AddTower(int aType, Vector2 aPosition)
         {
+            Tower aTower = null;
+
+            switch (aType)
+            {
+                case 0:
+                    aTower = new Tower_00(aPosition, new Point(64));
+                    break;
+                case 1:
+                    aTower = new Tower_01(aPosition, new Point(64));
+                    break;
+                case 2:
+                    aTower = new Tower_02(aPosition, new Point(64, 80));
+                    break;
+                default:
+                    aTower = new Tower_00(aPosition, new Point(64));
+                    break;
+            }
+
             Depth.AddObject(aTower);
             myTowers.Add(aTower);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -28,6 +29,10 @@ namespace Tower_Defense
             myGraphics.PreferredBackBufferWidth = 1600;
             myGraphics.PreferredBackBufferHeight = 900;
             myGraphics.ApplyChanges();
+
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 60.0f); //60 fps
+            MaxElapsedTime = TargetElapsedTime;
 
             ResourceManager.Initialize();
 
@@ -70,7 +75,7 @@ namespace Tower_Defense
             }
             ResourceManager.AddTexture("Healthbar", this.Content.Load<Texture2D>("Sprites/Main/healthbar"));
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 ResourceManager.AddTexture("Tower_" + Extensions.NumberFormat(i),
                     this.Content.Load<Texture2D>("Sprites/Main/tower_" + Extensions.NumberFormat(i)));

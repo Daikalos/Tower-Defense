@@ -15,12 +15,10 @@ namespace Tower_Defense
         private static float SpawnDelay_Decrease { get; set; }
 
         public static bool SpawnEnemies { get; set; }
-        public static int TotalAmountToSpawn { get => Enemy_AmountToSpawn.Sum(); }
+        public static int TotalAmountToSpawn => Enemy_AmountToSpawn.Sum();
 
         public static void Initialize()
         {
-            SpawnInfo.Initialize();
-
             Enemy_AmountToSpawn = new int[SpawnInfo.Enemy_Amount.Length];
             Enemy_SpawnTimer = new float[SpawnInfo.Enemy_SpawnRate.Length];
             Enemy_SpawnDelay = new float[SpawnInfo.Enemy_SpawnRate.Length];
@@ -33,10 +31,10 @@ namespace Tower_Defense
             if (!SpawnEnemies)
             {
                 SpawnDelay_Decrease = (float)MathHelper.Clamp(
-                    (float)Math.Pow(EnemyProperties.Enemy_Info.SpawnDelay_Decrease, (GameInfo.Wave + SpawnInfo.Difficulty)), 
-                    EnemyProperties.Enemy_Info.SpawnDelay_Min, 
+                    (float)Math.Pow(EnemyProperties.Enemy_Info.SpawnDelay_Decrease, (GameInfo.Wave + SpawnInfo.Difficulty)),
+                    EnemyProperties.Enemy_Info.SpawnDelay_Min,
                     float.MaxValue);
-
+                
                 AmountToSpawn_Increase = (int)Math.Pow(EnemyProperties.Enemy_Info.AmountToSpawn_Increase, (GameInfo.Wave + SpawnInfo.Difficulty));
 
                 for (int i = 0; i < Enemy_SpawnDelay.Length; i++)

@@ -55,26 +55,26 @@
         public static class Tower_02
         {
             //Tower general info
-            public static string Name => ":)";
+            public static string Name => "Slow";
 
             //Tower stats
-            public static float FireSpeed => 4.0f;
-            public static float Range => 256;
+            public static float FireSpeed => 0.0f;
+            public static float Range => 156;
             public static int Damage => 1;
-            public static int NumberOfTargets => 1;
+            public static int NumberOfTargets => 0;
 
             //Tower prices
             public static int Price => 450;
-            public static int FireSpeed_Price => 150;
-            public static int Range_Price => 150;
-            public static int Damage_Price => 150;
-            public static int NumberOfTargets_Price => 150;
+            public static int FireSpeed_Price => 0;
+            public static int Range_Price => 800;
+            public static int Damage_Price => 1500;
+            public static int NumberOfTargets_Price => 0;
 
             //Tower Max Level
-            public static int FireSpeed_Level_Max => 25;
-            public static int Range_Level_Max => 25;
-            public static int Damage_Level_Max => 25;
-            public static int NumberOfTargets_Level_Max => 25;
+            public static int FireSpeed_Level_Max => 1;
+            public static int Range_Level_Max => 15;
+            public static int Damage_Level_Max => 5;
+            public static int NumberOfTargets_Level_Max => 1;
         }
 
         public static class Tower_Upgrade

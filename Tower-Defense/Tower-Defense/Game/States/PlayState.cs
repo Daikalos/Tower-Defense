@@ -20,9 +20,9 @@ namespace Tower_Defense
 
             ParticleManager.Initialize(myGame.GraphicsDevice);
 
-            SpawnManager.Initialize();
-
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
+
+            SpawnManager.Initialize();
 
             for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
             {
@@ -69,13 +69,13 @@ namespace Tower_Defense
 
                 if (GameInfo.Wave >= GameInfo.TotalWaves)
                 {
+                    GameInfo.LoadHighScore(GameInfo.LevelName);
+                    GameInfo.SaveHighScore(GameInfo.LevelName);
+
                     myGame.ChangeState(new WinState(myGame));
                 }
                 if (GameInfo.Health <= 0)
                 {
-                    GameInfo.LoadHighScore(GameInfo.LevelName);
-                    GameInfo.SaveHighScore(GameInfo.LevelName);
-
                     myGame.ChangeState(new DeadState(myGame));
                 }
 

@@ -29,7 +29,7 @@ namespace Tower_Defense
             {
                 new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, (1.0f / 3.0f), 0.36f),
                 new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, (1.0f / 3.0f), 0.36f),
-                new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, 1.0f, 1.10f),
+                new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, (1.0f / 3.0f), 0.36f),
             };
 
             this.myHidePosition = aPosition - aOffset;
@@ -164,18 +164,7 @@ namespace Tower_Defense
                         myCurrentTile = tempTile.Item1;
                         if (KeyMouseReader.LeftClick() && GameInfo.Money >= myBuyPrice[mySelectedTower])
                         {
-                            switch (mySelectedTower)
-                            {
-                                case 0: //Tower_00
-                                    TowerManager.AddTower(new Tower_00(tempTile.Item1.GetCenter(), new Point(64)));
-                                    break;
-                                case 1: //Tower_01
-                                    TowerManager.AddTower(new Tower_01(tempTile.Item1.GetCenter(), new Point(64)));
-                                    break;
-                                case 2: //Tower_02
-                                    TowerManager.AddTower(new Tower_02(tempTile.Item1.GetCenter(), new Point(64)));
-                                    break;
-                            }
+                            TowerManager.AddTower(mySelectedTower, tempTile.Item1.GetCenter());
 
                             tempTile.Item1.IsObstacle = true;
                             GameInfo.Money -= myBuyPrice[mySelectedTower];
@@ -188,6 +177,10 @@ namespace Tower_Defense
                     {
                         myCurrentTile = null;
                     }
+                }
+                else
+                {
+                    myCurrentTile = null;
                 }
                 if (KeyMouseReader.RightClick())
                 {

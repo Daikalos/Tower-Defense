@@ -13,6 +13,9 @@ namespace Tower_Defense
             InitializeComponent();
 
             WaveTextBox.Text = GameInfo.TotalWaves.ToString();
+
+            XSizeTextBox.Text = Level.GetTiles.GetLength(0).ToString();
+            YSizeTextBox.Text = Level.GetTiles.GetLength(1).ToString();
         }
 
         private void xSizeTextBox_KeyPress(object sender, KeyPressEventArgs e)

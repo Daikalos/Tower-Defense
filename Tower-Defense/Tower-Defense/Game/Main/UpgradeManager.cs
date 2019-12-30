@@ -13,16 +13,20 @@ namespace Tower_Defense
         //Upgrade
         private SpriteFont my8bitFont;
         private Button[] myUpgradeOptions;
+        private Button mySellButton;
         private Button myTowerIcon;
         private Tower mySelectedTower;
         private Vector2[] myUpgradeOptionsOffset;
         private Vector2
             myShowPosition,
             myHidePosition,
+            mySellButtonOffset,
             myTowerIconOffset;
         private int[] myUpgradePrice;
         private string[] myUpgradeName;
-        private int mySelectedUpgrade;
+        private int 
+            mySelectedUpgrade,
+            mySellPrice;
 
         public Tower SelectedTower
         {
@@ -40,10 +44,13 @@ namespace Tower_Defense
                 new Button(aPosition, new Point(32), UpgradeDamage, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
                 new Button(aPosition, new Point(32), UpgradeNumberOfTargets, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
             };
+            this.mySellButton = new Button(aPosition, new Point(96, 36), SellTower, 1, "SELL", 0.5f, (3.0f / 4.0f), (3.1f / 4.0f));
             this.myTowerIcon = new Button(aPosition, new Point(118, 92), null, -1, string.Empty, 0.0f, (1.0f / 3.0f), (1.0f / 3.0f));
 
             this.myHidePosition = aPosition - aOffset;
             this.myShowPosition = aPosition - aSize.ToVector2();
+
+            this.mySellButtonOffset = new Vector2(aSize.X - 118, aSize.Y - 44); //Values from sprite
             this.myTowerIconOffset = new Vector2(25, 51); //Values from sprite
 
             this.myUpgradeOptionsOffset = new Vector2[myUpgradeOptions.Length];
@@ -78,7 +85,6 @@ namespace Tower_Defense
             UpdateButtons(aWindow);
 
             SetPrices();
-
             ClickOutside();
         }
 
@@ -114,6 +120,9 @@ namespace Tower_Defense
                             new Vector2(myUpgradeOptions[i].Position.X + 38, myUpgradeOptions[i].Position.Y + 7), Color.LightSlateGray, 0.4f);
                     }
                 }
+
+                StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "$" + mySellPrice, new Vector2(mySellButton.Position.X, mySellButton.Position.Y - 10), Color.MediumSeaGreen, 0.4f);
+                mySellButton.Draw(aSpriteBatch);
             }
 
             Array.ForEach(myUpgradeOptions, o => o.Draw(aSpriteBatch));
@@ -176,6 +185,9 @@ namespace Tower_Defense
                 }
             }
 
+            mySellButton.Update(aWindow);
+            mySellButton.Position = myPosition + mySellButtonOffset;
+
             myTowerIcon.Update(aWindow);
             myTowerIcon.Position = myPosition + myTowerIconOffset;
 
@@ -189,27 +201,33 @@ namespace Tower_Defense
         {
             if (mySelectedTower != null)
             {
+                mySellPrice = (mySelectedTower.Properties.Price / 2);
+
                 for (int i = 0; i < myUpgradeOptions.Length; i++)
                 {
                     switch (i)
                     {
                         case 0:
                             myUpgradePrice[i] = mySelectedTower.Properties.FireSpeedLevel * mySelectedTower.Properties.FireSpeed_Price;
+                            mySellPrice += ((mySelectedTower.Properties.FireSpeedLevel - 1) * mySelectedTower.Properties.FireSpeed_Price) / 2;
                             break;
                         case 1:
                             myUpgradePrice[i] = mySelectedTower.Properties.RangeLevel * mySelectedTower.Properties.Range_Price;
+                            mySellPrice += ((mySelectedTower.Properties.RangeLevel - 1) * mySelectedTower.Properties.Range_Price) / 2;
                             break;
                         case 2:
                             myUpgradePrice[i] = mySelectedTower.Properties.DamageLevel * mySelectedTower.Properties.Damage_Price;
+                            mySellPrice += ((mySelectedTower.Properties.DamageLevel - 1) * mySelectedTower.Properties.Damage_Price) / 2;
                             break;
                         case 3:
                             myUpgradePrice[i] = mySelectedTower.Properties.NumberOfTargetsLevel * mySelectedTower.Properties.NumberOfTargets_Price;
+                            mySellPrice += ((mySelectedTower.Properties.NumberOfTargetsLevel - 1) * mySelectedTower.Properties.NumberOfTargets_Price) / 2;
                             break;
                     }
                 }
+
             }
         }
-
         private void ClickOutside()
         {
             if (KeyMouseReader.LeftClick())
@@ -288,6 +306,14 @@ namespace Tower_Defense
             }
         }
 
+        public void SellTower(GameWindow aWindow)
+        {
+            mySelectedTower.IsAlive = false;
+            mySelectedTower = null;
+
+            GameInfo.Money += mySellPrice;
+        }
+
         public void LoadContent()
         {
             my8bitFont = ResourceManager.RequestFont("8-bit");
@@ -299,6 +325,7 @@ namespace Tower_Defense
             {
                 myUpgradeOptions[i].LoadContent();
             }
+            mySellButton.LoadContent();
         }
     }
 }
