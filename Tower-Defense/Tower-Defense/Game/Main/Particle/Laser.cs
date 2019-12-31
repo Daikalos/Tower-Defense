@@ -9,7 +9,7 @@ namespace Tower_Defense
         private GraphicsPath myDrawPath;
         private float myTimer;
 
-        public Laser(Vector2 aPosition, Point aSize, Pen aPen, float aDelay, params Vector2[] somePoints) : base(aPosition, aSize)
+        public Laser(Vector2 aPosition, Point aSize, float aDelay, Pen aPen, params Vector2[] somePoints) : base(aPosition, aSize)
         {
             myDrawPath = new GraphicsPath(aPen, somePoints);
 

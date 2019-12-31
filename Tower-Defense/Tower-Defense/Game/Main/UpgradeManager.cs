@@ -64,7 +64,7 @@ namespace Tower_Defense
                 switch (i)
                 {
                     case 0:
-                        myUpgradeName[i] = "Fire Speed";
+                        myUpgradeName[i] = "Attack Rate";
                         break;
                     case 1:
                         myUpgradeName[i] = "Range";
@@ -91,6 +91,7 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch)
         {
             DrawTowerRange();
+            DrawTowerStats(aSpriteBatch);
 
             aSpriteBatch.Draw(myTexture, Camera.TopLeftCorner + myPosition / Camera.Zoom,
                 SourceRect, Color.White, 0.0f, Vector2.Zero, 1.0f / Camera.Zoom, SpriteEffects.None, 0.0f);
@@ -142,6 +143,34 @@ namespace Tower_Defense
                     (int)(mySelectedTower.Properties.Range / 2)));
 
                 myDrawBatch.End();
+            }
+        }
+        private void DrawTowerStats(SpriteBatch aSpriteBatch)
+        {
+            if (mySelectedTower != null)
+            {
+                myDrawBatch.Begin(DrawSortMode.Deferred, BlendState.AlphaBlend,
+                    SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
+
+                myDrawBatch.DrawRectangle(Pen.DarkGray,
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X, mySelectedTower.Position.Y - (myTowerIcon.Size.Y  / 2)),
+                    myTowerIcon.Size.X + 20,
+                    myTowerIcon.Size.Y);
+                myDrawBatch.FillRectangle(Brush.Gray,
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2)),
+                    myTowerIcon.Size.X + 20,
+                    myTowerIcon.Size.Y);
+
+                myDrawBatch.End();
+
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "AR: " + Math.Round(mySelectedTower.Properties.AttackRate, 2),
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 10), new Color(180, 180, 180), 0.5f);
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + mySelectedTower.Properties.Range,
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 34), new Color(180, 180, 180), 0.5f);
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "DMG: " + mySelectedTower.Properties.Damage,
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 58), new Color(180, 180, 180), 0.5f);
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + mySelectedTower.Properties.NumberOfTargets,
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 82), new Color(180, 180, 180), 0.5f);
             }
         }
 
@@ -208,8 +237,8 @@ namespace Tower_Defense
                     switch (i)
                     {
                         case 0:
-                            myUpgradePrice[i] = mySelectedTower.Properties.FireSpeedLevel * mySelectedTower.Properties.FireSpeed_Price;
-                            mySellPrice += ((mySelectedTower.Properties.FireSpeedLevel - 1) * mySelectedTower.Properties.FireSpeed_Price) / 2;
+                            myUpgradePrice[i] = mySelectedTower.Properties.AttackRateLevel * mySelectedTower.Properties.AttackRate_Price;
+                            mySellPrice += ((mySelectedTower.Properties.AttackRateLevel - 1) * mySelectedTower.Properties.AttackRate_Price) / 2;
                             break;
                         case 1:
                             myUpgradePrice[i] = mySelectedTower.Properties.RangeLevel * mySelectedTower.Properties.Range_Price;
@@ -256,12 +285,12 @@ namespace Tower_Defense
                 {
                     GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                    mySelectedTower.Properties.FireSpeedLevel++;
-                    mySelectedTower.Properties.FireSpeedDelay *= TowerProperties.Tower_Upgrade.FireSpeed_Upgrade;
+                    mySelectedTower.Properties.AttackRateLevel++;
+                    mySelectedTower.Properties.AttackRateDelay *= TowerProperties.Tower_Upgrade.AttackRate_Upgrade;
 
-                    if (mySelectedTower.Properties.FireSpeed >= mySelectedTower.Properties.FireSpeedDelay)
+                    if (mySelectedTower.Properties.AttackRate >= mySelectedTower.Properties.AttackRateDelay)
                     {
-                        mySelectedTower.Properties.FireSpeed = mySelectedTower.Properties.FireSpeedDelay;
+                        mySelectedTower.Properties.AttackRate = mySelectedTower.Properties.AttackRateDelay;
                     }
                 }
             }

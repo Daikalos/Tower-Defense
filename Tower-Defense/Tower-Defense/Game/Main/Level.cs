@@ -179,7 +179,7 @@ namespace Tower_Defense
                     }
                 }
 
-                GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-');
+                GameInfo.Path = Pathfinder.FindPath(tempStartPos, tempGoalPos, '#', '-', '.');
                 GameInfo.TotalWaves = Int32.Parse(FileReader.FindInfoOfName(GameInfo.FolderLevelsInfo + aLevelName + "_Info.txt", "Waves", '='));
 
                 SpawnInfo.Initialize();

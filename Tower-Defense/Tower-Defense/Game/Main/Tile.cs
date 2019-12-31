@@ -87,6 +87,9 @@ namespace Tower_Defense
                     this.myColor = new Color(150, 150, 240);
                     this.myTileForm = StaticRandom.RandomNumber(4, 5);
                     break;
+                case '.':
+                    this.myIsObstacle = true;
+                    break;
                 default:
                     this.myIsObstacle = false;
                     this.myColor = new Color(255, 255, 255);
@@ -103,6 +106,10 @@ namespace Tower_Defense
                     SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
                     myGroundTexture = ResourceManager.RequestTexture("Tile_00");
                     break;
+                case '.':
+                    SetTexture("Empty");
+                    myGroundTexture = null;
+                    break;
                 default:
                     SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
                     myGroundTexture = null;
@@ -116,6 +123,10 @@ namespace Tower_Defense
                 case '#':
                     SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));
                     myGroundTexture = ResourceManager.RequestTexture("Tile_00");
+                    break;
+                case '.':
+                    SetTexture("Empty");
+                    myGroundTexture = null;
                     break;
                 default:
                     SetTexture("Tile_" + Extensions.NumberFormat(myTileForm));

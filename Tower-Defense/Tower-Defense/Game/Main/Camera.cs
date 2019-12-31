@@ -54,6 +54,13 @@ namespace Tower_Defense
             myZoomValue = 0.05f; //Fixed values
         }
 
+        public static void Reset()
+        {
+            myPosition = ViewportCenter;
+            myOldMousePosition = Point.Zero;
+            myZoom = 1.0f;
+        }
+
         public static void MoveCamera(GameTime aGameTime)
         {
             if (KeyMouseReader.MiddleMouseClick())

@@ -24,6 +24,7 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_02.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/tower_02_icon.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Main/upgrade_menu.png</File>
+    <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Other/empty.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Other/null.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_00.png</File>
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_01.png</File>
@@ -33,6 +34,7 @@
     <File>C:/Users/Tobias/Documents/GitHub/TowerDefense/Tower-Defense/Tower-Defense/Content/Sprites/Tileset/tile_05.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

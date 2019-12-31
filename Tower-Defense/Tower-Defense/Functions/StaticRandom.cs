@@ -6,6 +6,7 @@ namespace Tower_Defense
     {
         private static readonly Random myRandom = new Random();
         private static readonly object mySyncLock = new object();
+
         public static int RandomNumber(int aMin, int aMax)
         {
             lock (mySyncLock)

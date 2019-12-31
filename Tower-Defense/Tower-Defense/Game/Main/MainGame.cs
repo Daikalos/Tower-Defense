@@ -40,6 +40,8 @@ namespace Tower_Defense
 
             Background.Initialize(12.0f);
 
+            Camera.Initialize(Window, new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2), 15);
+
             myGameState = new MenuState(this, Window);
 
             base.Initialize();
@@ -52,6 +54,7 @@ namespace Tower_Defense
             ResourceManager.AddFont("8-bit", this.Content.Load<SpriteFont>("Fonts/8bit"));
 
             ResourceManager.AddTexture("Null", this.Content.Load<Texture2D>("Sprites/other/null"));
+            ResourceManager.AddTexture("Empty", this.Content.Load<Texture2D>("Sprites/other/empty"));
 
             ResourceManager.AddTexture("Border_Long", this.Content.Load<Texture2D>("Sprites/Main/border_long"));
             ResourceManager.AddTexture("Border_Short", this.Content.Load<Texture2D>("Sprites/Main/border_short"));

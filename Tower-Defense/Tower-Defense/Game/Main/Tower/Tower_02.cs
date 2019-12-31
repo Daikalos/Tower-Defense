@@ -13,26 +13,26 @@ namespace Tower_Defense
         {
             this.Properties.Name = TowerProperties.Tower_02.Name;
 
-            this.myProperties.FireSpeed = TowerProperties.Tower_02.FireSpeed;
+            this.myProperties.AttackRate = TowerProperties.Tower_02.AttackRate;
             this.myProperties.Range = TowerProperties.Tower_02.Range;
             this.myProperties.Damage = TowerProperties.Tower_02.Damage;
             this.myProperties.NumberOfTargets = TowerProperties.Tower_02.NumberOfTargets;
 
             this.myProperties.Price = TowerProperties.Tower_02.Price;
-            this.myProperties.FireSpeed_Price = TowerProperties.Tower_02.FireSpeed_Price;
+            this.myProperties.AttackRate_Price = TowerProperties.Tower_02.AttackRate_Price;
             this.myProperties.Range_Price = TowerProperties.Tower_02.Range_Price;
             this.myProperties.Damage_Price = TowerProperties.Tower_02.Damage_Price;
             this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_02.NumberOfTargets_Price;
 
             this.myProperties.TowerLevelsMax = new int[]
             {
-                TowerProperties.Tower_02.FireSpeed_Level_Max,
+                TowerProperties.Tower_02.AttackRate_Level_Max,
                 TowerProperties.Tower_02.Range_Level_Max,
                 TowerProperties.Tower_02.Damage_Level_Max,
                 TowerProperties.Tower_02.NumberOfTargets_Level_Max
             };
 
-            this.myProperties.FireSpeedDelay = myProperties.FireSpeed;
+            this.myProperties.AttackRateDelay = myProperties.AttackRate;
         }
 
         public override void Update(GameTime aGameTime)
@@ -74,30 +74,28 @@ namespace Tower_Defense
 
         private void Attack(GameTime aGameTime, List<Tuple<Enemy, float>> someEnemies)
         {
-            myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
-            if (myProperties.FireSpeed <= 0)
+            myProperties.AttackRate -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
+            if (myProperties.AttackRate <= 0)
             {
                 if (someEnemies.Count > 0)
                 {
-                    Vector2[] tempPositions = new Vector2[someEnemies.Count + 1];
-                    tempPositions[0] = OffsetPosition;
+                    List<Vector2> tempPositions = new List<Vector2>();
+                    tempPositions.Add(OffsetPosition);
 
                     for (int i = 0; i < myProperties.NumberOfTargets; i++)
                     {
                         if (i < someEnemies.Count)
                         {
-                            tempPositions[i + 1] = someEnemies[i].Item1.DestRect.Center.ToVector2();
+                            tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
 
-                            someEnemies[i].Item1.RecieveDamage(myProperties.Damage);
+
                         }
                     }
 
-                    Vector2[] tempFilteredArray = Array.FindAll(tempPositions, p => p != Vector2.Zero && p != null); //Filter out empty positions
-
-                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, Pen.Purple, 1.0f, tempFilteredArray));
+                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, 1.0f, Pen.Purple, tempPositions.ToArray()));
                 }
 
-                myProperties.FireSpeed = myProperties.FireSpeedDelay;
+                myProperties.AttackRate = myProperties.AttackRateDelay;
             }
         }
 

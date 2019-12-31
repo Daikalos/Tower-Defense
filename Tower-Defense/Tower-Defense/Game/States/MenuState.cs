@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using LilyPath;
 
 namespace Tower_Defense
 {
@@ -21,7 +22,7 @@ namespace Tower_Defense
 
             Depth.Initialize();
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+            Camera.Reset();
 
             myButtons = new Button[]
             {

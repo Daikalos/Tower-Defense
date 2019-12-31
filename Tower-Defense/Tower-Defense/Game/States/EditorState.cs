@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using LilyPath;
 
 namespace Tower_Defense
 {
@@ -45,7 +46,7 @@ namespace Tower_Defense
         {
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+            Camera.Reset();
 
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f, 1.0f, 1.03f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f, 1.0f, 1.03f);
@@ -57,7 +58,8 @@ namespace Tower_Defense
             this.mySelections = new Tile[]
             {
                 new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#'),
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/')
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/'),
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 192), new Point(128, 64), '-')
             };
 
             this.myLevelInfoForm = new LevelInfo();
@@ -250,7 +252,7 @@ namespace Tower_Defense
         }
         private void EditMap()
         {
-            if (KeyMouseReader.LeftHold() && mySelectedTile != '-' && myTimer <= 0)
+            if (KeyMouseReader.LeftHold() && mySelectedTile != '.' && myTimer <= 0)
             {
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
 
@@ -266,7 +268,7 @@ namespace Tower_Defense
             }
             if (KeyMouseReader.RightHold())
             {
-                mySelectedTile = '-';
+                mySelectedTile = '.';
                 myTile = -1;
 
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
@@ -275,7 +277,7 @@ namespace Tower_Defense
                 {
                     if (mySelectedTile != tempTile.Item1.TileType)
                     {
-                        tempTile.Item1.TileType = '-';
+                        tempTile.Item1.TileType = '.';
                         tempTile.Item1.DefineTileProperties();
                         tempTile.Item1.SetTextureEditor();
                     }
@@ -299,7 +301,7 @@ namespace Tower_Defense
         }
         private void PressSaveLevel(GameWindow aWindow)
         {
-            GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
+            GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-', '.');
 
             if (GameInfo.Path.Count > 1)
             {
@@ -437,7 +439,7 @@ namespace Tower_Defense
 
             if (KeyMouseReader.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
             {
-                GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-');
+                GameInfo.Path = Pathfinder.FindPath(myStartPosition, myGoalPosition, '#', '-', '.');
 
                 if (GameInfo.Path.Count > 1)
                 {
@@ -463,7 +465,7 @@ namespace Tower_Defense
                             break;
                         default:
                             myEditorState = EditorStates.isEditing;
-                            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+                            Camera.Reset();
                             break;
                     }
 

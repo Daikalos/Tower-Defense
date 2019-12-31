@@ -34,12 +34,12 @@ namespace Tower_Defense
 
         public Animation(Point aFrameAmount, float aAnimationSpeed, bool aIsLoop)
         {
-            this.myCurrentFrame = 0;
-            this.myIsFinished = false;
-
             this.myFrameAmount = aFrameAmount;
             this.myAnimationSpeed = aAnimationSpeed;
             this.myIsLoop = aIsLoop;
+
+            this.myCurrentFrame = 0;
+            this.myIsFinished = false;
         }
 
         public void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, Texture2D aTexture, Rectangle aDestRect, Point aFrameSize, Color aColor, float aRotation, Vector2 aOrigin, SpriteEffects aSE, float aDepth)

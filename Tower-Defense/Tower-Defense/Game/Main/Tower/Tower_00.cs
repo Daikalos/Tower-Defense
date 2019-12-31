@@ -13,26 +13,26 @@ namespace Tower_Defense
         {
             this.myProperties.Name = TowerProperties.Tower_00.Name;
 
-            this.myProperties.FireSpeed = TowerProperties.Tower_00.FireSpeed;
+            this.myProperties.AttackRate = TowerProperties.Tower_00.AttackRate;
             this.myProperties.Range = TowerProperties.Tower_00.Range;
             this.myProperties.Damage = TowerProperties.Tower_00.Damage;
             this.myProperties.NumberOfTargets = TowerProperties.Tower_00.NumberOfTargets;
 
             this.myProperties.Price = TowerProperties.Tower_00.Price;
-            this.myProperties.FireSpeed_Price = TowerProperties.Tower_00.FireSpeed_Price;
+            this.myProperties.AttackRate_Price = TowerProperties.Tower_00.AttackRate_Price;
             this.myProperties.Range_Price = TowerProperties.Tower_00.Range_Price;
             this.myProperties.Damage_Price = TowerProperties.Tower_00.Damage_Price;
             this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_00.NumberOfTargets_Price;
 
             this.myProperties.TowerLevelsMax = new int[]
             {
-                TowerProperties.Tower_00.FireSpeed_Level_Max,
+                TowerProperties.Tower_00.AttackRate_Level_Max,
                 TowerProperties.Tower_00.Range_Level_Max,
                 TowerProperties.Tower_00.Damage_Level_Max,
                 TowerProperties.Tower_00.NumberOfTargets_Level_Max
             };
 
-            this.myProperties.FireSpeedDelay = myProperties.FireSpeed;
+            this.myProperties.AttackRateDelay = myProperties.AttackRate;
         }
 
         public override void Update(GameTime aGameTime)
@@ -67,8 +67,8 @@ namespace Tower_Defense
                 if (tempSortedList.Count > 0)
                 {
                     float tempAngle = Extensions.AngleToPoint(OffsetPosition, tempSortedList.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
-                    RotateTower(tempAngle);
 
+                    RotateTower(tempAngle);
                     Attack(aGameTime, tempSortedList);
                 }
             }
@@ -82,8 +82,8 @@ namespace Tower_Defense
 
             tempRotateTowerX = (aAngle / 360.0f) * 4; //4 = total of frames
 
-            tempRotateTowerY = (int)(tempRotateTowerX / 2);
-            tempRotateTowerX = (int)(tempRotateTowerX % 2);
+            tempRotateTowerY = (int)(tempRotateTowerX / 2); //2 = amount of frames in x-axis
+            tempRotateTowerX = (int)(tempRotateTowerX % 2); //2 = amount of frames in y-axis
 
             mySourceRect = new Rectangle(
                 (int)((myTexture.Width / 2) * tempRotateTowerX),
@@ -94,8 +94,8 @@ namespace Tower_Defense
 
         private void Attack(GameTime aGameTime, List<Tuple<Enemy, float>> someEnemies)
         {
-            myProperties.FireSpeed -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
-            if (myProperties.FireSpeed <= 0)
+            myProperties.AttackRate -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
+            if (myProperties.AttackRate <= 0)
             {
                 if (someEnemies.Count > 0)
                 {
@@ -112,10 +112,10 @@ namespace Tower_Defense
                         }
                     }
 
-                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, Pen.Purple, 1.0f, tempPositions.ToArray()));
+                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, 1.0f, Pen.Purple, tempPositions.ToArray()));
                 }
 
-                myProperties.FireSpeed = myProperties.FireSpeedDelay;
+                myProperties.AttackRate = myProperties.AttackRateDelay;
             }
         }
 

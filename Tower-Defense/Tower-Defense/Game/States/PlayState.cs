@@ -35,8 +35,6 @@ namespace Tower_Defense
                 }         
             }
 
-            Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
-
             myBackButton = new Button(
                 new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                 new Point(128, 48), Menu, 1, "MENU", 0.6f, 1.0f, 1.03f);
@@ -100,7 +98,7 @@ namespace Tower_Defense
 
             if (KeyMouseReader.KeyPressed(Keys.Space))
             {
-                Camera.Initialize(aWindow, new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), 5);
+                Camera.Reset();
             }
             if (KeyMouseReader.KeyPressed(Keys.Escape))
             {
@@ -138,8 +136,8 @@ namespace Tower_Defense
             {
                 GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
 
-                myShop.Draw(aSpriteBatch);
                 myUpgrade.Draw(aSpriteBatch);
+                myShop.Draw(aSpriteBatch);
             }
         }
 

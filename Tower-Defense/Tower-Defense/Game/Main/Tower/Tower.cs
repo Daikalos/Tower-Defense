@@ -45,7 +45,7 @@ namespace Tower_Defense
                 1, 1, 1, 1
             };
 
-            this.myProperties.FireSpeedLevel = myProperties.TowerLevels[0];
+            this.myProperties.AttackRateLevel = myProperties.TowerLevels[0];
             this.myProperties.RangeLevel = myProperties.TowerLevels[1];
             this.myProperties.DamageLevel = myProperties.TowerLevels[2];
             this.myProperties.NumberOfTargetsLevel = myProperties.TowerLevels[3];
@@ -55,7 +55,7 @@ namespace Tower_Defense
         {
             base.Update();
 
-            myProperties.TowerLevels[0] = myProperties.FireSpeedLevel;
+            myProperties.TowerLevels[0] = myProperties.AttackRateLevel;
             myProperties.TowerLevels[1] = myProperties.RangeLevel;
             myProperties.TowerLevels[2] = myProperties.DamageLevel;
             myProperties.TowerLevels[3] = myProperties.NumberOfTargetsLevel;
@@ -84,8 +84,8 @@ namespace Tower_Defense
         {
             public string Name { get; set; }
 
-            public float FireSpeed { get; set; }
-            public float FireSpeedDelay { get; set; }
+            public float AttackRate { get; set; }
+            public float AttackRateDelay { get; set; }
             public float Range { get; set; }
             public int Damage { get; set; }
             public int NumberOfTargets { get; set; }
@@ -93,13 +93,13 @@ namespace Tower_Defense
             public int[] TowerLevels { get; set; }
             public int[] TowerLevelsMax { get; set; }
 
-            public int FireSpeedLevel { get; set; }
+            public int AttackRateLevel { get; set; }
             public int RangeLevel { get; set; }
             public int DamageLevel { get; set; }
             public int NumberOfTargetsLevel { get; set; }
 
             public int Price { get; set; }
-            public int FireSpeed_Price { get; set; }
+            public int AttackRate_Price { get; set; }
             public int Range_Price { get; set; }
             public int Damage_Price { get; set; }
             public int NumberOfTargets_Price { get; set; }
