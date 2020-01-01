@@ -7,7 +7,11 @@ namespace Tower_Defense
     class PlayState : State
     {
         private SpriteFont my8bitFont;
-        private Button myBackButton;
+        private Button
+            myBackButton,
+            myPlayButton,
+            mySpeedUpButton;
+        private Minimap myMinimap;
         private ShopManager myShop;
         private UpgradeManager myUpgrade;
 
@@ -32,15 +36,26 @@ namespace Tower_Defense
                     {
                         Depth.AddObject(Level.GetTiles[i, j]);
                     }
-                }         
+                }
             }
 
             myBackButton = new Button(
                 new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                 new Point(128, 48), Menu, 1, "MENU", 0.6f, 1.0f, 1.03f);
 
+            myPlayButton = new Button(
+                new Vector2((aWindow.ClientBounds.Width / 3) + 16, aWindow.ClientBounds.Height - 64 - 4),
+                new Point(64, 64), Play, -1, string.Empty, 0.0f, 1.0f, 1.03f);
+
+            mySpeedUpButton = new Button(
+                new Vector2((aWindow.ClientBounds.Width / 3) + 128, aWindow.ClientBounds.Height - 64 - 4),
+                new Point(128, 64), SpeedUp, -1, string.Empty, 0.0f, 1.0f, 1.03f);
+
+            myMinimap = new Minimap(Vector2.Zero, 
+                new Point(aWindow.ClientBounds.Width / 4, aWindow.ClientBounds.Height / 4), myGame.GraphicsDevice);
+
             myShop = new ShopManager(
-                new Vector2(aWindow.ClientBounds.Width, 0), 
+                new Vector2(aWindow.ClientBounds.Width, 0),
                 new Point(aWindow.ClientBounds.Width / 5, aWindow.ClientBounds.Height), 18.0f,
                 myGame.GraphicsDevice, new Vector2(32, 0));
 
@@ -59,6 +74,9 @@ namespace Tower_Defense
                 myShop.Update(aGameTime, aWindow);
                 myUpgrade.Update(aGameTime, aWindow);
 
+                myPlayButton.Update(aWindow);
+                mySpeedUpButton.Update(aWindow);
+
                 Camera.MoveCamera(aGameTime);
                 EnemyManager.Update(aGameTime);
                 TowerManager.Update(aGameTime, myUpgrade);
@@ -75,20 +93,6 @@ namespace Tower_Defense
                 if (GameInfo.Health <= 0)
                 {
                     myGame.ChangeState(new DeadState(myGame));
-                }
-
-                if (KeyMouseReader.KeyPressed(Keys.Enter))
-                {
-                    SpawnManager.InitiateWave();
-                }
-
-                if (KeyMouseReader.KeyPressed(Keys.I))
-                {
-                    GameInfo.GameSpeed /= 2;
-                }
-                if (KeyMouseReader.KeyPressed(Keys.O))
-                {
-                    GameInfo.GameSpeed *= 2;
                 }
             }
             else
@@ -108,6 +112,13 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
+            myMinimap.SetRenderTarget(aGameTime, this);
+
+            DrawLevel(aSpriteBatch, aGameTime);
+            DrawHUD(aSpriteBatch, aGameTime, aWindow);
+        }
+        public void DrawLevel(SpriteBatch aSpriteBatch, GameTime aGameTime)
+        {
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend,
@@ -125,11 +136,19 @@ namespace Tower_Defense
                 SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix); //Reset spritebatch to ignore depth
 
             ParticleManager.Draw(aSpriteBatch, aGameTime);
+        }
+        private void DrawHUD(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
+        {
+            aSpriteBatch.End();
+
+            aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix); //Reset spritebatch to ignore depth
 
             if (GameInfo.IsPaused)
             {
-                StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "PAUSED", 
+                StringManager.CameraDrawStringMid(aSpriteBatch, my8bitFont, "PAUSED",
                     new Vector2(aWindow.ClientBounds.Width / 2, aWindow.ClientBounds.Height / 2), Color.LightSlateGray, 1.5f);
+
                 myBackButton.Draw(aSpriteBatch);
             }
             else
@@ -138,9 +157,22 @@ namespace Tower_Defense
 
                 myUpgrade.Draw(aSpriteBatch);
                 myShop.Draw(aSpriteBatch);
+
+                myPlayButton.Draw(aSpriteBatch);
+                mySpeedUpButton.Draw(aSpriteBatch);
+
+                myMinimap.Draw(aSpriteBatch);
             }
         }
 
+        private void Play(GameWindow aWindow)
+        {
+            SpawnManager.InitiateWave();
+        }
+        private void SpeedUp(GameWindow aWindow)
+        {
+            GameInfo.GameSpeed = (GameInfo.GameSpeed != 4) ? GameInfo.GameSpeed = 4 : GameInfo.GameSpeed = 1;
+        }
         private void Menu(GameWindow aWindow)
         {
             myGame.ChangeState(new MenuState(myGame, aWindow));
@@ -154,6 +186,9 @@ namespace Tower_Defense
             myBackButton.LoadContent();
             myShop.LoadContent();
             myUpgrade.LoadContent();
+
+            myPlayButton.SetTexture("Play_Button");
+            mySpeedUpButton.SetTexture("SpeedUp_Button");
         }
     }
 }

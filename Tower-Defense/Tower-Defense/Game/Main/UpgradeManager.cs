@@ -163,7 +163,7 @@ namespace Tower_Defense
 
                 myDrawBatch.End();
 
-                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "AR: " + Math.Round(mySelectedTower.Properties.AttackRate, 2),
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "AR:  " + Math.Round(mySelectedTower.Properties.AttackRate, 2),
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 10), new Color(180, 180, 180), 0.5f);
                 StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + mySelectedTower.Properties.Range,
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 34), new Color(180, 180, 180), 0.5f);
@@ -205,13 +205,13 @@ namespace Tower_Defense
         {
             for (int i = 0; i < myUpgradeOptions.Length; i++)
             {
-                myUpgradeOptions[i].Update(aWindow);
-                myUpgradeOptions[i].Position = myPosition + myUpgradeOptionsOffset[i];
-
                 if (myUpgradeOptions[i].IsClicked())
                 {
                     mySelectedUpgrade = i;
                 }
+
+                myUpgradeOptions[i].Update(aWindow);
+                myUpgradeOptions[i].Position = myPosition + myUpgradeOptionsOffset[i];
             }
 
             mySellButton.Update(aWindow);

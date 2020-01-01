@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using LilyPath;
@@ -16,12 +17,12 @@ namespace Tower_Defense
             myDrawBatch = new DrawBatch(aGraphicsDevice);
         }
 
-        public static void AddParticle(Particle aParticle)
+        public static void AddParticle(params Particle[] someParticles)
         {
-            Depth.AddObject(aParticle);
-            myParticles.Add(aParticle);
+            Depth.AddObject(someParticles);
+            myParticles.AddRange(someParticles);
 
-            aParticle.LoadContent();
+            Array.ForEach(someParticles, p => p.LoadContent());
         }
 
         public static void Update(GameTime aGameTime)

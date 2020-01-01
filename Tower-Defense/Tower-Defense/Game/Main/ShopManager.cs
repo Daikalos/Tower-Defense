@@ -138,8 +138,8 @@ namespace Tower_Defense
             {
                 myDrawBatch.DrawRectangle(Pen.DarkGray,
                     new Vector2(myBuyOptions[myHoveredTower].Position.X - 138, myBuyOptions[myHoveredTower].Position.Y),
-                    myBuyOptions[myHoveredTower].Size.X + 20,
-                    myBuyOptions[myHoveredTower].Size.Y);
+                    myBuyOptions[myHoveredTower].Size.X + 21,
+                    myBuyOptions[myHoveredTower].Size.Y + 1);
                 myDrawBatch.FillRectangle(Brush.Gray,
                     new Vector2(myBuyOptions[myHoveredTower].Position.X - 138, myBuyOptions[myHoveredTower].Position.Y),
                     myBuyOptions[myHoveredTower].Size.X + 20,
@@ -156,7 +156,7 @@ namespace Tower_Defense
                 switch (myHoveredTower)
                 {
                     case 0:
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR: " + TowerProperties.Tower_00.AttackRate,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR:  " + TowerProperties.Tower_00.AttackRate,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_00.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
@@ -166,7 +166,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
                         break;
                     case 1:
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR: " + TowerProperties.Tower_01.AttackRate,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR:  " + TowerProperties.Tower_01.AttackRate,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_01.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
@@ -176,7 +176,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
                         break;
                     case 2:
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR: " + TowerProperties.Tower_02.AttackRate,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "AR:  " + TowerProperties.Tower_02.AttackRate,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_02.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);

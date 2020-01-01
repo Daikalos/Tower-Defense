@@ -97,17 +97,14 @@ namespace Tower_Defense
                 }
             }
         }
-
         private void Editor(GameWindow aWindow)
         {
             myGame.ChangeState(new EditorState(myGame, aWindow));
         }
-
         private void Leaderboard(GameWindow aWindow)
         {
             myGame.ChangeState(new LeaderboardState(myGame));
         }
-
         private void Exit(GameWindow aWindow)
         {
             myGame.Exit();

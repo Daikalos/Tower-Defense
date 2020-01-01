@@ -79,15 +79,15 @@ namespace Tower_Defense
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Wave: " + Wave.ToString(),
-                new Vector2(32, 32), Color.LightSlateGray, 0.6f);
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 32), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + Score.ToString(),
-                new Vector2(32, 64), Color.LightSlateGray, 0.6f);
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 64), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Enemies: " + SpawnManager.TotalAmountToSpawn.ToString(),
-                new Vector2(32, 96), Color.LightSlateGray, 0.6f);
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 96), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Money: $" + Money.ToString(), 
-                new Vector2(32, 160), Color.MediumSeaGreen, 0.6f);
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 160), Color.MediumSeaGreen, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Health: " + Health.ToString(),
-                new Vector2(32, 192), Color.IndianRed, 0.6f);
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 192), Color.IndianRed, 0.6f);
             StringManager.CameraDrawStringMid(aSpriteBatch, aFont, GameInfo.LevelName, 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
             

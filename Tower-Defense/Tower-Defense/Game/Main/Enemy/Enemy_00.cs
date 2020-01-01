@@ -10,7 +10,10 @@ namespace Tower_Defense
             this.myProperties.Speed = EnemyProperties.Enemy_00.Speed;
             this.myProperties.HealthPoints = EnemyProperties.Enemy_00.HealthPoints;
 
-            if (GameInfo.Wave >= (int)(1.0f / EnemyProperties.Enemy_Info.HealthPoint_Increase))
+            this.mySaveSpeed = myProperties.Speed;
+            this.mySlowDownSpeed = myProperties.Speed * EnemyProperties.Enemy_Info.SlowDown;
+
+            if (GameInfo.Wave >= (1.0f / EnemyProperties.Enemy_Info.HealthPoint_Increase))
             {
                 this.myProperties.HealthPoints *= (int)(GameInfo.Wave * EnemyProperties.Enemy_Info.HealthPoint_Increase); //So that it is possible for the game to end sometime
             }

@@ -58,11 +58,11 @@ namespace Tower_Defense
                     if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
                     {
                         tempDistToEnemy.Add(new Tuple<Enemy, float>(EnemyManager.Enemies[i],
-                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition)));
+                            EnemyManager.Enemies[i].DistanceTraveled));
                     }
                 }
 
-                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderBy(d => d.Item2).ToList();
+                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderByDescending(d => d.Item2).ToList();
 
                 if (tempSortedList.Count > 0)
                 {

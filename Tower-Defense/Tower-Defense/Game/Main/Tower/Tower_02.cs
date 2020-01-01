@@ -11,7 +11,7 @@ namespace Tower_Defense
     {
         public Tower_02(Vector2 aPosition, Point aSize) : base(aPosition, aSize)
         {
-            this.Properties.Name = TowerProperties.Tower_02.Name;
+            this.myProperties.Name = TowerProperties.Tower_02.Name;
 
             this.myProperties.AttackRate = TowerProperties.Tower_02.AttackRate;
             this.myProperties.Range = TowerProperties.Tower_02.Range;
@@ -59,11 +59,11 @@ namespace Tower_Defense
                     if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
                     {
                         tempDistToEnemy.Add(new Tuple<Enemy, float>(EnemyManager.Enemies[i],
-                            Vector2.Distance(OffsetPosition, EnemyManager.Enemies[i].OffsetPosition)));
+                            EnemyManager.Enemies[i].DistanceTraveled));
                     }
                 }
 
-                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderBy(d => d.Item2).ToList();
+                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderByDescending(d => d.Item2).ToList();
 
                 if (tempSortedList.Count > 0)
                 {
@@ -88,11 +88,20 @@ namespace Tower_Defense
                         {
                             tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
 
+                            someEnemies[i].Item1.ResetSpeedTimer = myProperties.Damage;
 
+                            List<Spark> tempSparks = new List<Spark>();
+                            for (int j = 0; j < StaticRandom.RandomNumber(2, 5); j++)
+                            {
+                                tempSparks.Add(new Spark(
+                                    new Vector2(someEnemies[i].Item1.OffsetPosition.X, someEnemies[i].Item1.OffsetPosition.Y - (someEnemies[i].Item1.DestRect.Height / 2)), 
+                                    new Point(2, 4)));
+                            }
+                            ParticleManager.AddParticle(tempSparks.ToArray());
                         }
                     }
 
-                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, 1.0f, Pen.Purple, tempPositions.ToArray()));
+                    ParticleManager.AddParticle(new Laser(Vector2.Zero, Point.Zero, 1.0f, Pen.White, tempPositions.ToArray()));
                 }
 
                 myProperties.AttackRate = myProperties.AttackRateDelay;

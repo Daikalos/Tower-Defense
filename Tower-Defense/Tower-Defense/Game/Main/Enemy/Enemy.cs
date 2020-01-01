@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
@@ -12,7 +13,11 @@ namespace Tower_Defense
             myOffset;
         protected bool myIsAlive;
         protected float
-            myCurrentSpeed;
+            myDistanceTraveled,
+            myCurrentSpeed,
+            mySlowDownSpeed,
+            mySaveSpeed,
+            myResetSpeedTimer;
         protected int
             myDirection,
             myMaxHealthPoints,
@@ -36,12 +41,25 @@ namespace Tower_Defense
             get => myIsAlive;
             set => myIsAlive = value;
         }
+        public float DistanceTraveled
+        {
+            get => myDistanceTraveled;
+        }
+        public float SlowDownSpeed
+        {
+            get => mySlowDownSpeed;
+        }
+        public float ResetSpeedTimer
+        {
+            set => myResetSpeedTimer = value;
+        }
 
         public Enemy(Vector2 aPosition, Point aSize) : base(aPosition, aSize)
         {
             this.myOffsetPosition = aPosition;
 
             this.myIsAlive = true;
+            this.myDistanceTraveled = 0;
             this.myWalkToTile = 1;
 
             this.myProperties = new Enemy_Properties();
@@ -68,6 +86,17 @@ namespace Tower_Defense
 
                 ParticleManager.AddParticle(new Explosion(new Vector2(myOffsetPosition.X, myOffsetPosition.Y - (mySize.Y / 2)), new Point(48)));
                 myIsAlive = false;
+            }
+
+            if (myResetSpeedTimer > 0)
+            {
+                myProperties.Speed = mySlowDownSpeed;
+                myResetSpeedTimer -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
+            }
+            if (myResetSpeedTimer <= 0)
+            {
+                myProperties.Speed = mySaveSpeed;
+                myResetSpeedTimer = 0;
             }
 
             Movement(aGameTime);
@@ -110,6 +139,7 @@ namespace Tower_Defense
             else
             {
                 myPosition += tempNorm * myCurrentSpeed;
+                myDistanceTraveled += (float)(Math.Sqrt(Math.Pow(tempNorm.X, 2) + Math.Pow(tempNorm.Y, 2)) * myCurrentSpeed);
             }
         }
 

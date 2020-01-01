@@ -42,6 +42,7 @@ namespace Tower_Defense
             public static float AmountToSpawn_Increase => 1.20f;
             public static float SpawnDelay_Decrease => 0.95f;
             public static float SpawnDelay_Min => 0.05f;
+            public static float SlowDown => 0.5f;
 
             public static int Enemy_Value => 30;
             public static int EnemyTypes => 4;
