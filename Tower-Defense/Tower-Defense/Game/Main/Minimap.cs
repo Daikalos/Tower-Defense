@@ -9,7 +9,7 @@ namespace Tower_Defense
         //Rendertarget
         private readonly GraphicsDevice myDevice;
         private readonly SpriteBatch mySpriteBatch;
-        private RenderTarget2D myMiniMap;
+        private readonly RenderTarget2D myMiniMap;
 
         public Minimap(Vector2 aPosition, Point aSize, GraphicsDevice aGraphicsDevice) : base(aPosition, aSize)
         {
@@ -21,7 +21,6 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch)
         {
             aSpriteBatch.End();
-
             aSpriteBatch.Begin();
 
             aSpriteBatch.Draw(myMiniMap, myDestRect, Color.White);

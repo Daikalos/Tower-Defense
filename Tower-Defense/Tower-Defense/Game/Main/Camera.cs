@@ -45,10 +45,10 @@ namespace Tower_Defense
             get => myZoom;
         }
 
-        public static void Initialize(GameWindow aWindow, Vector2 aPosition, float aSpeed)
+        public static void Initialize(GameWindow aWindow, float aSpeed)
         {
-            myPosition = aPosition;
             myViewportSize = aWindow.ClientBounds.Size.ToVector2();
+            myPosition = ViewportCenter;
             myMoveSpeed = aSpeed;
             myOldMousePosition = Point.Zero;
             myZoomLimit = new Vector2(0.5f, 2.0f);
@@ -65,6 +65,12 @@ namespace Tower_Defense
 
         public static void MoveCamera(GameTime aGameTime)
         {
+            MouseMovement();
+            KeyboardMovement(aGameTime);
+        }
+
+        private static void MouseMovement()
+        {
             if (KeyMouseReader.MiddleMouseClick())
             {
                 myOldMousePosition = ViewToWorld(KeyMouseReader.MousePos).ToPoint();
@@ -76,7 +82,9 @@ namespace Tower_Defense
 
                 myPosition += tempDeltaPos.ToVector2();
             }
-
+        }
+        private static void KeyboardMovement(GameTime aGameTime)
+        {
             if (KeyMouseReader.ScrollUp())
             {
                 myZoom += myZoomValue;

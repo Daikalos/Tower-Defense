@@ -46,7 +46,8 @@ namespace Tower_Defense
         {
             if (EnemyManager.Enemies.Count > 0)
             {
-                List<Tuple<Enemy, float>> tempDistToEnemy = new List<Tuple<Enemy, float>>();
+                myEnemies.Clear();
+
                 Rectangle tempRange = new Rectangle(
                     (int)(OffsetPosition.X - (myProperties.Range / 2)),
                     (int)(OffsetPosition.Y - (myProperties.Range / 4)),
@@ -57,19 +58,19 @@ namespace Tower_Defense
                 {
                     if (Extensions.PointWithinEllipse(EnemyManager.Enemies[i].OffsetPosition, tempRange))
                     {
-                        tempDistToEnemy.Add(new Tuple<Enemy, float>(EnemyManager.Enemies[i],
+                        myEnemies.Add(new Tuple<Enemy, float>(EnemyManager.Enemies[i],
                             EnemyManager.Enemies[i].DistanceTraveled));
                     }
                 }
 
-                List<Tuple<Enemy, float>> tempSortedList = tempDistToEnemy.OrderByDescending(d => d.Item2).ToList();
+                myEnemies = myEnemies.OrderByDescending(d => d.Item2).ToList();
 
-                if (tempSortedList.Count > 0)
+                if (myEnemies.Count > 0)
                 {
-                    float tempAngle = Extensions.AngleToPoint(OffsetPosition, tempSortedList.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
+                    float tempAngle = Extensions.AngleToPoint(OffsetPosition, myEnemies.First().Item1.OffsetPosition) + 180.0f; //180 to match spritesheet
 
                     RotateTower(tempAngle);
-                    Attack(aGameTime, tempSortedList);
+                    Action(aGameTime);
                 }
             }
         }
@@ -92,23 +93,23 @@ namespace Tower_Defense
                 (int)(myTexture.Height / 2));
         }
 
-        private void Attack(GameTime aGameTime, List<Tuple<Enemy, float>> someEnemies)
+        protected override void Action(GameTime aGameTime)
         {
             myProperties.AttackRate -= (float)aGameTime.ElapsedGameTime.TotalSeconds * GameInfo.GameSpeed;
             if (myProperties.AttackRate <= 0)
             {
-                if (someEnemies.Count > 0)
+                if (myEnemies.Count > 0)
                 {
                     List<Vector2> tempPositions = new List<Vector2>();
                     tempPositions.Add(OffsetPosition);
 
                     for (int i = 0; i < myProperties.NumberOfTargets; i++)
                     {
-                        if (i < someEnemies.Count)
+                        if (i < myEnemies.Count)
                         {
-                            tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
+                            tempPositions.Add(myEnemies[i].Item1.DestRect.Center.ToVector2());
 
-                            someEnemies[i].Item1.RecieveDamage(myProperties.Power);
+                            myEnemies[i].Item1.RecieveDamage(myProperties.Power);
                         }
                     }
 

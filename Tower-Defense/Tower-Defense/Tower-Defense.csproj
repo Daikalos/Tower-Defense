@@ -117,6 +117,7 @@
     <Compile Include="Game\Main\Tower\Tower_01.cs" />
     <Compile Include="Game\Main\Tower\Tower_02.cs" />
     <Compile Include="Game\Main\UpgradeManager.cs" />
+    <Compile Include="Game\Main\UserInterface.cs" />
     <Compile Include="Game\States\DeadState.cs" />
     <Compile Include="Game\States\EditorState.cs" />
     <Compile Include="Game\States\LeaderboardState.cs" />

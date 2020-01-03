@@ -10,7 +10,6 @@ namespace Tower_Defense
         public State(MainGame aGame)
         {
             this.myGame = aGame;
-            GameInfo.IsPaused = false;
         }
 
         public abstract void Update(GameTime aGameTime, GameWindow aWindow);

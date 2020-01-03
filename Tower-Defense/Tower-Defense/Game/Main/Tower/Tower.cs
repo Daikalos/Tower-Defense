@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,6 +9,9 @@ namespace Tower_Defense
     abstract class Tower : StaticObject
     {
         protected Tower_Properties myProperties;
+
+        protected List<Tuple<Enemy, float>> myEnemies; //Enemies to sort by specified order to perform defined action
+        protected List<Tuple<Tower, float>> myTowers; //Towers to sort by specified order to perform defined action
 
         private Vector2 myOffsetPosition; //Middle of tile
         private bool myIsAlive; //Incase if tower is sold
@@ -30,6 +34,9 @@ namespace Tower_Defense
 
         public Tower(Vector2 aPosition, Point aSize) : base(aPosition, aSize)
         {
+            this.myEnemies = new List<Tuple<Enemy, float>>();
+            this.myTowers = new List<Tuple<Tower, float>>();
+
             this.myOffsetPosition = aPosition;
 
             this.myPosition.X -= aSize.X / 2;
@@ -77,6 +84,8 @@ namespace Tower_Defense
             }
             return false;
         }
+
+        protected abstract void Action(GameTime aGameTime);
 
         public abstract void LoadContent();
 

@@ -315,7 +315,7 @@ namespace Tower_Defense
             {
                 for (int j = 0; j < myTiles.GetLength(1); j++)
                 {
-                    myTiles[i, j].SetTexture();
+                    myTiles[i, j].LoadContent();
                 }
             }
         }
@@ -325,7 +325,7 @@ namespace Tower_Defense
             {
                 for (int j = 0; j < myTiles.GetLength(1); j++)
                 {
-                    myTiles[i, j].SetTextureEditor();
+                    myTiles[i, j].LoadContentEditor();
                 }
             }
         }

@@ -16,6 +16,8 @@ namespace Tower_Defense
         {
             myGameState = aNewState;
             myGameState.LoadContent();
+
+            GameInfo.IsPaused = false;
         }
 
         public MainGame()
@@ -37,7 +39,7 @@ namespace Tower_Defense
             ResourceManager.Initialize();
             GameInfo.Initialize();
             Background.Initialize(12.0f);
-            Camera.Initialize(Window, new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2), 15);
+            Camera.Initialize(Window, 15);
 
             myGameState = new MenuState(this, Window);
 

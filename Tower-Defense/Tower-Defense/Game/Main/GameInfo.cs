@@ -78,7 +78,13 @@ namespace Tower_Defense
 
         public static void Draw(SpriteBatch aSpriteBatch, GameWindow aWindow, SpriteFont aFont)
         {
-            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Wave: " + Wave.ToString(),
+            if (Path.Count > 1 && !SpawnManager.SpawnEnemies)
+            {
+                StringManager.DrawStringMid(aSpriteBatch, aFont, "Start", Path[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);
+                StringManager.DrawStringMid(aSpriteBatch, aFont, "Goal", Path[Path.Count - 1].DestRect.Center.ToVector2(), Color.Black, 0.3f);
+            }
+
+            StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Wave: " + Wave.ToString() + "/" + TotalWaves.ToString(),
                 new Vector2(32, (aWindow.ClientBounds.Height / 4) + 32), Color.LightSlateGray, 0.6f);
             StringManager.CameraDrawStringLeft(aSpriteBatch, aFont, "Score: " + Score.ToString(),
                 new Vector2(32, (aWindow.ClientBounds.Height / 4) + 64), Color.LightSlateGray, 0.6f);
@@ -90,12 +96,6 @@ namespace Tower_Defense
                 new Vector2(32, (aWindow.ClientBounds.Height / 4) + 192), Color.IndianRed, 0.6f);
             StringManager.CameraDrawStringMid(aSpriteBatch, aFont, GameInfo.LevelName, 
                 new Vector2((aWindow.ClientBounds.Width / 2), 32), Color.LightSlateGray, 0.7f);
-            
-            if (Path.Count > 1 && !SpawnManager.SpawnEnemies)
-            {
-                StringManager.DrawStringMid(aSpriteBatch, aFont, "Start", Path[0].DestRect.Center.ToVector2(), Color.Black, 0.3f);
-                StringManager.DrawStringMid(aSpriteBatch, aFont, "Goal", Path[Path.Count - 1].DestRect.Center.ToVector2(), Color.Black, 0.3f);
-            }
         }
     }
 }

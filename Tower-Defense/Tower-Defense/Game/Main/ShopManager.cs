@@ -282,9 +282,7 @@ namespace Tower_Defense
         public void LoadContent()
         {
             my8bitFont = ResourceManager.RequestFont("8-bit");
-
-            myTexture = ResourceManager.RequestTexture("Shop_Menu");
-            mySourceRect = new Rectangle(0, 0, myTexture.Width, myTexture.Height);
+            base.SetTexture("Shop_Menu");
 
             for (int i = 0; i < myBuyOptions.Length; i++)
             {

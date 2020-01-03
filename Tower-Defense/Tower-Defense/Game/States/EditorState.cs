@@ -19,6 +19,7 @@ namespace Tower_Defense
         }
 
         private SpriteFont my8bitFont;
+        private Tile[] mySelections;
         private Button[] myLevels;
         private Button
             myLoadButton,
@@ -27,7 +28,7 @@ namespace Tower_Defense
             myPathButton,
             myInfoButton,
             myWaveButton;
-        private Tile[] mySelections;
+        private UserInterface myInterface;
         private LevelInfo myLevelInfoForm;
         private LevelName myLevelNameForm;
         private LevelWave myLevelWaveForm;
@@ -48,6 +49,13 @@ namespace Tower_Defense
 
             Camera.Reset();
 
+            this.mySelections = new Tile[]
+{
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#'),
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/'),
+                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 192), new Point(128, 64), '-')
+};
+
             this.myLoadButton = new Button(new Vector2(32, 32), new Point(128, 48), PressLoadLevel, 1, "LOAD", 0.6f, 1.0f, 1.03f);
             this.mySaveButton = new Button(new Vector2(32, 96), new Point(128, 48), PressSaveLevel, 1, "SAVE", 0.6f, 1.0f, 1.03f);
             this.myDeleteButton = new Button(new Vector2(32, 160), new Point(128, 48), PressDeleteLevel, 1, "DEL", 0.6f, 1.0f, 1.03f);
@@ -55,12 +63,7 @@ namespace Tower_Defense
             this.myInfoButton = new Button(new Vector2(192, 96), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f, 1.0f, 1.03f);
             this.myWaveButton = new Button(new Vector2(192, 160), new Point(128, 48), PressEditWaves, 1, "WAVE", 0.6f, 1.0f, 1.03f);
 
-            this.mySelections = new Tile[]
-            {
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 64), new Point(128, 64), '#'),
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 128), new Point(128, 64), '/'),
-                new Tile(new Vector2(aWindow.ClientBounds.Width - 160, 192), new Point(128, 64), '-')
-            };
+            this.myInterface = new UserInterface(Vector2.Zero, new Point(aWindow.ClientBounds.Width, aWindow.ClientBounds.Height), DrawHUD, myGame.GraphicsDevice);
 
             this.myLevelInfoForm = new LevelInfo();
             this.myLevelNameForm = new LevelName();
@@ -117,12 +120,24 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
+            myInterface.SetRenderTarget(aGameTime, aWindow);
+
             aSpriteBatch.End();
 
             aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
 
             Level.DrawTilesEditor(aSpriteBatch);
+
+            myInterface.Draw(aSpriteBatch);
+        }
+
+        private void DrawHUD(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
+        {
+            aSpriteBatch.End();
+
+            aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
 
             switch (myEditorState)
             {
@@ -179,7 +194,6 @@ namespace Tower_Defense
 
             DrawPathEnds(aSpriteBatch);
         }
-
         private void DrawPathEnds(SpriteBatch aSpriteBatch)
         {
             if (myStartPosition != Vector2.Zero)
@@ -262,7 +276,7 @@ namespace Tower_Defense
                     {
                         tempTile.Item1.TileType = mySelectedTile;
                         tempTile.Item1.DefineTileProperties();
-                        tempTile.Item1.SetTextureEditor();
+                        tempTile.Item1.LoadContentEditor();
                     }
                 }
             }
@@ -279,7 +293,7 @@ namespace Tower_Defense
                     {
                         tempTile.Item1.TileType = '.';
                         tempTile.Item1.DefineTileProperties();
-                        tempTile.Item1.SetTextureEditor();
+                        tempTile.Item1.LoadContentEditor();
                     }
                 }
             }
@@ -495,7 +509,7 @@ namespace Tower_Defense
         {
             Level.LoadContent();
 
-            Array.ForEach(mySelections, t => t.SetTextureEditor());
+            Array.ForEach(mySelections, t => t.LoadContentEditor());
 
             myLoadButton.LoadContent();
             mySaveButton.LoadContent();

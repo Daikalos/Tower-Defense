@@ -59,7 +59,7 @@ namespace Tower_Defense
                     {
                         GameInfo.Path[i].TileForm = 4;
                     }
-                    GameInfo.Path[i].SetTexture();
+                    GameInfo.Path[i].LoadContent();
                 }
 
                 SpawnEnemies = true;
@@ -98,7 +98,7 @@ namespace Tower_Defense
                         {
                             GameInfo.Path[i].TileForm = 5;
                         }
-                        GameInfo.Path[i].SetTexture();
+                        GameInfo.Path[i].LoadContent();
                     }
                 }
             }

@@ -14,6 +14,7 @@ namespace Tower_Defense
         private Minimap myMinimap;
         private ShopManager myShop;
         private UpgradeManager myUpgrade;
+        private UserInterface myInterface;
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
@@ -39,30 +40,32 @@ namespace Tower_Defense
                 }
             }
 
-            myBackButton = new Button(
+            this.myBackButton = new Button(
                 new Vector2(aWindow.ClientBounds.Width - 128 - 16, aWindow.ClientBounds.Height - 48 - 16),
                 new Point(128, 48), Menu, 1, "MENU", 0.6f, 1.0f, 1.03f);
 
-            myPlayButton = new Button(
-                new Vector2((aWindow.ClientBounds.Width / 3) + 16, aWindow.ClientBounds.Height - 64 - 4),
+            this.myPlayButton = new Button(
+                new Vector2(32, (aWindow.ClientBounds.Height / 4) + 256),
                 new Point(64, 64), Play, -1, string.Empty, 0.0f, 1.0f, 1.03f);
 
-            mySpeedUpButton = new Button(
-                new Vector2((aWindow.ClientBounds.Width / 3) + 128, aWindow.ClientBounds.Height - 64 - 4),
+            this.mySpeedUpButton = new Button(
+                new Vector2(156, (aWindow.ClientBounds.Height / 4) + 256),
                 new Point(128, 64), SpeedUp, -1, string.Empty, 0.0f, 1.0f, 1.03f);
 
-            myMinimap = new Minimap(Vector2.Zero,
+            this.myMinimap = new Minimap(Vector2.Zero,
                 new Point(aWindow.ClientBounds.Width / 4, aWindow.ClientBounds.Height / 4), myGame.GraphicsDevice);
 
-            myShop = new ShopManager(
+            this.myShop = new ShopManager(
                 new Vector2(aWindow.ClientBounds.Width, 0),
                 new Point(aWindow.ClientBounds.Width / 5, aWindow.ClientBounds.Height), 18.0f,
                 myGame.GraphicsDevice, new Vector2(32, 0));
 
-            myUpgrade = new UpgradeManager(
+            this.myUpgrade = new UpgradeManager(
                 new Vector2(0, aWindow.ClientBounds.Height),
                 new Point(aWindow.ClientBounds.Width / 3, aWindow.ClientBounds.Height / 5), 18.0f,
                 myGame.GraphicsDevice, new Vector2(0, 32));
+
+            this.myInterface = new UserInterface(Vector2.Zero, new Point(aWindow.ClientBounds.Width, aWindow.ClientBounds.Height), DrawHUD, myGame.GraphicsDevice);
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
@@ -113,10 +116,12 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             myMinimap.SetRenderTarget(aGameTime, this);
+            myInterface.SetRenderTarget(aGameTime, aWindow);
 
             DrawLevel(aSpriteBatch, aGameTime);
-            DrawHUD(aSpriteBatch, aGameTime, aWindow);
+            myInterface.Draw(aSpriteBatch);
         }
+
         public void DrawLevel(SpriteBatch aSpriteBatch, GameTime aGameTime)
         {
             aSpriteBatch.End();

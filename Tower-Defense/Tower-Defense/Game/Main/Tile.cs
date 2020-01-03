@@ -98,7 +98,7 @@ namespace Tower_Defense
             }
         }
 
-        public void SetTexture()
+        public void LoadContent()
         {
             switch (myTileType)
             {
@@ -116,7 +116,7 @@ namespace Tower_Defense
                     break;
             }
         }
-        public void SetTextureEditor()
+        public void LoadContentEditor()
         {
             switch (myTileType)
             {
