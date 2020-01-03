@@ -76,7 +76,6 @@ namespace Tower_Defense
                 Color.LightSlateGray, 0.5f);
             }
 
-
             StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "HIGH SCORE", new Vector2(aWindow.ClientBounds.Width / 2, 64), Color.LightSlateGray, 0.9f);
             for (int i = 0; i < GameInfo.HighScores.Length; i++)
             {

@@ -35,11 +35,8 @@ namespace Tower_Defense
             MaxElapsedTime = TargetElapsedTime;
 
             ResourceManager.Initialize();
-
             GameInfo.Initialize();
-
             Background.Initialize(12.0f);
-
             Camera.Initialize(Window, new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2), 15);
 
             myGameState = new MenuState(this, Window);

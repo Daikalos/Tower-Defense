@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defense
@@ -64,9 +64,9 @@ namespace Tower_Defense
             return myCurrentMouseState.ScrollWheelValue < myPreviousMouseState.ScrollWheelValue;
         }
 
-        public static MouseState CurrentMouseState
+        public static Vector2 MousePos
         {
-            get => myCurrentMouseState;
+            get => myCurrentMouseState.Position.ToVector2();
         }
         public static MouseState PreviousMouseState
         {

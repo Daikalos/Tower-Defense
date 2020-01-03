@@ -37,7 +37,7 @@ namespace Tower_Defense
             Score = 0;
             GameSpeed = 1;
             Health = 100;
-            Money = 10000000;
+            Money = 1000;
             Wave = 1;
         }
 

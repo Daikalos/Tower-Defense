@@ -11,7 +11,7 @@ namespace Tower_Defense
 
         public Laser(Vector2 aPosition, Point aSize, float aDelay, Pen aPen, params Vector2[] somePoints) : base(aPosition, aSize)
         {
-            myDrawPath = new GraphicsPath(aPen, somePoints);
+            myDrawPath = new GraphicsPath(aPen, aPen, somePoints, StrokeType.Both);
 
             this.myTimer = aDelay;
         }

@@ -15,20 +15,20 @@ namespace Tower_Defense
 
             this.myProperties.AttackRate = TowerProperties.Tower_02.AttackRate;
             this.myProperties.Range = TowerProperties.Tower_02.Range;
-            this.myProperties.Damage = TowerProperties.Tower_02.Damage;
+            this.myProperties.Power = TowerProperties.Tower_02.Power;
             this.myProperties.NumberOfTargets = TowerProperties.Tower_02.NumberOfTargets;
 
             this.myProperties.Price = TowerProperties.Tower_02.Price;
             this.myProperties.AttackRate_Price = TowerProperties.Tower_02.AttackRate_Price;
             this.myProperties.Range_Price = TowerProperties.Tower_02.Range_Price;
-            this.myProperties.Damage_Price = TowerProperties.Tower_02.Damage_Price;
+            this.myProperties.Power_Price = TowerProperties.Tower_02.Power_Price;
             this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_02.NumberOfTargets_Price;
 
             this.myProperties.TowerLevelsMax = new int[]
             {
                 TowerProperties.Tower_02.AttackRate_Level_Max,
                 TowerProperties.Tower_02.Range_Level_Max,
-                TowerProperties.Tower_02.Damage_Level_Max,
+                TowerProperties.Tower_02.Power_Level_Max,
                 TowerProperties.Tower_02.NumberOfTargets_Level_Max
             };
 
@@ -88,13 +88,13 @@ namespace Tower_Defense
                         {
                             tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
 
-                            someEnemies[i].Item1.ResetSpeedTimer = myProperties.Damage;
+                            someEnemies[i].Item1.ResetSpeedTimer = myProperties.Power;
 
                             List<Spark> tempSparks = new List<Spark>();
                             for (int j = 0; j < StaticRandom.RandomNumber(2, 5); j++)
                             {
                                 tempSparks.Add(new Spark(
-                                    new Vector2(someEnemies[i].Item1.OffsetPosition.X, someEnemies[i].Item1.OffsetPosition.Y - (someEnemies[i].Item1.DestRect.Height / 2)), 
+                                    new Vector2(someEnemies[i].Item1.OffsetPosition.X, someEnemies[i].Item1.OffsetPosition.Y - (someEnemies[i].Item1.DestRect.Height / 2)),
                                     new Point(2, 4)));
                             }
                             ParticleManager.AddParticle(tempSparks.ToArray());

@@ -15,7 +15,10 @@ namespace Tower_Defense
 
         public static float ObjectDepth(GameObject aObject)
         {
-            return 1.0f / (aObject.Position.Y + aObject.Size.Y * 0.9f);
+            float tempDepth = 1.0f / (aObject.Position.Y + aObject.Size.Y * 0.9f);
+            tempDepth = tempDepth > 0 ? tempDepth : 0;
+
+            return tempDepth;
         }
 
         public static void Initialize()

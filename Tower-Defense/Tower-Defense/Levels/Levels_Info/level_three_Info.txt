@@ -1,0 +1,16 @@
+Start={X:-960 Y:1088}
+Goal={X:2528 Y:976}
+Waves=30
+Enemy_00_Start=1
+Enemy_00_SpawnRate=3
+Enemy_00_Amount=5
+Enemy_01_Start=3
+Enemy_01_SpawnRate=3
+Enemy_01_Amount=3
+Enemy_02_Start=5
+Enemy_02_SpawnRate=2
+Enemy_02_Amount=2
+Enemy_03_Start=7
+Enemy_03_SpawnRate=1
+Enemy_03_Amount=15
+Difficulty=1

@@ -86,7 +86,7 @@ namespace Tower_Defense
 
             if (mySelectedTower >= 0 && mySelectedTower < myBuyOptions.Length)
             {
-                aSpriteBatch.Draw(myBuyOptions[mySelectedTower].Texture, Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()),
+                aSpriteBatch.Draw(myBuyOptions[mySelectedTower].Texture, Camera.ViewToWorld(KeyMouseReader.MousePos),
                     null, Color.White, 0.0f, Vector2.Zero, 0.25f / Camera.Zoom, SpriteEffects.None, 0.0f);
             }
 
@@ -160,7 +160,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_00.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "DMG: " + TowerProperties.Tower_00.Damage,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "PWR: " + TowerProperties.Tower_00.Power,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 58), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + TowerProperties.Tower_00.NumberOfTargets,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
@@ -170,7 +170,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_01.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "DMG: " + TowerProperties.Tower_01.Damage,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "PWR: " + TowerProperties.Tower_01.Power,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 58), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + TowerProperties.Tower_01.AttackRate,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
@@ -180,7 +180,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 10), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + TowerProperties.Tower_02.Range,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "DMG: " + TowerProperties.Tower_02.Damage,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "PWR: " + TowerProperties.Tower_02.Power,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 58), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + TowerProperties.Tower_02.NumberOfTargets,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
@@ -191,7 +191,7 @@ namespace Tower_Defense
 
         private void MenuSlide(GameTime aGameTime)
         {
-            if (KeyMouseReader.CurrentMouseState.Position.X > myPosition.X)
+            if (KeyMouseReader.MousePos.X > myPosition.X)
             {
                 if (myPosition.X - myCurrentSpeed > myShowPosition.X)
                 {
@@ -203,7 +203,7 @@ namespace Tower_Defense
                     myPosition.X = myShowPosition.X;
                 }
             }
-            if (KeyMouseReader.CurrentMouseState.Position.X < myPosition.X)
+            if (KeyMouseReader.MousePos.X < myPosition.X)
             {
                 if (myPosition.X + myCurrentSpeed < myHidePosition.X)
                 {
@@ -220,7 +220,7 @@ namespace Tower_Defense
         {
             if (mySelectedTower != -1)
             {
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
                 if (tempTile.Item2)
                 {

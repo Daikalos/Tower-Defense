@@ -67,11 +67,11 @@ namespace Tower_Defense
         {
             return
                 KeyMouseReader.LeftClick() &&
-                BoundingBox.Contains(KeyMouseReader.CurrentMouseState.Position);
+                BoundingBox.Contains(KeyMouseReader.MousePos);
         }
         public bool IsHold()
         {
-            return BoundingBox.Contains(KeyMouseReader.CurrentMouseState.Position);
+            return BoundingBox.Contains(KeyMouseReader.MousePos);
         }
 
         public delegate void OnClick(GameWindow aWindow);

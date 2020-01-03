@@ -49,14 +49,7 @@ namespace Tower_Defense
 
                 for (int i = 0; i < Enemy_AmountToSpawn.Length; i++)
                 {
-                    if (GameInfo.Wave >= SpawnInfo.Enemy_Start[i])
-                    {
-                        Enemy_AmountToSpawn[i] = SpawnInfo.Enemy_Amount[i] + AmountToSpawn_Increase;
-                    }
-                    else
-                    {
-                        Enemy_AmountToSpawn[i] = 0;
-                    }
+                    Enemy_AmountToSpawn[i] = GameInfo.Wave >= SpawnInfo.Enemy_Start[i] ? SpawnInfo.Enemy_Amount[i] + AmountToSpawn_Increase : 0;
                 }
 
                 for (int i = 0; i < GameInfo.Path.Count; i++)

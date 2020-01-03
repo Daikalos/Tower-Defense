@@ -15,20 +15,20 @@ namespace Tower_Defense
 
             this.myProperties.AttackRate = TowerProperties.Tower_01.AttackRate;
             this.myProperties.Range = TowerProperties.Tower_01.Range;
-            this.myProperties.Damage = TowerProperties.Tower_01.Damage;
+            this.myProperties.Power = TowerProperties.Tower_01.Power;
             this.myProperties.NumberOfTargets = TowerProperties.Tower_01.NumberOfTargets;
 
             this.myProperties.Price = TowerProperties.Tower_01.Price;
             this.myProperties.AttackRate_Price = TowerProperties.Tower_01.AttackRate_Price;
             this.myProperties.Range_Price = TowerProperties.Tower_01.Range_Price;
-            this.myProperties.Damage_Price = TowerProperties.Tower_01.Damage_Price;
+            this.myProperties.Power_Price = TowerProperties.Tower_01.Power_Price;
             this.myProperties.NumberOfTargets_Price = TowerProperties.Tower_01.NumberOfTargets_Price;
 
             this.myProperties.TowerLevelsMax = new int[]
             {
                 TowerProperties.Tower_01.AttackRate_Level_Max,
                 TowerProperties.Tower_01.Range_Level_Max,
-                TowerProperties.Tower_01.Damage_Level_Max,
+                TowerProperties.Tower_01.Power_Level_Max,
                 TowerProperties.Tower_01.NumberOfTargets_Level_Max
             };
 
@@ -108,7 +108,7 @@ namespace Tower_Defense
                         {
                             tempPositions.Add(someEnemies[i].Item1.DestRect.Center.ToVector2());
 
-                            someEnemies[i].Item1.RecieveDamage(myProperties.Damage);
+                            someEnemies[i].Item1.RecieveDamage(myProperties.Power);
                         }
                     }
 

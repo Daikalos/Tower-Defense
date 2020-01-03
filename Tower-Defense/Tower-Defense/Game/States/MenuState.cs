@@ -9,7 +9,7 @@ namespace Tower_Defense
     class MenuState : State
     {
         private SpriteFont my8bitFont;
-        private Button[] 
+        private Button[]
             myButtons,
             myLevels;
         private bool myLoadLevel;
@@ -61,7 +61,7 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
-            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Tower-Defense", 
+            StringManager.DrawStringMid(aSpriteBatch, my8bitFont, "Tower-Defense",
                 new Vector2((aWindow.ClientBounds.Width / 2), (aWindow.ClientBounds.Height / 2) - 200),
                 Color.LightSlateGray, 1.5f);
 
@@ -72,7 +72,7 @@ namespace Tower_Defense
             else
             {
                 Array.ForEach(myLevels, b => b.Draw(aSpriteBatch));
-                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu", 
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "Press escape to go back to menu",
                     new Vector2(16, aWindow.ClientBounds.Height - 16), Color.DarkSlateGray, 0.4f);
             }
         }

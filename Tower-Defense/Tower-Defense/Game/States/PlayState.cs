@@ -51,7 +51,7 @@ namespace Tower_Defense
                 new Vector2((aWindow.ClientBounds.Width / 3) + 128, aWindow.ClientBounds.Height - 64 - 4),
                 new Point(128, 64), SpeedUp, -1, string.Empty, 0.0f, 1.0f, 1.03f);
 
-            myMinimap = new Minimap(Vector2.Zero, 
+            myMinimap = new Minimap(Vector2.Zero,
                 new Point(aWindow.ClientBounds.Width / 4, aWindow.ClientBounds.Height / 4), myGame.GraphicsDevice);
 
             myShop = new ShopManager(
@@ -127,8 +127,8 @@ namespace Tower_Defense
             Level.DrawTiles(aSpriteBatch);
             Depth.Draw(aSpriteBatch, aGameTime);
 
-            EnemyManager.Draw(aSpriteBatch);
-            TowerManager.Draw(aSpriteBatch);
+            EnemyManager.Draw(aSpriteBatch); //Draws healthbar
+            TowerManager.Draw(aSpriteBatch); //Not needed because depth draws tower
 
             aSpriteBatch.End();
 

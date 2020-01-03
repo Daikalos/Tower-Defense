@@ -47,7 +47,7 @@ namespace Tower_Defense
 
             this.myProperties.AttackRateLevel = myProperties.TowerLevels[0];
             this.myProperties.RangeLevel = myProperties.TowerLevels[1];
-            this.myProperties.DamageLevel = myProperties.TowerLevels[2];
+            this.myProperties.PowerLevel = myProperties.TowerLevels[2];
             this.myProperties.NumberOfTargetsLevel = myProperties.TowerLevels[3];
         }
 
@@ -57,7 +57,7 @@ namespace Tower_Defense
 
             myProperties.TowerLevels[0] = myProperties.AttackRateLevel;
             myProperties.TowerLevels[1] = myProperties.RangeLevel;
-            myProperties.TowerLevels[2] = myProperties.DamageLevel;
+            myProperties.TowerLevels[2] = myProperties.PowerLevel;
             myProperties.TowerLevels[3] = myProperties.NumberOfTargetsLevel;
 
             IsClicked();
@@ -67,7 +67,7 @@ namespace Tower_Defense
         {
             if (KeyMouseReader.LeftClick())
             {
-                Tile tempTile1 = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2())).Item1;
+                Tile tempTile1 = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos)).Item1;
                 Tile tempTile2 = Level.TileAtPos(myOffsetPosition).Item1;
 
                 if (tempTile1 == tempTile2)
@@ -87,7 +87,7 @@ namespace Tower_Defense
             public float AttackRate { get; set; }
             public float AttackRateDelay { get; set; }
             public float Range { get; set; }
-            public int Damage { get; set; }
+            public int Power { get; set; }
             public int NumberOfTargets { get; set; }
 
             public int[] TowerLevels { get; set; }
@@ -95,13 +95,13 @@ namespace Tower_Defense
 
             public int AttackRateLevel { get; set; }
             public int RangeLevel { get; set; }
-            public int DamageLevel { get; set; }
+            public int PowerLevel { get; set; }
             public int NumberOfTargetsLevel { get; set; }
 
             public int Price { get; set; }
             public int AttackRate_Price { get; set; }
             public int Range_Price { get; set; }
-            public int Damage_Price { get; set; }
+            public int Power_Price { get; set; }
             public int NumberOfTargets_Price { get; set; }
 
         }

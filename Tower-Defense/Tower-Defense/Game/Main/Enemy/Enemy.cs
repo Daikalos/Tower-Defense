@@ -7,8 +7,9 @@ namespace Tower_Defense
     abstract class Enemy : GameObject
     {
         //Enemy
+        protected Enemy_Properties myProperties;
         protected Animation myEnemyAnimation;
-        protected Vector2 
+        protected Vector2
             myOffsetPosition,
             myOffset;
         protected bool myIsAlive;
@@ -23,13 +24,11 @@ namespace Tower_Defense
             myMaxHealthPoints,
             myWalkToTile;
 
-        protected Enemy_Properties myProperties;
-
         //Healthbar
         private Texture2D myHealthbar;
         private Vector2 myHealthbarOffset;
-        private Rectangle 
-            myHealthbarDest, 
+        private Rectangle
+            myHealthbarDest,
             myHealthbarSource;
 
         public Vector2 OffsetPosition
@@ -72,9 +71,9 @@ namespace Tower_Defense
             base.Update();
 
             myHealthbarDest = new Rectangle(
-                (int)(myPosition.X + myHealthbarOffset.X), 
-                (int)(myPosition.Y + myHealthbarOffset.Y), 
-                myHealthbarDest.Width, 
+                (int)(myPosition.X + myHealthbarOffset.X),
+                (int)(myPosition.Y + myHealthbarOffset.Y),
+                myHealthbarDest.Width,
                 myHealthbarDest.Height);
 
             myOffsetPosition = myPosition - myOffset;
@@ -112,9 +111,9 @@ namespace Tower_Defense
                 myHealthbarDest.Height);
 
             Rectangle tempSource = new Rectangle(
-                0, 
-                0, 
-                (int)(myHealthbarSource.Width * ((float)myProperties.HealthPoints / (float)myMaxHealthPoints)), 
+                0,
+                0,
+                (int)(myHealthbarSource.Width * ((float)myProperties.HealthPoints / (float)myMaxHealthPoints)),
                 myHealthbarSource.Height);
 
             aSpriteBatch.Draw(myHealthbar, tempDest, tempSource, Color.White);
@@ -188,8 +187,8 @@ namespace Tower_Defense
             SetTexture(this.GetType().Name);
 
             myHealthbar = ResourceManager.RequestTexture("Healthbar");
-            myHealthbarDest = new Rectangle(0, 0, 
-                (myHealthbar.Width / 2) - (myHealthbar.Width / 8), 
+            myHealthbarDest = new Rectangle(0, 0,
+                (myHealthbar.Width / 2) - (myHealthbar.Width / 8),
                 (myHealthbar.Height / 2) - (myHealthbar.Height / 8));
             myHealthbarSource = new Rectangle(0, 0, myHealthbar.Width, myHealthbar.Height);
             myHealthbarOffset = new Vector2((myHealthbar.Width / 8) / 2, -8);

@@ -24,7 +24,7 @@ namespace Tower_Defense
             myTowerIconOffset;
         private int[] myUpgradePrice;
         private string[] myUpgradeName;
-        private int 
+        private int
             mySelectedUpgrade,
             mySellPrice;
 
@@ -70,7 +70,7 @@ namespace Tower_Defense
                         myUpgradeName[i] = "Range";
                         break;
                     case 2:
-                        myUpgradeName[i] = "Damage";
+                        myUpgradeName[i] = "Power";
                         break;
                     case 3:
                         myUpgradeName[i] = "Targets";
@@ -153,7 +153,7 @@ namespace Tower_Defense
                     SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
 
                 myDrawBatch.DrawRectangle(Pen.DarkGray,
-                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X, mySelectedTower.Position.Y - (myTowerIcon.Size.Y  / 2)),
+                    new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2)),
                     myTowerIcon.Size.X + 20,
                     myTowerIcon.Size.Y);
                 myDrawBatch.FillRectangle(Brush.Gray,
@@ -167,7 +167,7 @@ namespace Tower_Defense
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 10), new Color(180, 180, 180), 0.5f);
                 StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "RNG: " + mySelectedTower.Properties.Range,
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 34), new Color(180, 180, 180), 0.5f);
-                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "DMG: " + mySelectedTower.Properties.Damage,
+                StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "PWR: " + mySelectedTower.Properties.Power,
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 58), new Color(180, 180, 180), 0.5f);
                 StringManager.DrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + mySelectedTower.Properties.NumberOfTargets,
                     new Vector2(mySelectedTower.Position.X + mySelectedTower.Size.X + 2, mySelectedTower.Position.Y - (myTowerIcon.Size.Y / 2) + 82), new Color(180, 180, 180), 0.5f);
@@ -245,8 +245,8 @@ namespace Tower_Defense
                             mySellPrice += ((mySelectedTower.Properties.RangeLevel - 1) * mySelectedTower.Properties.Range_Price) / 2;
                             break;
                         case 2:
-                            myUpgradePrice[i] = mySelectedTower.Properties.DamageLevel * mySelectedTower.Properties.Damage_Price;
-                            mySellPrice += ((mySelectedTower.Properties.DamageLevel - 1) * mySelectedTower.Properties.Damage_Price) / 2;
+                            myUpgradePrice[i] = mySelectedTower.Properties.PowerLevel * mySelectedTower.Properties.Power_Price;
+                            mySellPrice += ((mySelectedTower.Properties.PowerLevel - 1) * mySelectedTower.Properties.Power_Price) / 2;
                             break;
                         case 3:
                             myUpgradePrice[i] = mySelectedTower.Properties.NumberOfTargetsLevel * mySelectedTower.Properties.NumberOfTargets_Price;
@@ -269,7 +269,7 @@ namespace Tower_Defense
                         (int)mySize.X,
                         (int)mySize.Y);
 
-                    if (!tempCollisionBox.Contains(KeyMouseReader.CurrentMouseState.Position))
+                    if (!tempCollisionBox.Contains(KeyMouseReader.MousePos))
                     {
                         mySelectedTower = null;
                     }
@@ -316,8 +316,8 @@ namespace Tower_Defense
                 {
                     GameInfo.Money -= myUpgradePrice[mySelectedUpgrade];
 
-                    mySelectedTower.Properties.DamageLevel++;
-                    mySelectedTower.Properties.Damage += TowerProperties.Tower_Upgrade.Damage_Upgrade;
+                    mySelectedTower.Properties.PowerLevel++;
+                    mySelectedTower.Properties.Power += TowerProperties.Tower_Upgrade.Power_Upgrade;
                 }
             }
         }

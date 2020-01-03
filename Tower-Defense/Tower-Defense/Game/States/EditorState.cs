@@ -133,8 +133,8 @@ namespace Tower_Defense
                     {
                         aSpriteBatch.Draw(mySelections[myTile].Texture,
                             new Rectangle(
-                                (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).X,
-                                (int)Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()).Y,
+                                (int)Camera.ViewToWorld(KeyMouseReader.MousePos).X,
+                                (int)Camera.ViewToWorld(KeyMouseReader.MousePos).Y,
                                 (int)(mySelections[myTile].DestRect.Width),
                                 (int)(mySelections[myTile].DestRect.Height)), null, Color.White);
                     }
@@ -235,7 +235,7 @@ namespace Tower_Defense
 
                 Rectangle tempRect = mySelections[i].BoundingBox;
 
-                if (tempRect.Contains(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2())))
+                if (tempRect.Contains(Camera.ViewToWorld(KeyMouseReader.MousePos)))
                 {
                     mySelections[i].BoundingBox = new Rectangle(tempRect.X + myOffset.X, tempRect.Y + myOffset.Y,
                         tempRect.Width + myOffset.Width, tempRect.Height + myOffset.Height);
@@ -254,7 +254,7 @@ namespace Tower_Defense
         {
             if (KeyMouseReader.LeftHold() && mySelectedTile != '.' && myTimer <= 0)
             {
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
                 if (tempTile.Item2)
                 {
@@ -271,7 +271,7 @@ namespace Tower_Defense
                 mySelectedTile = '.';
                 myTile = -1;
 
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
                 if (tempTile.Item2)
                 {
@@ -414,7 +414,7 @@ namespace Tower_Defense
         {
             if (KeyMouseReader.LeftClick())
             {
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
                 if (tempTile.Item2)
                 {
@@ -426,7 +426,7 @@ namespace Tower_Defense
             }
             if (KeyMouseReader.RightClick())
             {
-                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.CurrentMouseState.Position.ToVector2()));
+                Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
                 if (tempTile.Item2)
                 {

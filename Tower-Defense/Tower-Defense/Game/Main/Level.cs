@@ -34,8 +34,9 @@ namespace Tower_Defense
 
             //Tile-space to screen-space
             tempMatrix.M11 = TileSize.X / 2; //Vector points
-            tempMatrix.M21 = -TileSize.X / 2;
             tempMatrix.M12 = TileSize.Y / 2;
+
+            tempMatrix.M21 = -TileSize.X / 2;
             tempMatrix.M22 = TileSize.Y / 2;
 
             tempMatrix.M31 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
@@ -52,32 +53,6 @@ namespace Tower_Defense
             }
 
             return new Tuple<Tile, bool>(myTiles[0, 0], false);
-        }
-
-        public static Tile ClosestTile(Vector2 aPos, params char[] aTileType)
-        {
-            Tile tempClosest = null;
-            float tempMinDistance = float.MaxValue;
-
-            for (int i = 0; i < myTiles.GetLength(0); i++)
-            {
-                for (int j = 0; j < myTiles.GetLength(1); j++)
-                {
-                    foreach (char type in aTileType)
-                    {
-                        if (myTiles[i, j].TileType != type)
-                        {
-                            float tempDistance = Vector2.Distance(myTiles[i, j].GetCenter(), aPos);
-                            if (tempDistance < tempMinDistance)
-                            {
-                                tempClosest = myTiles[i, j];
-                                tempMinDistance = tempDistance;
-                            }
-                        }
-                    }
-                }
-            }
-            return tempClosest;
         }
 
         public static void DrawTiles(SpriteBatch aSpriteBatch)
