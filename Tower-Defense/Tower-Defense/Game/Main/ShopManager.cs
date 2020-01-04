@@ -224,7 +224,7 @@ namespace Tower_Defense
 
                 if (tempTile.Item2)
                 {
-                    if (!tempTile.Item1.IsObstacle)
+                    if (!tempTile.Item1.IsObstacle && UserInterface.IsMouseOutside())
                     {
                         myCurrentTile = tempTile.Item1;
                         if (KeyMouseReader.LeftClick() && GameInfo.Money >= myBuyPrice[mySelectedTower])

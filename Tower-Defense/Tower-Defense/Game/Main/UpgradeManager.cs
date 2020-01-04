@@ -259,20 +259,11 @@ namespace Tower_Defense
         }
         private void ClickOutside()
         {
-            if (KeyMouseReader.LeftClick())
+            if (mySelectedTower != null)
             {
-                if (mySelectedTower != null)
+                if (KeyMouseReader.LeftClick() && UserInterface.IsMouseOutside())
                 {
-                    Rectangle tempCollisionBox = new Rectangle(
-                        (int)myPosition.X,
-                        (int)myPosition.Y,
-                        (int)mySize.X,
-                        (int)mySize.Y);
-
-                    if (!tempCollisionBox.Contains(KeyMouseReader.MousePos))
-                    {
-                        mySelectedTower = null;
-                    }
+                    mySelectedTower = null;
                 }
             }
         }

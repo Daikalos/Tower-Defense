@@ -28,7 +28,6 @@ namespace Tower_Defense
             myPathButton,
             myInfoButton,
             myWaveButton;
-        private UserInterface myInterface;
         private LevelInfo myLevelInfoForm;
         private LevelName myLevelNameForm;
         private LevelWave myLevelWaveForm;
@@ -38,9 +37,6 @@ namespace Tower_Defense
         private Rectangle myOffset;
         private EditorStates myEditorState;
         private char mySelectedTile;
-        private float
-            myTimer,
-            myDelay;
         private int myTile;
 
         public EditorState(MainGame aGame, GameWindow aWindow) : base(aGame)
@@ -48,6 +44,8 @@ namespace Tower_Defense
             Level.LoadLevel(aWindow, new Point(64, 32), "Level_Template");
 
             Camera.Reset();
+
+            UserInterface.DefineRenderTarget(DrawHUD);
 
             this.mySelections = new Tile[]
 {
@@ -63,8 +61,6 @@ namespace Tower_Defense
             this.myInfoButton = new Button(new Vector2(192, 96), new Point(128, 48), PressEditInfo, 1, "INFO", 0.6f, 1.0f, 1.03f);
             this.myWaveButton = new Button(new Vector2(192, 160), new Point(128, 48), PressEditWaves, 1, "WAVE", 0.6f, 1.0f, 1.03f);
 
-            this.myInterface = new UserInterface(Vector2.Zero, new Point(aWindow.ClientBounds.Width, aWindow.ClientBounds.Height), DrawHUD, myGame.GraphicsDevice);
-
             this.myLevelInfoForm = new LevelInfo();
             this.myLevelNameForm = new LevelName();
             this.myLevelWaveForm = new LevelWave();
@@ -76,8 +72,7 @@ namespace Tower_Defense
                 Level.TileSize.X / 8, Level.TileSize.Y / 8);
 
             this.myEditorState = EditorStates.isEditing;
-            this.mySelectedTile = '-';
-            this.myDelay = 0.50f;
+            this.mySelectedTile = '.';
             this.myTile = -1;
         }
 
@@ -88,7 +83,7 @@ namespace Tower_Defense
                 case EditorStates.isEditing:
                     Camera.MoveCamera(aGameTime);
 
-                    Misc(aGameTime, aWindow);
+                    UpdateButtons(aWindow);
 
                     SelectTile();
                     EditMap();
@@ -120,7 +115,7 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
-            myInterface.SetRenderTarget(aGameTime, aWindow);
+            UserInterface.SetRenderTarget(aGameTime, aWindow);
 
             aSpriteBatch.End();
 
@@ -129,7 +124,7 @@ namespace Tower_Defense
 
             Level.DrawTilesEditor(aSpriteBatch);
 
-            myInterface.Draw(aSpriteBatch);
+            UserInterface.Draw(aSpriteBatch);
         }
 
         private void DrawHUD(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
@@ -220,7 +215,7 @@ namespace Tower_Defense
             }
         }
 
-        private void Misc(GameTime aGameTime, GameWindow aWindow)
+        private void UpdateButtons(GameWindow aWindow)
         {
             myLoadButton.Update(aWindow);
             mySaveButton.Update(aWindow);
@@ -228,11 +223,6 @@ namespace Tower_Defense
             myPathButton.Update(aWindow);
             myInfoButton.Update(aWindow);
             myWaveButton.Update(aWindow);
-
-            if (myTimer > 0)
-            {
-                myTimer -= (float)aGameTime.ElapsedGameTime.TotalSeconds;
-            }
         }
 
         private void SelectTile()
@@ -258,15 +248,13 @@ namespace Tower_Defense
                     {
                         mySelectedTile = mySelections[i].TileType;
                         myTile = i;
-
-                        myTimer = myDelay;
                     }
                 }
             }
         }
         private void EditMap()
         {
-            if (KeyMouseReader.LeftHold() && mySelectedTile != '.' && myTimer <= 0)
+            if (KeyMouseReader.LeftHold() && mySelectedTile != '.' && UserInterface.IsMouseOutside())
             {
                 Tuple<Tile, bool> tempTile = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos));
 
@@ -280,7 +268,7 @@ namespace Tower_Defense
                     }
                 }
             }
-            if (KeyMouseReader.RightHold())
+            if (KeyMouseReader.RightHold() && UserInterface.IsMouseOutside())
             {
                 mySelectedTile = '.';
                 myTile = -1;

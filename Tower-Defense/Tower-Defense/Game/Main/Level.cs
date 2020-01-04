@@ -57,7 +57,7 @@ namespace Tower_Defense
 
         public static void DrawTiles(SpriteBatch aSpriteBatch)
         {
-            Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
+            Vector2 tempCameraOffset = Camera.Position;
             Vector2 tempCameraDimensions = new Vector2(
                 ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2,
                 ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);
@@ -82,7 +82,7 @@ namespace Tower_Defense
         }
         public static void DrawTilesEditor(SpriteBatch aSpriteBatch)
         {
-            Vector2 tempCameraOffset = new Vector2(Camera.Position.X, Camera.Position.Y);
+            Vector2 tempCameraOffset = Camera.Position;
             Vector2 tempCameraDimensions = new Vector2(
                 ((Camera.Position.X - Camera.TopLeftCorner.X) * 2) + TileSize.X * 2,
                 ((Camera.Position.Y - Camera.TopLeftCorner.Y) * 2) + TileSize.Y * 2);

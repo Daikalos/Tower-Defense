@@ -4,23 +4,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
 {
-    class UserInterface : StaticObject
+    static class UserInterface
     {
         //Rendertarget
-        private readonly GraphicsDevice myDevice;
-        private readonly SpriteBatch mySpriteBatch;
-        private readonly RenderTarget2D myInterface;
-        private readonly RenderTarget myRenderTarget;
+        private static GraphicsDevice myDevice;
+        private static SpriteBatch mySpriteBatch;
+        private static RenderTarget2D myInterface;
+        private static RenderTarget myRenderTarget;
 
-        public UserInterface(Vector2 aPosition, Point aSize, RenderTarget aRenderTarget, GraphicsDevice aGraphicsDevice) : base(aPosition, aSize)
+        private static Vector2 myPosition;
+        private static Point mySize;
+        private static Rectangle myDestRect;
+
+        public static void Initialize(Vector2 aPosition, Point aSize, GraphicsDevice aGraphicsDevice)
         {
-            this.myRenderTarget = aRenderTarget;
-            this.myDevice = aGraphicsDevice;
-            this.mySpriteBatch = new SpriteBatch(aGraphicsDevice);
-            this.myInterface = new RenderTarget2D(aGraphicsDevice, aGraphicsDevice.Viewport.Width, aGraphicsDevice.Viewport.Height);
+            myPosition = aPosition;
+            mySize = aSize;
+            myDestRect = new Rectangle((int)myPosition.X, (int)myPosition.Y, mySize.X, mySize.Y);
+
+            myDevice = aGraphicsDevice;
+            mySpriteBatch = new SpriteBatch(aGraphicsDevice);
+            myInterface = new RenderTarget2D(aGraphicsDevice, aGraphicsDevice.Viewport.Width, aGraphicsDevice.Viewport.Height);
         }
 
-        public override void Draw(SpriteBatch aSpriteBatch)
+        public static void Draw(SpriteBatch aSpriteBatch)
         {
             aSpriteBatch.End();
             aSpriteBatch.Begin();
@@ -28,9 +35,19 @@ namespace Tower_Defense
             aSpriteBatch.Draw(myInterface, myDestRect, Color.White);
         }
 
-        public delegate void RenderTarget(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow);
+        public static bool IsMouseOutside()
+        {
+            if (KeyMouseReader.MousePos.X >= 0 && KeyMouseReader.MousePos.Y >= 0 && KeyMouseReader.MousePos.X <= myInterface.Width && KeyMouseReader.MousePos.Y <= myInterface.Height)
+            {
+                Color[] tempPixels = new Color[myInterface.Width * myInterface.Height];
+                myInterface.GetData(0, new Rectangle((int)KeyMouseReader.MousePos.X, (int)KeyMouseReader.MousePos.Y, 1, 1), tempPixels, 0, 1);
 
-        public void SetRenderTarget(GameTime aGameTime, GameWindow aWindow)
+                return tempPixels[0].A < 10;
+            }
+            return false;
+        }
+
+        public static void SetRenderTarget(GameTime aGameTime, GameWindow aWindow)
         {
             myDevice.SetRenderTarget(myInterface);
             myDevice.Clear(Color.Transparent);
@@ -43,5 +60,12 @@ namespace Tower_Defense
 
             myDevice.SetRenderTarget(null);
         }
+
+        public static void DefineRenderTarget(RenderTarget aTarget)
+        {
+            myRenderTarget = aTarget;
+        }
+
+        public delegate void RenderTarget(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow);
     }
 }

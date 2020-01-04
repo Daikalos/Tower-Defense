@@ -72,7 +72,7 @@ namespace Tower_Defense
 
         public bool IsClicked()
         {
-            if (KeyMouseReader.LeftClick())
+            if (KeyMouseReader.LeftClick() && UserInterface.IsMouseOutside())
             {
                 Tile tempTile1 = Level.TileAtPos(Camera.ViewToWorld(KeyMouseReader.MousePos)).Item1;
                 Tile tempTile2 = Level.TileAtPos(myOffsetPosition).Item1;

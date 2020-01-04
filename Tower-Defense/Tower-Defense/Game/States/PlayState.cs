@@ -14,7 +14,6 @@ namespace Tower_Defense
         private Minimap myMinimap;
         private ShopManager myShop;
         private UpgradeManager myUpgrade;
-        private UserInterface myInterface;
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
@@ -28,6 +27,8 @@ namespace Tower_Defense
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
 
             SpawnManager.Initialize();
+
+            UserInterface.DefineRenderTarget(DrawHUD);
 
             for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
             {
@@ -64,8 +65,6 @@ namespace Tower_Defense
                 new Vector2(0, aWindow.ClientBounds.Height),
                 new Point(aWindow.ClientBounds.Width / 3, aWindow.ClientBounds.Height / 5), 18.0f,
                 myGame.GraphicsDevice, new Vector2(0, 32));
-
-            this.myInterface = new UserInterface(Vector2.Zero, new Point(aWindow.ClientBounds.Width, aWindow.ClientBounds.Height), DrawHUD, myGame.GraphicsDevice);
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
@@ -116,10 +115,10 @@ namespace Tower_Defense
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             myMinimap.SetRenderTarget(aGameTime, this);
-            myInterface.SetRenderTarget(aGameTime, aWindow);
+            UserInterface.SetRenderTarget(aGameTime, aWindow);
 
             DrawLevel(aSpriteBatch, aGameTime);
-            myInterface.Draw(aSpriteBatch);
+            UserInterface.Draw(aSpriteBatch);
         }
 
         public void DrawLevel(SpriteBatch aSpriteBatch, GameTime aGameTime)
@@ -160,13 +159,18 @@ namespace Tower_Defense
             {
                 GameInfo.Draw(aSpriteBatch, aWindow, my8bitFont);
 
-                myUpgrade.Draw(aSpriteBatch);
-                myShop.Draw(aSpriteBatch);
-
                 myPlayButton.Draw(aSpriteBatch);
                 mySpeedUpButton.Draw(aSpriteBatch);
 
                 myMinimap.Draw(aSpriteBatch);
+
+                aSpriteBatch.End();
+
+                aSpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
+                    SamplerState.AnisotropicClamp, null, null, null, Camera.TranslationMatrix);
+
+                myUpgrade.Draw(aSpriteBatch);
+                myShop.Draw(aSpriteBatch);
             }
         }
 

@@ -8,7 +8,7 @@
             public static string Name => "Laser";
 
             //Tower stats
-            public static float AttackRate => 4.0f;
+            public static float AttackRate => 3.5f;
             public static float Range => 256;
             public static int Power => 1;
             public static int NumberOfTargets => 1;

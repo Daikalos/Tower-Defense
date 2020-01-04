@@ -8,11 +8,6 @@ namespace Tower_Defense
     {
         private static List<GameObject> myObjects;
 
-        public static List<GameObject> Objects
-        {
-            get => myObjects;
-        }
-
         public static float ObjectDepth(GameObject aObject)
         {
             float tempDepth = 1.0f / (aObject.Position.Y + aObject.Size.Y * 0.9f);

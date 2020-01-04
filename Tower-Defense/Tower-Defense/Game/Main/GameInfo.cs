@@ -25,7 +25,7 @@ namespace Tower_Defense
         public static string LevelName { get; set; }
 
         //Get properties, will not change during runtime
-        public static int MoneyEachWave => 200;
+        public static int MoneyEachWave => 500;
 
         public static string FolderLevels => "../../../../Levels/Levels/";
         public static string FolderLevelsInfo => "../../../../Levels/Levels_Info/";
@@ -37,7 +37,7 @@ namespace Tower_Defense
             Score = 0;
             GameSpeed = 1;
             Health = 100;
-            Money = 1000;
+            Money = 1500;
             Wave = 1;
         }
 

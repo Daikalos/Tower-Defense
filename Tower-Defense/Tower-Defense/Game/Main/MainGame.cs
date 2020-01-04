@@ -7,10 +7,10 @@ namespace Tower_Defense
 {
     public class MainGame : Game
     {
-        GraphicsDeviceManager myGraphics;
-        SpriteBatch mySpriteBatch;
+        private GraphicsDeviceManager myGraphics;
+        private SpriteBatch mySpriteBatch;
 
-        State myGameState;
+        private State myGameState;
 
         public void ChangeState(State aNewState)
         {
@@ -40,6 +40,7 @@ namespace Tower_Defense
             GameInfo.Initialize();
             Background.Initialize(12.0f);
             Camera.Initialize(Window, 15);
+            UserInterface.Initialize(Vector2.Zero, new Point(Window.ClientBounds.Width, Window.ClientBounds.Height), GraphicsDevice);
 
             myGameState = new MenuState(this, Window);
 
