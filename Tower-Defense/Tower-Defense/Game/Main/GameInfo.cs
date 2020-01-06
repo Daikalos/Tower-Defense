@@ -12,6 +12,8 @@ namespace Tower_Defense
         public static List<Tile> Path { get; set; }
 
         public static bool IsPaused { get; set; }
+        public static bool IsFreePlay { get; set; }
+        public static bool ReturnToMenu { get; set; }
 
         public static float GameSpeed { get; set; }
 
@@ -34,6 +36,10 @@ namespace Tower_Defense
         public static void Initialize()
         {
             //Starting values
+            IsPaused = false;
+            IsFreePlay = false;
+            ReturnToMenu = false;
+
             Score = 0;
             GameSpeed = 1;
             Health = 100;

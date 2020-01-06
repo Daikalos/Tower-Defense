@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Windows.Forms.Design;
 
 namespace Tower_Defense
 {
@@ -14,6 +15,7 @@ namespace Tower_Defense
         private Minimap myMinimap;
         private ShopManager myShop;
         private UpgradeManager myUpgrade;
+        private LevelWin myWinForm;
 
         public PlayState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
@@ -65,11 +67,13 @@ namespace Tower_Defense
                 new Vector2(0, aWindow.ClientBounds.Height),
                 new Point(aWindow.ClientBounds.Width / 3, aWindow.ClientBounds.Height / 5), 18.0f,
                 myGame.GraphicsDevice, new Vector2(0, 32));
+
+            this.myWinForm = new LevelWin();
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)
         {
-            if (!GameInfo.IsPaused)
+            if (!GameInfo.IsPaused && !myWinForm.Visible)
             {
                 SpawnManager.Update(aGameTime);
 
@@ -85,31 +89,14 @@ namespace Tower_Defense
 
                 ParticleManager.Update(aGameTime);
 
-                if (GameInfo.Wave >= GameInfo.TotalWaves)
-                {
-                    GameInfo.LoadHighScore(GameInfo.LevelName);
-                    GameInfo.SaveHighScore(GameInfo.LevelName);
-
-                    myGame.ChangeState(new WinState(myGame));
-                }
-                if (GameInfo.Health <= 0)
-                {
-                    myGame.ChangeState(new DeadState(myGame));
-                }
+                ConditionCheck(aWindow);
             }
             else
             {
                 myBackButton.Update(aWindow);
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.Space))
-            {
-                Camera.Reset();
-            }
-            if (KeyMouseReader.KeyPressed(Keys.Escape))
-            {
-                GameInfo.IsPaused = !GameInfo.IsPaused;
-            }
+            KeyPressOptions();
         }
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
@@ -171,6 +158,49 @@ namespace Tower_Defense
 
                 myUpgrade.Draw(aSpriteBatch);
                 myShop.Draw(aSpriteBatch);
+            }
+        }
+
+        private void ConditionCheck(GameWindow aWindow)
+        {
+            if (GameInfo.Wave > GameInfo.TotalWaves && !GameInfo.IsFreePlay)
+            {
+                GameInfo.IsPaused = true;
+                if (!GameInfo.ReturnToMenu)
+                {
+                    myWinForm.Show();
+                }
+                else
+                {
+                    myGame.ChangeState(new MenuState(myGame, aWindow));
+                }
+            }
+            if (GameInfo.Health <= 0)
+            {
+                if (GameInfo.IsFreePlay)
+                {
+                    GameInfo.LoadHighScore(GameInfo.LevelName);
+                    GameInfo.SaveHighScore(GameInfo.LevelName);
+                }
+                myGame.ChangeState(new DeadState(myGame));
+            }
+        }
+        private void KeyPressOptions()
+        {
+            if (KeyMouseReader.KeyPressed(Keys.Space))
+            {
+                Camera.Reset();
+            }
+            if (KeyMouseReader.KeyPressed(Keys.Escape))
+            {
+                if (!myWinForm.Visible)
+                {
+                    GameInfo.IsPaused = !GameInfo.IsPaused;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Please select an option in the window first");
+                }
             }
         }
 

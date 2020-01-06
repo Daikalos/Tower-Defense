@@ -104,3 +104,4 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Wi
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Other\empty.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\play_button.xnb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\bin\Windows\x86\Debug\Content\Sprites\Main\speedup_button.xnb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\Tower-Defense\Tower-Defense\obj\x86\Debug\Tower_Defense.LevelWin.resources

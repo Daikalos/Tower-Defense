@@ -16,8 +16,6 @@ namespace Tower_Defense
         {
             myGameState = aNewState;
             myGameState.LoadContent();
-
-            GameInfo.IsPaused = false;
         }
 
         public MainGame()
