@@ -11,7 +11,8 @@ namespace Tower_Defense
 
         public DeadState(MainGame aGame) : base(aGame)
         {
-
+            Camera.Reset();
+            GameInfo.GameSpeed = 1;
         }
 
         public override void Update(GameTime aGameTime, GameWindow aWindow)

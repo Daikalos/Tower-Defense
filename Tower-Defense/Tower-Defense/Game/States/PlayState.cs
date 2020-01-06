@@ -88,14 +88,13 @@ namespace Tower_Defense
                 TowerManager.Update(aGameTime, myUpgrade);
 
                 ParticleManager.Update(aGameTime);
-
-                ConditionCheck(aWindow);
             }
             else
             {
                 myBackButton.Update(aWindow);
             }
 
+            ConditionCheck(aWindow);
             KeyPressOptions();
         }
 
@@ -214,7 +213,11 @@ namespace Tower_Defense
         }
         private void Menu(GameWindow aWindow)
         {
-            myGame.ChangeState(new MenuState(myGame, aWindow));
+            if (!GameInfo.ReturnToMenu)
+            {
+                myWinForm.Close();
+                myGame.ChangeState(new MenuState(myGame, aWindow));
+            }
         }
 
         public override void LoadContent()
