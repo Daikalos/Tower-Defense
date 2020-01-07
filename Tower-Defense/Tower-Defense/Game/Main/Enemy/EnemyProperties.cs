@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace Tower_Defense
+﻿namespace Tower_Defense
 {
     //Acts as starting values for each enemy type
 

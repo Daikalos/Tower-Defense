@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Tower_Defense
 {
     static class StaticRandom
