@@ -10,9 +10,11 @@ namespace Tower_Defense
         private readonly GraphicsDevice myDevice;
         private readonly SpriteBatch mySpriteBatch;
         private readonly RenderTarget2D myMiniMap;
+        private readonly RenderTarget myTargetToRender;
 
-        public Minimap(Vector2 aPosition, Point aSize, GraphicsDevice aGraphicsDevice) : base(aPosition, aSize)
+        public Minimap(Vector2 aPosition, Point aSize, RenderTarget aTargetToRender, GraphicsDevice aGraphicsDevice) : base(aPosition, aSize)
         {
+            this.myTargetToRender = aTargetToRender;
             this.myDevice = aGraphicsDevice;
             this.mySpriteBatch = new SpriteBatch(aGraphicsDevice);
             this.myMiniMap = new RenderTarget2D(aGraphicsDevice, aGraphicsDevice.Viewport.Width, aGraphicsDevice.Viewport.Height);
@@ -26,18 +28,20 @@ namespace Tower_Defense
             aSpriteBatch.Draw(myMiniMap, myDestRect, Color.White);
         }
 
-        public void SetRenderTarget(GameTime aGameTime, PlayState aPlayState)
+        public void SetRenderTarget(GameTime aGameTime, GameWindow aWindow)
         {
             myDevice.SetRenderTarget(myMiniMap);
             myDevice.Clear(Color.Black);
 
             mySpriteBatch.Begin();
 
-            aPlayState.DrawLevel(mySpriteBatch, aGameTime);
+            myTargetToRender?.Invoke(mySpriteBatch, aGameTime, aWindow);
 
             mySpriteBatch.End();
 
             myDevice.SetRenderTarget(null);
         }
+
+        public delegate void RenderTarget(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow);
     }
 }

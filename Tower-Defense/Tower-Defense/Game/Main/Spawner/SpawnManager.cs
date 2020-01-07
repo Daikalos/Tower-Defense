@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Tower_Defense
 {
-    static class SpawnManager
+    static class SpawnManager //Also + 'WaveManager'
     {
         private static int[] Enemy_AmountToSpawn { get; set; }
         private static float[] Enemy_SpawnTimer { get; set; }
@@ -80,12 +80,12 @@ namespace Tower_Defense
                             EnemyManager.AddEnemy(i);
                                 
                             Enemy_AmountToSpawn[i]--;
-                            Enemy_SpawnTimer[i] = Enemy_SpawnDelay[i] * SpawnDelay_Decrease;
+                            Enemy_SpawnTimer[i] = Enemy_SpawnDelay[i];
                         }
                     }
                 }
 
-                if (EnemyManager.Enemies.Count <= 0 && Array.TrueForAll(Enemy_AmountToSpawn, a => a <= 0)) //All enemies dead and no longer spawns
+                if (EnemyManager.Enemies.Count <= 0 && Array.TrueForAll(Enemy_AmountToSpawn, a => a <= 0)) //All enemies are dead and no more to spawn
                 {
                     GameInfo.Wave++;
                     GameInfo.Money += GameInfo.MoneyEachWave * GameInfo.Wave;

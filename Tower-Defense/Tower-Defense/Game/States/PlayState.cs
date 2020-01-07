@@ -21,16 +21,14 @@ namespace Tower_Defense
         {
             EnemyManager.Initialize();
             TowerManager.Initialize();
-
             GameInfo.Initialize();
-
             ParticleManager.Initialize(myGame.GraphicsDevice);
 
             Level.LoadLevel(aWindow, new Point(64, 32), GameInfo.LevelName);
 
             SpawnManager.Initialize();
 
-            UserInterface.DefineRenderTarget(DrawHUD);
+            UserInterface.SetTargetToRender(DrawUI);
 
             for (int i = 0; i < Level.GetTiles.GetLength(0); i++)
             {
@@ -56,7 +54,7 @@ namespace Tower_Defense
                 new Point(128, 64), SpeedUp, -1, string.Empty, 0.0f, 1.0f, 1.03f);
 
             this.myMinimap = new Minimap(Vector2.Zero,
-                new Point(aWindow.ClientBounds.Width / 4, aWindow.ClientBounds.Height / 4), myGame.GraphicsDevice);
+                new Point(aWindow.ClientBounds.Width / 4, aWindow.ClientBounds.Height / 4), DrawLevel, myGame.GraphicsDevice);
 
             this.myShop = new ShopManager(
                 new Vector2(aWindow.ClientBounds.Width, 0),
@@ -100,14 +98,14 @@ namespace Tower_Defense
 
         public override void Draw(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
-            myMinimap.SetRenderTarget(aGameTime, this);
+            myMinimap.SetRenderTarget(aGameTime, aWindow);
             UserInterface.SetRenderTarget(aGameTime, aWindow);
 
-            DrawLevel(aSpriteBatch, aGameTime);
+            DrawLevel(aSpriteBatch, aGameTime, aWindow);
             UserInterface.Draw(aSpriteBatch);
         }
 
-        public void DrawLevel(SpriteBatch aSpriteBatch, GameTime aGameTime)
+        public void DrawLevel(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             aSpriteBatch.End();
 
@@ -127,7 +125,7 @@ namespace Tower_Defense
 
             ParticleManager.Draw(aSpriteBatch, aGameTime);
         }
-        private void DrawHUD(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
+        private void DrawUI(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             aSpriteBatch.End();
 

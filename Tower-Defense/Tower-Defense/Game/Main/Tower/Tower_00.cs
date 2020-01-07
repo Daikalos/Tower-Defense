@@ -72,6 +72,10 @@ namespace Tower_Defense
                     RotateTower(tempAngle);
                     Action(aGameTime);
                 }
+                else
+                {
+                    myProperties.AttackRate = myProperties.AttackRateDelay; //Reset attack if no enemies to within distance
+                }
             }
         }
 
@@ -123,7 +127,6 @@ namespace Tower_Defense
         public override void LoadContent()
         {
             base.SetTexture(this.GetType().Name);
-
             SourceRect = new Rectangle(0, 0, myTexture.Width / 2, myTexture.Height / 2);
         }
     }

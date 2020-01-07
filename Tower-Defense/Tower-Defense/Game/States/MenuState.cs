@@ -16,10 +16,7 @@ namespace Tower_Defense
 
         public MenuState(MainGame aGame, GameWindow aWindow) : base(aGame)
         {
-            aGame.IsMouseVisible = true;
-
             GameInfo.Initialize();
-
             Depth.Initialize();
 
             Camera.Reset();

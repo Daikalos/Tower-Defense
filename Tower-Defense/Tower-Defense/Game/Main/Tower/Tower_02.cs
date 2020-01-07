@@ -70,6 +70,10 @@ namespace Tower_Defense
                 {
                     Action(aGameTime);
                 }
+                else
+                {
+                    myProperties.AttackRate = myProperties.AttackRateDelay; //Reset attack if no enemies to within distance
+                }
             }
         }
 

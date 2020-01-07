@@ -82,9 +82,7 @@ namespace Tower_Defense
 
                 myPosition += tempDeltaPos.ToVector2();
             }
-        }
-        private static void KeyboardMovement(GameTime aGameTime)
-        {
+
             if (KeyMouseReader.ScrollUp())
             {
                 myZoom += myZoomValue;
@@ -95,7 +93,9 @@ namespace Tower_Defense
                 myZoom -= myZoomValue;
                 myZoom = MathHelper.Clamp(myZoom, myZoomLimit.X, myZoomLimit.Y);
             }
-
+        }
+        private static void KeyboardMovement(GameTime aGameTime)
+        {
             if (KeyMouseReader.KeyHold(Keys.Up))
             {
                 myPosition.Y -= myMoveSpeed * (1 / myZoom) * 60 * (float)aGameTime.ElapsedGameTime.TotalSeconds;

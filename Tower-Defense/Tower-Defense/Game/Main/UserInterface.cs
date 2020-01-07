@@ -55,14 +55,14 @@ namespace Tower_Defense
 
             mySpriteBatch.Begin();
 
-            myRenderTarget(mySpriteBatch, aGameTime, aWindow);
+            myRenderTarget?.Invoke(mySpriteBatch, aGameTime, aWindow);
 
             mySpriteBatch.End();
 
             myDevice.SetRenderTarget(null);
         }
 
-        public static void DefineRenderTarget(RenderTarget aTarget)
+        public static void SetTargetToRender(RenderTarget aTarget)
         {
             myRenderTarget = aTarget;
         }

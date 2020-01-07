@@ -34,6 +34,8 @@ namespace Tower_Defense
             TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 60.0f); //60 fps
             MaxElapsedTime = TargetElapsedTime;
 
+            IsMouseVisible = true;
+
             ResourceManager.Initialize();
             GameInfo.Initialize();
             Background.Initialize(12.0f);

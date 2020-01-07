@@ -39,9 +39,9 @@ namespace Tower_Defense
 
             this.myUpgradeOptions = new Button[]
             {
-                new Button(aPosition, new Point(32), UpgradeFireSpeed, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
+                new Button(aPosition, new Point(32), UpgradeAttackRate, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
                 new Button(aPosition, new Point(32), UpgradeRange, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
-                new Button(aPosition, new Point(32), UpgradeDamage, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
+                new Button(aPosition, new Point(32), UpgradePower, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
                 new Button(aPosition, new Point(32), UpgradeNumberOfTargets, 3, "", 0.0f, (2.0f / 3.0f), 0.70f),
             };
             this.mySellButton = new Button(aPosition, new Point(96, 36), SellTower, 1, "SELL", 0.5f, (3.0f / 4.0f), (3.1f / 4.0f));
@@ -268,7 +268,7 @@ namespace Tower_Defense
             }
         }
 
-        public void UpgradeFireSpeed(GameWindow aWindow)
+        public void UpgradeAttackRate(GameWindow aWindow)
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {
@@ -279,7 +279,7 @@ namespace Tower_Defense
                     mySelectedTower.Properties.AttackRateLevel++;
                     mySelectedTower.Properties.AttackRateDelay *= TowerProperties.Tower_Upgrade.AttackRate_Upgrade;
 
-                    if (mySelectedTower.Properties.AttackRate >= mySelectedTower.Properties.AttackRateDelay)
+                    if (mySelectedTower.Properties.AttackRate > mySelectedTower.Properties.AttackRateDelay)
                     {
                         mySelectedTower.Properties.AttackRate = mySelectedTower.Properties.AttackRateDelay;
                     }
@@ -299,7 +299,7 @@ namespace Tower_Defense
                 }
             }
         }
-        public void UpgradeDamage(GameWindow aWindow)
+        public void UpgradePower(GameWindow aWindow)
         {
             if (mySelectedTower != null && GameInfo.Money >= myUpgradePrice[mySelectedUpgrade])
             {

@@ -45,7 +45,7 @@ namespace Tower_Defense
 
             Camera.Reset();
 
-            UserInterface.DefineRenderTarget(DrawHUD);
+            UserInterface.SetTargetToRender(DrawUI);
 
             this.mySelections = new Tile[]
 {
@@ -127,7 +127,7 @@ namespace Tower_Defense
             UserInterface.Draw(aSpriteBatch);
         }
 
-        private void DrawHUD(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
+        private void DrawUI(SpriteBatch aSpriteBatch, GameTime aGameTime, GameWindow aWindow)
         {
             aSpriteBatch.End();
 

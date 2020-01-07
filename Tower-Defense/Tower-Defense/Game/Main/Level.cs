@@ -34,18 +34,18 @@ namespace Tower_Defense
 
             //Tile-space to screen-space
             tempMatrix.M11 = TileSize.X / 2; //Vector points
-            tempMatrix.M12 = TileSize.Y / 2;
+            tempMatrix.M21 = TileSize.Y / 2;
 
-            tempMatrix.M21 = -TileSize.X / 2;
+            tempMatrix.M12 = -TileSize.X / 2;
             tempMatrix.M22 = TileSize.Y / 2;
 
-            tempMatrix.M31 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
-            tempMatrix.M32 = GetTiles[0, 0].Position.Y;
+            tempMatrix.M13 = GetTiles[0, 0].Position.X + myTileSize.X / 2; //Offset
+            tempMatrix.M23 = GetTiles[0, 0].Position.Y;
 
             tempMatrix = Matrix.Invert(tempMatrix); //Screen-space to tile-space
 
-            int tempX = (int)Math.Floor((aPos.X * tempMatrix.M11 + aPos.Y * tempMatrix.M21 + tempMatrix.M31)); //Multiply with mouse coordinates
-            int tempY = (int)Math.Floor((aPos.X * tempMatrix.M12 + aPos.Y * tempMatrix.M22 + tempMatrix.M32));
+            int tempX = (int)Math.Floor((aPos.X * tempMatrix.M11 + aPos.Y * tempMatrix.M12 + tempMatrix.M13)); //Multiply with mouse coordinates
+            int tempY = (int)Math.Floor((aPos.X * tempMatrix.M21 + aPos.Y * tempMatrix.M22 + tempMatrix.M23));
 
             if (CheckIn(tempX, tempY))
             {                                                                                                                                                                                                    
@@ -285,7 +285,7 @@ namespace Tower_Defense
             }
             catch (OutOfMemoryException anException)
             {
-                MessageBox.Show(anException.ToString());
+                MessageBox.Show(anException.Message);
                 return false;
             }
 
