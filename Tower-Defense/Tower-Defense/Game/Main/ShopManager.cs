@@ -172,7 +172,7 @@ namespace Tower_Defense
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 34), new Color(180, 180, 180), 0.5f);
                         StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "PWR: " + TowerProperties.Tower_01.Power,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 58), new Color(180, 180, 180), 0.5f);
-                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + TowerProperties.Tower_01.AttackRate,
+                        StringManager.CameraDrawStringLeft(aSpriteBatch, my8bitFont, "TRG: " + TowerProperties.Tower_01.NumberOfTargets,
                             new Vector2(myBuyOptions[myHoveredTower].Position.X - 136, myBuyOptions[myHoveredTower].Position.Y + 82), new Color(180, 180, 180), 0.5f);
                         break;
                     case 2:
